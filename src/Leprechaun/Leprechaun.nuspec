@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Leprechaun</id>
+    <version>$version$</version>
+    <authors>Kam Figy</authors>
+    <owners>Kam Figy</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/kamsar/Leprechaun</projectUrl>
+    <iconUrl>http://kamsar.net/nuget/rainbow/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Rainbow-based template code generation framework for Sitecore CMS</description>
+    <tags>sitecore serialization rainbow unicorn</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
