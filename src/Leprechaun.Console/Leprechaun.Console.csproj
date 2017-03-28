@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Leprechaun</RootNamespace>
-    <AssemblyName>Leprechaun</AssemblyName>
+    <ProjectGuid>{13EC2417-AE21-44D2-81EA-97514B140E92}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Leprechaun.Console</RootNamespace>
+    <AssemblyName>Leprechaun.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,12 +35,20 @@
     <Reference Include="Configy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Configy.1.0.0-pre02\lib\net45\Configy.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.2\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.2\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Rainbow, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rainbow.Core.2.0.0-pre05\lib\net452\Rainbow.dll</HintPath>
     </Reference>
+    <Reference Include="Rainbow.Storage.Yaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Rainbow.Storage.Yaml.2.0.0-pre05\lib\net452\Rainbow.Storage.Yaml.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sitecore.Kernel.NoReferences.8.2.161221\lib\NET452\Sitecore.Kernel.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,40 +63,22 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Filters\RainbowNullFieldFilter.cs" />
-    <Compile Include="LeprechaunConfigurationBuilder.cs" />
-    <Compile Include="MetadataGeneration\ITemplateMetadataGenerator.cs" />
-    <Compile Include="MetadataGeneration\ITypeNameGenerator.cs" />
-    <Compile Include="MetadataGeneration\StandardTemplateMetadataGenerator.cs" />
-    <Compile Include="MetadataGeneration\StandardTypeNameGenerator.cs" />
-    <Compile Include="Model\ConfigurationCodeGenerationMetadata.cs" />
-    <Compile Include="Model\TemplateCodeGenerationMetadata.cs" />
-    <Compile Include="Model\TemplateFieldCodeGenerationMetadata.cs" />
-    <Compile Include="Orchestrator.cs" />
-    <Compile Include="Model\TemplateConfiguration.cs" />
-    <Compile Include="Filters\TemplateTreeRoot.cs" />
-    <Compile Include="Filters\Exclusions\ChildrenOfPathBasedPresetTreeExclusion.cs" />
-    <Compile Include="Filters\Exclusions\PathBasedPresetTreeExclusion.cs" />
-    <Compile Include="Filters\Exclusions\PathTool.cs" />
-    <Compile Include="Filters\IPresetTreeExclusion.cs" />
-    <Compile Include="Filters\StandardFieldFilter.cs" />
-    <Compile Include="Filters\StandardTemplateFilter.cs" />
-    <Compile Include="TemplateReaders\DataStoreTemplateReader.cs" />
-    <Compile Include="Filters\IFieldFilter.cs" />
-    <Compile Include="Filters\ITemplateFilter.cs" />
-    <Compile Include="Model\TemplateFieldInfo.cs" />
-    <Compile Include="Model\TemplateInfo.cs" />
+    <Compile Include="LeprechaunConfigurationManager.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateReaders\ITemplateReader.cs" />
-    <Compile Include="Validation\ArchitectureValidationException.cs" />
-    <Compile Include="Validation\IArchitectureValidator.cs" />
-    <Compile Include="Validation\StandardArchitectureValidator.cs" />
-    <Compile Include="Validation\StandardArchitectureValidatorLogger.cs" />
-    <Compile Include="Validation\IArchitectureValidatorLogger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Leprechaun.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Leprechaun\Leprechaun.csproj">
+      <Project>{fa3e85a5-31ed-458f-a864-54ff20faae5f}</Project>
+      <Name>Leprechaun</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

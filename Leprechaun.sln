@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun", "src\Leprechaun\Leprechaun.csproj", "{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Tests", "src\Leprechaun.Tests\Leprechaun.Tests.csproj", "{35E11AFB-E613-4804-BD26-F928DE00EF39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Console", "src\Leprechaun.Console\Leprechaun.Console.csproj", "{13EC2417-AE21-44D2-81EA-97514B140E92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E11AFB-E613-4804-BD26-F928DE00EF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E11AFB-E613-4804-BD26-F928DE00EF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E11AFB-E613-4804-BD26-F928DE00EF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E11AFB-E613-4804-BD26-F928DE00EF39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13EC2417-AE21-44D2-81EA-97514B140E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13EC2417-AE21-44D2-81EA-97514B140E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13EC2417-AE21-44D2-81EA-97514B140E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13EC2417-AE21-44D2-81EA-97514B140E92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
