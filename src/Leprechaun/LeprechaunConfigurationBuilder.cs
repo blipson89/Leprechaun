@@ -4,6 +4,7 @@ using Configy;
 using Configy.Containers;
 using Configy.Parsing;
 using Leprechaun.Filters;
+using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
@@ -67,6 +68,7 @@ namespace Leprechaun
 				configuration.AssertSingleton(typeof(ITemplateFilter));
 				configuration.AssertSingleton(typeof(ITypeNameGenerator));
 				configuration.AssertSingleton(typeof(ITemplateReader));
+				
 
 				// register the container with itself. how meta!
 				configuration.Register(typeof(IContainer), () => configuration, true);
@@ -84,6 +86,7 @@ namespace Leprechaun
 			// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
 			sharedConfiguration.AssertSingleton(typeof(ITemplateMetadataGenerator));
 			sharedConfiguration.AssertSingleton(typeof(IArchitectureValidator));
+			sharedConfiguration.Assert(typeof(ILogger));
 
 			_sharedConfig = sharedConfiguration;
 		}

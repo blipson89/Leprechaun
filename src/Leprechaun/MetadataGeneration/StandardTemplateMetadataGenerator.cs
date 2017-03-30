@@ -14,7 +14,7 @@ namespace Leprechaun.MetadataGeneration
 			{
 				var nameGenerator = configuration.Configuration.Resolve<ITypeNameGenerator>();
 
-				var templates = configuration.Templates.Select(template => CreateTemplate(nameGenerator, template));
+				var templates = configuration.Templates.Select(template => CreateTemplate(nameGenerator, template)).ToArray();
 
 				results.Add(new ConfigurationCodeGenerationMetadata(configuration.Configuration, templates));
 			}

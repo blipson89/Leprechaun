@@ -77,8 +77,8 @@ namespace Leprechaun.TemplateReaders
 
 			var result = new TemplateInfo
 			{
-				Id = templateItem.TemplateId,
-				BaseTemplateIds = ParseMultilistValue(GetFieldValue(templateItem, BaseTemplateFieldId, string.Empty)),
+				Id = templateItem.Id,
+				BaseTemplateIds = ParseBaseTemplatesAndRejectIgnoredBaseTemplates(GetFieldValue(templateItem, BaseTemplateFieldId, string.Empty)),
 				HelpText = GetFieldValue(templateItem, HelpTextFieldId, string.Empty),
 				Name = templateItem.Name,
 				OwnFields = ParseTemplateFields(templateItem),
@@ -153,6 +153,15 @@ namespace Leprechaun.TemplateReaders
 			return defaultValue;
 		}
 
+		protected virtual Guid[] ParseBaseTemplatesAndRejectIgnoredBaseTemplates(string value)
+		{
+			var ignoredIds = IgnoredBaseTemplateIds;
+
+			return ParseMultilistValue(value)
+				.Where(id => !ignoredIds.Contains(id))
+				.ToArray();
+		}
+
 		protected virtual Guid[] ParseMultilistValue(string value)
 		{
 			return value.Split('|')
@@ -168,5 +177,7 @@ namespace Leprechaun.TemplateReaders
 				.Where(item => item != Guid.Empty)
 				.ToArray();
 		}
+
+		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => new HashSet<Guid> { TemplateIDs.StandardTemplate.Guid, TemplateIDs.Folder.Guid };
 	}
 }

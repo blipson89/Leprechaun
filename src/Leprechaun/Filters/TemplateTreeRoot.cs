@@ -5,11 +5,9 @@ namespace Leprechaun.Filters
 {
 	public class TemplateTreeRoot : TreeRoot
 	{
-		public TemplateTreeRoot(string path) : base(null, path, "master")
+		public TemplateTreeRoot(string name, string path) : base(name, path, "master")
 		{
 			Exclusions = new List<IPresetTreeExclusion>();
-
-			Name = path.Substring(path.LastIndexOf('/') + 1);
 		}
 
 		public IList<IPresetTreeExclusion> Exclusions { get; set; }

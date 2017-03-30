@@ -109,7 +109,11 @@ namespace Leprechaun.Filters
 		{
 			string path = GetExpectedAttribute(configuration, "path");
 
-			var root = new TemplateTreeRoot(path);
+			// ReSharper disable once PossibleNullReferenceException
+			var name = configuration.Attributes["name"];
+			string nameValue = name == null ? path.Substring(path.LastIndexOf('/') + 1) : name.Value;
+
+			var root = new TemplateTreeRoot(nameValue, path);
 
 			root.Exclusions = configuration.ChildNodes
 				.OfType<XmlElement>()

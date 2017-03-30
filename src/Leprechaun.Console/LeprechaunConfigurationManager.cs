@@ -1,5 +1,6 @@
 ﻿using System.Xml;
 using Configy.Parsing;
+using Leprechaun.Console.Variables;
 
 namespace Leprechaun.Console
 {
@@ -12,7 +13,9 @@ namespace Leprechaun.Console
 			var config = new XmlDocument();
 			config.Load("Leprechaun.config");
 
-			Configuration = new LeprechaunConfigurationBuilder(new ContainerDefinitionVariablesReplacer(), config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"]);
+			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
+
+			Configuration = new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"]);
 		}
 
 		public static LeprechaunConfigurationBuilder Configuration { get; }

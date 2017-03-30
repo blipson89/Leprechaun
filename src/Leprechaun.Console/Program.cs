@@ -11,7 +11,9 @@
 
 			var orchestrator = LeprechaunConfigurationManager.Configuration.Shared.Resolve<Orchestrator>();
 
-			orchestrator.GenerateMetadata(LeprechaunConfigurationManager.Configuration.Configurations);
+			var metadata = orchestrator.GenerateMetadata(LeprechaunConfigurationManager.Configuration.Configurations);
+
+			System.Console.ReadKey();
 		}
 	}
 }
