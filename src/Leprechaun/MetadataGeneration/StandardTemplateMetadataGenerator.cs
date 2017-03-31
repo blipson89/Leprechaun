@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Leprechaun.Model;
 
@@ -14,12 +15,17 @@ namespace Leprechaun.MetadataGeneration
 			{
 				var nameGenerator = configuration.Configuration.Resolve<ITypeNameGenerator>();
 
-				var templates = configuration.Templates.Select(template => CreateTemplate(nameGenerator, template)).ToArray();
+				var templates = configuration.Templates
+					.Select(template => CreateTemplate(nameGenerator, template))
+					.OrderBy(template => template.Name, StringComparer.Ordinal)
+					.ToArray();
 
 				results.Add(new ConfigurationCodeGenerationMetadata(configuration.Configuration, templates));
 			}
 
 			ApplyBaseTemplates(results);
+
+			results.Sort((a, b) => string.Compare(a.Configuration.Name, b.Configuration.Name, StringComparison.Ordinal));
 
 			return results;
 		}
@@ -43,6 +49,8 @@ namespace Leprechaun.MetadataGeneration
 
 				fields.Add(currentField);
 			}
+
+			fields.Sort((a,b) => string.Compare(a.CodeName, b.CodeName, StringComparison.Ordinal));
 
 			return fields;
 		}
