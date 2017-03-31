@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Leprechaun.MetadataGeneration
@@ -56,10 +57,19 @@ namespace Leprechaun.MetadataGeneration
 		/// </summary>
 		public virtual string ConvertToIdentifier(string name)
 		{
-			// allow for fields that start with a number
+			// Desnakeify case if it exists (e.g. foo_bar -> "foo bar")
+			name = name.Replace("_", " ");
+
+			// Uppercase any non-capitalized words (e.g. 'lord flowers' -> 'Lord Flowers')
+			// this makes identifiers Pascal Case as .NET expects
+			name = Regex.Replace(name, "^([a-z])", match => match.Value.ToUpperInvariant()); // first letter
+			name = Regex.Replace(name, " ([a-z])", match => match.Value.ToUpperInvariant()); // subsequent words
+
+			// allow for fields that start with a number (this is not allowed as an identifier)
 			if (char.IsDigit(name[0]))
 				name = "_" + name;
 
+			// replace invalid chars for an identifier with nothing (removes spaces, etc)
 			return Regex.Replace(name, "[^a-zA-Z0-9_\\.]+", string.Empty);
 		}
 	}

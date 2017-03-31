@@ -21,7 +21,7 @@ namespace Leprechaun.Tests.MetadataGeneration
 			InlineData("Foo", "Foo"),
 			InlineData("9Foo9", "_9Foo9"), // identifier cannot begin with number
 			InlineData("Field Name", "FieldName"),
-			InlineData("field_name", "field_name"),
+			InlineData("field_name", "FieldName"),
 			InlineData("Field.Name", "Field.Name")]
 		public void ConvertToIdentifier_ShouldPerformAsExpected(string input, string expected)
 		{
