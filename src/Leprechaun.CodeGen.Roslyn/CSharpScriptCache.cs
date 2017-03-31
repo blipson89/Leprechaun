@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Reflection;
+using Leprechaun.Model;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -16,7 +18,9 @@ namespace Leprechaun.CodeGen.Roslyn
 			return ScriptCache.GetOrAdd(fileName, key =>
 			{
 				var scriptOptions = ScriptOptions.Default
-					.WithFilePath(fileName);
+					.WithFilePath(fileName)
+					.WithReferences(Assembly.GetAssembly(typeof(TemplateInfo)))
+					.WithImports("Leprechaun.Model");
 
 				return CSharpScript.Create(File.ReadAllText(fileName), scriptOptions, typeof(CSharpScriptCodeGeneratorContext));
 			});

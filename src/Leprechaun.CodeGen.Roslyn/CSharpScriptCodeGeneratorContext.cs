@@ -9,10 +9,10 @@ namespace Leprechaun.CodeGen.Roslyn
 	{
 		private readonly ConfigurationCodeGenerationMetadata _metadata;
 
-		public CSharpScriptCodeGeneratorContext(ConfigurationCodeGenerationMetadata metadata, ILogger logger, string outputFileName)
+		public CSharpScriptCodeGeneratorContext(ConfigurationCodeGenerationMetadata metadata, ILogger logger, string rootNamespace)
 		{
 			Log = logger;
-			OutputFileName = outputFileName;
+			RootNamespace = rootNamespace;
 			_metadata = metadata;
 		}
 
@@ -22,7 +22,7 @@ namespace Leprechaun.CodeGen.Roslyn
 
 		public ILogger Log { get; }
 
-		public string OutputFileName { get; }
+		public string RootNamespace { get; }
 
 		public StringBuilder Code { get; } = new StringBuilder();
 	}

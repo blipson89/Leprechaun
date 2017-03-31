@@ -2,7 +2,7 @@
 
 foreach (var template in Templates)
 {
-	Code.AppendLine($"// {template.RelativeNamespace}.{template.CodeName} ({template.Path} {template.Id})");
+	Code.AppendLine($"// {RootNamespace}.{template.RelativeNamespace}.{template.CodeName} ({template.Path} {template.Id})");
 
 	foreach (var field in template.OwnFields)
 	{
