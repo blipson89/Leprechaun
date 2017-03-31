@@ -1,4 +1,7 @@
-﻿namespace Leprechaun.Console
+﻿using System.Xml;
+using Leprechaun.Console.Variables;
+
+namespace Leprechaun.Console
 {
 	class Program
 	{
@@ -9,11 +12,23 @@
 			// -config=c:\foo.config
 			// ??
 
-			var orchestrator = LeprechaunConfigurationManager.Configuration.Shared.Resolve<Orchestrator>();
+			var configuration = BuildConfiguration();
 
-			var metadata = orchestrator.GenerateMetadata(LeprechaunConfigurationManager.Configuration.Configurations);
+			var orchestrator = configuration.Shared.Resolve<Orchestrator>();
+
+			var metadata = orchestrator.GenerateMetadata(configuration.Configurations);
 
 			System.Console.ReadKey();
+		}
+
+		private static LeprechaunConfigurationBuilder BuildConfiguration()
+		{
+			var config = new XmlDocument();
+			config.Load("Leprechaun.config");
+
+			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
+
+			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"]);
 		}
 	}
 }

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<predicate>
+	<!-- 
+		BASIC: Basic include/exclude test 
+	-->
+	<include name="Basic" path="/sitecore/layout/Simulators">
+		<exclude path="/sitecore/layout/Simulators/Android Phone" />
+		<exclude path="iPhone" /> <!-- relative path exclusion based on parent include path -->
+		<exclude path="iPhone Apps/1.0" /> <!-- exclude where name starts with a different include -->
+	</include>
+
+	<!-- 
+		EXPLICIT NO-CHILDREN: Include parent, but exclude children test
+	-->
+	<include name="No children" path="/nochildren">
+		<exclude children="true" /> <!-- include /nochildren, exclude all of /nochildren's children -->
+	</include>
+	
+	<!-- 
+		IMPLICIT NO-CHILDREN: Include parent, but exclude children test
+		NOTE: this works and has a test but favor EXPLICIT exclusion of children instead
+	-->
+	<include name="Implicit no children" path="/implicit-nochildren">
+		<exclude path="/implicit-nochildren/" /> <!-- implicit exclusion of a child path. NOTE: does not work for paths under the root (e.g. /implicit-nochildren/foo/) -->
+	</include>
+
+	<!-- 
+		SOME-CHILDREN: Include parent, exclude all children EXCEPT for specific ones
+	-->
+	<include name="Some children" database="master" path="/somechildren">
+		<exclude children="true">
+			<except name="tests" />
+			<except name="fests" />
+		</exclude>
+	</include>
+
+	<!-- 
+		CHILDREN-OF-CHILDREN: Exclusion that includes its specified path but excludes all children of the exclude
+	-->
+	<include name="Children of children" path="/CoC">
+		<exclude childrenOfPath="/CoC/stuff" />
+		<exclude childrenOfPath="morestuff" /> <!-- relative path to parent include -->
+		<exclude childrenOfPath="yetmorestuff">
+			<except name="monkey" />
+		</exclude>
+	</include>
+	
+	<!--
+		WILDCARD CHILDREN-OF-CHILDREN: Include all children of the specified path but none of those items' children
+		NOTE: Wildcards are only allowed as the last character of childrenOfPath.
+	-->
+	<include path="/Wild">
+		<exclude childrenOfPath="*" />
+	</include>
+	<include path="/ChildWild">
+		<exclude childrenOfPath="Mike/*" />
+	</include>
+	
+	<!--
+		COMPOSITE EXAMPLE: Include parent item, one child, but no children of that child
+	-->
+	<include name="Composite" path="/sitecore/0xDEADBEEF/Example">
+		<exclude children="true">
+			<except name="Home" />
+		</exclude>
+		<exclude childrenOfPath="Home" />
+	</include>
+
+	<!--
+		WILDCARD ESCAPING: Literal matching of Sitecore wildcard items (named '*', escaped as \*)
+		Including literal exclusion of a child wildcard item.
+		Escape literals with a backslash. Note that technically escaping is not REQUIRED for 
+		a path inclusion (<include path="/foo/*"), but is supported and recommended for consistency's sake.
+	-->
+	<include name="Wildcard" path="/LiteralWild/\*">
+		<exclude children="true">
+			<except name="\*" />
+		</exclude>
+	</include>
+
+	<!--
+		PATH PREFIX TEST
+		Makes sure nothing bad happens when both /foo and /foot are included by path
+	-->
+	<include name="Prefix" path="/somechildrenofmine" />
+</predicate>

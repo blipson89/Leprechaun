@@ -26,7 +26,7 @@ namespace Leprechaun.MetadataGeneration
 
 		protected virtual TemplateCodeGenerationMetadata CreateTemplate(ITypeNameGenerator nameGenerator, TemplateInfo template)
 		{
-			var fullName = nameGenerator.GetFullTypeName(template.Name, template.Path);
+			var fullName = nameGenerator.GetFullTypeName(template.Path);
 
 			var fields = CreateTemplateFields(template, nameGenerator);
 

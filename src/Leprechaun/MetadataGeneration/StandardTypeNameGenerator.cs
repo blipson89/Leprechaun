@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Leprechaun.MetadataGeneration
 {
@@ -11,13 +12,15 @@ namespace Leprechaun.MetadataGeneration
 
 		public StandardTypeNameGenerator(string namespaceRootPath)
 		{
+			if(namespaceRootPath == "/") throw new NotSupportedException("Namespace root cannot be /, please use a sub-path e.g. /sitecore/templates");
+
 			_namespaceRoot = namespaceRootPath;
 		}
 
 		/// <summary>
 		/// Calculates a relative namespace and type name for a template based on its relative path from the root namespace path
 		/// </summary>
-		public virtual string GetFullTypeName(string templateName, string fullPath)
+		public virtual string GetFullTypeName(string fullPath)
 		{
 			string name = fullPath.Replace(_namespaceRoot, string.Empty).Trim('/').Replace('/', '.');
 
@@ -39,10 +42,6 @@ namespace Leprechaun.MetadataGeneration
 
 			if (name.Contains("."))
 			{
-				// we need to make sure the namespace and full type name are both unique
-				// i.e. you could have (and this happens with the standard templates) a template called 
-				// foo.bar and another called foo.bar.baz - and the foo.bar namespace for foo.bar.baz wouldn't work because a type existed called foo.bar already
-
 				string typeName = name.Substring(name.LastIndexOf('.') + 1);
 				string namespaceName = ConvertToIdentifier(name.Substring(0, name.LastIndexOf('.')));
 
