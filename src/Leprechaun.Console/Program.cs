@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using Leprechaun.CodeGen;
 using Leprechaun.Console.Variables;
 
 namespace Leprechaun.Console
@@ -17,6 +18,12 @@ namespace Leprechaun.Console
 			var orchestrator = configuration.Shared.Resolve<Orchestrator>();
 
 			var metadata = orchestrator.GenerateMetadata(configuration.Configurations);
+
+			foreach (var meta in metadata)
+			{
+				var codeGen = meta.Configuration.Resolve<ICodeGenerator>();
+				codeGen.GenerateCode(meta);
+			}
 
 			System.Console.ReadKey();
 		}

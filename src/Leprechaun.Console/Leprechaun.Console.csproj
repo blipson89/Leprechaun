@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Leprechaun.Console</RootNamespace>
     <AssemblyName>Leprechaun.Console</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -81,6 +82,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj">
+      <Project>{36aa27e4-033f-40cf-9318-131791352ce2}</Project>
+      <Name>Leprechaun.CodeGen.Roslyn</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Leprechaun\Leprechaun.csproj">
       <Project>{fa3e85a5-31ed-458f-a864-54ff20faae5f}</Project>
       <Name>Leprechaun</Name>

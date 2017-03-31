@@ -3,6 +3,7 @@ using System.Xml;
 using Configy;
 using Configy.Containers;
 using Configy.Parsing;
+using Leprechaun.CodeGen;
 using Leprechaun.Filters;
 using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
@@ -68,7 +69,7 @@ namespace Leprechaun
 				configuration.AssertSingleton(typeof(ITemplateFilter));
 				configuration.AssertSingleton(typeof(ITypeNameGenerator));
 				configuration.AssertSingleton(typeof(ITemplateReader));
-				
+				configuration.Assert(typeof(ICodeGenerator));
 
 				// register the container with itself. how meta!
 				configuration.Register(typeof(IContainer), () => configuration, true);
