@@ -22,7 +22,10 @@ namespace Leprechaun.CodeGen.Roslyn
 					.WithReferences(Assembly.GetAssembly(typeof(TemplateInfo)))
 					.WithImports("Leprechaun.Model");
 
-				return CSharpScript.Create(File.ReadAllText(fileName), scriptOptions, typeof(CSharpScriptCodeGeneratorContext));
+				var script = CSharpScript.Create(File.ReadAllText(fileName), scriptOptions, typeof(CSharpScriptCodeGeneratorContext));
+				script.Compile();
+
+				return script;
 			});
 		}
 	}
