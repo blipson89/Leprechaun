@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Leprechaun.Logging;
 using Leprechaun.Model;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
 namespace Leprechaun.CodeGen.Roslyn
@@ -14,7 +13,7 @@ namespace Leprechaun.CodeGen.Roslyn
 		private readonly string _outputFile;
 		private readonly string _rootNamespace;
 		private readonly ILogger _logger;
-		private readonly string[] _scripts;
+		private readonly Script[] _scripts;
 
 		public CSharpScriptCodeGenerator(string scripts, string outputFile, string rootNamespace, ILogger logger)
 		{
@@ -33,7 +32,7 @@ namespace Leprechaun.CodeGen.Roslyn
 				{
 					var codegenContext = new CSharpScriptCodeGeneratorContext(metadata, _logger, _rootNamespace);
 
-					return GetScript(script)
+					return script
 						.RunAsync(codegenContext)
 						.ContinueWith(task => codegenContext);
 				})
@@ -65,17 +64,18 @@ namespace Leprechaun.CodeGen.Roslyn
 			return CSharpScriptCache.GetScript(scriptFileName);
 		}
 
-		protected virtual string[] ProcessScripts(string scripts)
+		protected virtual Script[] ProcessScripts(string scripts)
 		{
 			return scripts
 				.Split(',')
+				.AsParallel()
 				.Select(script =>
 				{
 					var trimmed = script.Trim();
 
 					if(!File.Exists(trimmed)) throw new FileNotFoundException($"Code generation script '{trimmed}' was not found on disk.");
 
-					return trimmed;
+					return GetScript(trimmed);
 				})
 				.ToArray();
 		}

@@ -15,6 +15,7 @@ namespace Leprechaun.CodeGen.Roslyn
 		public static Script GetScript(string fileName)
 		{
 			// TODO: this should decache files if watching, when the templates' timestamp changes
+			// TODO: possibly use Emit() to write actual cached assemblies by timestamp as a permanent cache?
 			return ScriptCache.GetOrAdd(fileName, key =>
 			{
 				var scriptOptions = ScriptOptions.Default
