@@ -138,17 +138,6 @@ public string RenderFields(TemplateCodeGenerationMetadata template)
 	return localCode.ToString();
 }
 
-public string GetBackingFieldName(TemplateFieldCodeGenerationMetadata field)
-{
-	return $"_{field.CodeName.Substring(0, 1).ToLowerInvariant()}{field.CodeName.Substring(1)}";
-}
-
-public string GetSearchFieldName(TemplateFieldCodeGenerationMetadata field)
-{
-	// not using Solr? Remove the GetSolrFieldTypeSuffix(field.Type)
-	return field.Name.Replace(" ", "_").ToLowerInvariant() + GetSolrFieldTypeSuffix(field.Type);
-}
-
 public string GetFieldType(TemplateFieldCodeGenerationMetadata field)
 {
 	switch(field.Type) {
@@ -197,6 +186,17 @@ public string GetFieldType(TemplateFieldCodeGenerationMetadata field)
 		case "link": return "HyperlinkField";
 		default: return "TextField";
 	}
+}
+
+public string GetBackingFieldName(TemplateFieldCodeGenerationMetadata field)
+{
+	return $"_{field.CodeName.Substring(0, 1).ToLowerInvariant()}{field.CodeName.Substring(1)}";
+}
+
+public string GetSearchFieldName(TemplateFieldCodeGenerationMetadata field)
+{
+	// not using Solr? Remove the GetSolrFieldTypeSuffix(field.Type)
+	return field.Name.Replace(" ", "_").ToLowerInvariant() + GetSolrFieldTypeSuffix(field.Type);
 }
 
 public string GetSolrFieldTypeSuffix(string typeName)
