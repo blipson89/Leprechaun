@@ -66,7 +66,7 @@ namespace Leprechaun
 				// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
 				configuration.AssertSingleton(typeof(IDataStore));
 				configuration.AssertSingleton(typeof(IFieldFilter));
-				configuration.AssertSingleton(typeof(ITemplateFilter));
+				configuration.AssertSingleton(typeof(ITemplatePredicate));
 				configuration.AssertSingleton(typeof(ITypeNameGenerator));
 				configuration.AssertSingleton(typeof(ITemplateReader));
 				configuration.Assert(typeof(ICodeGenerator));

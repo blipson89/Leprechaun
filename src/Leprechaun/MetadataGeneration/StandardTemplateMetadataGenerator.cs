@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Leprechaun.Filters;
 using Leprechaun.Model;
 
 namespace Leprechaun.MetadataGeneration
@@ -14,9 +15,10 @@ namespace Leprechaun.MetadataGeneration
 			foreach (var configuration in configurations)
 			{
 				var nameGenerator = configuration.Configuration.Resolve<ITypeNameGenerator>();
+				var predicate = configuration.Configuration.Resolve<ITemplatePredicate>();
 
 				var templates = configuration.Templates
-					.Select(template => CreateTemplate(nameGenerator, template))
+					.Select(template => CreateTemplate(nameGenerator, predicate, template))
 					.OrderBy(template => template.Name, StringComparer.Ordinal)
 					.ToArray();
 
@@ -30,13 +32,13 @@ namespace Leprechaun.MetadataGeneration
 			return results;
 		}
 
-		protected virtual TemplateCodeGenerationMetadata CreateTemplate(ITypeNameGenerator nameGenerator, TemplateInfo template)
+		protected virtual TemplateCodeGenerationMetadata CreateTemplate(ITypeNameGenerator nameGenerator, ITemplatePredicate predicate, TemplateInfo template)
 		{
 			var fullName = nameGenerator.GetFullTypeName(template.Path);
 
 			var fields = CreateTemplateFields(template, nameGenerator);
 
-			return new TemplateCodeGenerationMetadata(template, fullName, fields);
+			return new TemplateCodeGenerationMetadata(template, fullName, predicate.GetRootNamespace(template), fields);
 		}
 
 		protected virtual IEnumerable<TemplateFieldCodeGenerationMetadata> CreateTemplateFields(TemplateInfo template, ITypeNameGenerator nameGenerator)

@@ -53,7 +53,7 @@ namespace Leprechaun
 		protected virtual IEnumerable<TemplateInfo> GetTemplates(IContainer configuration)
 		{
 			var templateReader = configuration.Resolve<ITemplateReader>();
-			var templatePredicate = configuration.Resolve<ITemplateFilter>();
+			var templatePredicate = configuration.Resolve<ITemplatePredicate>();
 
 			Assert.IsNotNull(templateReader, "templateReader != null");
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");

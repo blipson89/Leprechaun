@@ -14,7 +14,7 @@ namespace Leprechaun.Tests.Filters
 		[Fact]
 		public void ctor_ThrowsArgumentNullException_WhenNodeIsNull()
 		{
-			Assert.Throws<ArgumentNullException>(() => new StandardTemplateFilter(null, null));
+			Assert.Throws<ArgumentNullException>(() => new StandardTemplatePredicate(null, null, null));
 		}
 
 		//
@@ -94,7 +94,7 @@ namespace Leprechaun.Tests.Filters
 		// Deps: BASIC and DB TEST test configs
 		public void GetRootItems_ReturnsExpectedRootValues()
 		{
-			var predicate = new StandardTemplateFilter(CreateTestConfiguration(), null);
+			var predicate = new StandardTemplatePredicate(CreateTestConfiguration(), null, string.Empty);
 
 			var roots = predicate.GetRootPaths();
 
@@ -103,9 +103,9 @@ namespace Leprechaun.Tests.Filters
 			roots[0].Path.Should().Be("/sitecore/layout/Simulators");
 		}
 
-		private StandardTemplateFilter CreateTestPredicate(XmlNode configNode)
+		private StandardTemplatePredicate CreateTestPredicate(XmlNode configNode)
 		{
-			return new StandardTemplateFilter(configNode, null);
+			return new StandardTemplatePredicate(configNode, null, string.Empty);
 		}
 
 		private XmlNode CreateTestConfiguration()

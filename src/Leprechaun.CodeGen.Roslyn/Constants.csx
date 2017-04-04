@@ -46,9 +46,9 @@ public string RenderTemplates()
 }
 
 Code.AppendLine($@"
-namespace {RootNamespace}
+namespace {GenericRootNamespace}
 {{
-	using Sitecore.Data;
+	using global::Sitecore.Data;
 
 	public struct Templates
 	{{

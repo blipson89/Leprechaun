@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,14 +12,12 @@ namespace Leprechaun.CodeGen.Roslyn
 	public class CSharpScriptCodeGenerator : ICodeGenerator
 	{
 		private readonly string _outputFile;
-		private readonly string _rootNamespace;
 		private readonly ILogger _logger;
 		private readonly Script[] _scripts;
 
-		public CSharpScriptCodeGenerator(string scripts, string outputFile, string rootNamespace, ILogger logger)
+		public CSharpScriptCodeGenerator(string scripts, string outputFile, ILogger logger)
 		{
 			_outputFile = outputFile;
-			_rootNamespace = rootNamespace;
 			_logger = logger;
 
 			// ReSharper disable once VirtualMemberCallInConstructor
@@ -30,11 +29,18 @@ namespace Leprechaun.CodeGen.Roslyn
 			var tasks = _scripts
 				.Select(script =>
 				{
-					var codegenContext = new CSharpScriptCodeGeneratorContext(metadata, _logger, _rootNamespace);
+					var codegenContext = new CSharpScriptCodeGeneratorContext(metadata, _logger);
 
-					return script
-						.RunAsync(codegenContext)
-						.ContinueWith(task => codegenContext);
+					try
+					{
+						return script
+							.RunAsync(codegenContext, catchException: exception => throw exception)
+							.ContinueWith(task => codegenContext);
+					}
+					catch (Exception ex)
+					{
+						throw new InvalidOperationException($"Error executing {script.Options.FilePath}", ex);
+					}
 				})
 				.ToArray();
 

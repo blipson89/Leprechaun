@@ -11,20 +11,24 @@ using Sitecore.StringExtensions;
 
 namespace Leprechaun.Filters
 {
-	public class StandardTemplateFilter : ITemplateFilter, ITreeRootFactory
+	public class StandardTemplatePredicate : ITemplatePredicate, ITreeRootFactory
 	{
+		private readonly string _rootNamespace;
 		private readonly IList<TemplateTreeRoot> _includeEntries;
 
-		public StandardTemplateFilter(XmlNode configNode, IContainer configuration)
+		public StandardTemplatePredicate(XmlNode configNode, IContainer configuration, string rootNamespace)
 		{
-			Assert.ArgumentNotNull(configNode, "configNode");
+			_rootNamespace = rootNamespace;
+			Assert.ArgumentNotNull(configNode, nameof(configNode));
+			Assert.ArgumentNotNull(configuration, nameof(configuration));
+			Assert.ArgumentNotNull(rootNamespace, nameof(rootNamespace));
 
 			_includeEntries = ParsePreset(configNode);
 
 			EnsureEntriesExist(configuration?.Name ?? "Unknown");
 		}
 
-		public bool Includes(TemplateInfo template)
+		public virtual bool Includes(TemplateInfo template)
 		{
 			Assert.ArgumentNotNull(template, nameof(template));
 
@@ -43,15 +47,21 @@ namespace Leprechaun.Filters
 			return result;
 		}
 
-		public TreeRoot[] GetRootPaths()
+		public virtual TreeRoot[] GetRootPaths()
 		{
 			return _includeEntries.ToArray<TreeRoot>();
+		}
+
+		/// <param name="template">Template to get a root NS for. MAY BE NULL, in which case a general root NS should be returned.</param>
+		public virtual string GetRootNamespace(TemplateInfo template)
+		{
+			return _rootNamespace;
 		}
 
 		/// <summary>
 		/// Checks if a preset includes a given item
 		/// </summary>
-		protected bool Includes(TemplateTreeRoot entry, TemplateInfo itemData)
+		protected virtual bool Includes(TemplateTreeRoot entry, TemplateInfo itemData)
 		{
 			// check for path match
 			var unescapedPath = entry.Path.Replace(@"\*", "*");
@@ -76,7 +86,7 @@ namespace Leprechaun.Filters
 			return true;
 		}
 
-		private IList<TemplateTreeRoot> ParsePreset(XmlNode configuration)
+		protected virtual IList<TemplateTreeRoot> ParsePreset(XmlNode configuration)
 		{
 			var presets = configuration.ChildNodes
 				.Cast<XmlNode>()
@@ -150,7 +160,7 @@ namespace Leprechaun.Filters
 			throw new InvalidOperationException($"Unable to parse invalid exclusion value: {excludeNode.OuterXml}");
 		}
 
-		private static string GetExpectedAttribute(XmlNode node, string attributeName)
+		protected static string GetExpectedAttribute(XmlNode node, string attributeName)
 		{
 			// ReSharper disable once PossibleNullReferenceException
 			var attribute = node.Attributes[attributeName];

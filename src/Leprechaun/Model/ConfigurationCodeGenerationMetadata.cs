@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Configy.Containers;
+using Leprechaun.Filters;
 
 namespace Leprechaun.Model
 {
@@ -14,6 +15,8 @@ namespace Leprechaun.Model
 		}
 
 		public IContainer Configuration { get; }
+
+		public string RootNamespace => Configuration.Resolve<ITemplatePredicate>().GetRootNamespace(null);
 
 		public IReadOnlyCollection<TemplateCodeGenerationMetadata> Metadata { get; }
 	}

@@ -72,10 +72,10 @@
     <Compile Include="Filters\Exclusions\PathTool.cs" />
     <Compile Include="Filters\IPresetTreeExclusion.cs" />
     <Compile Include="Filters\StandardFieldFilter.cs" />
-    <Compile Include="Filters\StandardTemplateFilter.cs" />
+    <Compile Include="Filters\StandardTemplatePredicate.cs" />
     <Compile Include="TemplateReaders\DataStoreTemplateReader.cs" />
     <Compile Include="Filters\IFieldFilter.cs" />
-    <Compile Include="Filters\ITemplateFilter.cs" />
+    <Compile Include="Filters\ITemplatePredicate.cs" />
     <Compile Include="Model\TemplateFieldInfo.cs" />
     <Compile Include="Model\TemplateInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

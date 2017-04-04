@@ -22,7 +22,7 @@ namespace Leprechaun.Model
 
 		public virtual string Path => Field.Path;
 
-		public virtual string HelpText => Field.HelpText;
+		public virtual string HelpText => string.IsNullOrWhiteSpace(Field.HelpText) ? $"Represents the {DisplayName} field ({Id})." : Field.HelpText;
 
 		public virtual string Type => Field.Type;
 
