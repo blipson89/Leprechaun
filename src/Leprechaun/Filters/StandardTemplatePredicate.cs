@@ -20,7 +20,6 @@ namespace Leprechaun.Filters
 		{
 			_rootNamespace = rootNamespace;
 			Assert.ArgumentNotNull(configNode, nameof(configNode));
-			Assert.ArgumentNotNull(configuration, nameof(configuration));
 			Assert.ArgumentNotNull(rootNamespace, nameof(rootNamespace));
 
 			_includeEntries = ParsePreset(configNode);

@@ -73,11 +73,18 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigurationImportPathResolverTests.cs" />
     <Compile Include="Filters\StandardTemplateFilterTests.cs" />
     <Compile Include="MetadataGeneration\StandardTypeNameGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConfigurationImportPathResolverTests\Directory1\Directory1.1\Foo.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ConfigurationImportPathResolverTests\Directory2\Bar.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

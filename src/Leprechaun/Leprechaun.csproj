@@ -54,6 +54,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CodeGen\ICodeGenerator.cs" />
+    <Compile Include="ConfigurationImportPathResolver.cs" />
     <Compile Include="Filters\RainbowNullFieldFilter.cs" />
     <Compile Include="LeprechaunConfigurationBuilder.cs" />
     <Compile Include="Logging\ILogger.cs" />

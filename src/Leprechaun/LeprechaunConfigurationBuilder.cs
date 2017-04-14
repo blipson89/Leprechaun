@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Xml;
 using Configy;
 using Configy.Containers;
@@ -19,11 +20,13 @@ namespace Leprechaun
 		private readonly XmlElement _configsElement;
 		private readonly XmlElement _baseConfigElement;
 		private readonly XmlElement _sharedConfigElement;
+		private readonly string _configFilePath;
+		private readonly ConfigurationImportPathResolver _configImportResolver;
 
 		private IContainer _sharedConfig;
 		private IContainer[] _configurations;
 
-		public LeprechaunConfigurationBuilder(IContainerDefinitionVariablesReplacer variablesReplacer, XmlElement configsElement, XmlElement baseConfigElement, XmlElement sharedConfigElement) : base(variablesReplacer)
+		public LeprechaunConfigurationBuilder(IContainerDefinitionVariablesReplacer variablesReplacer, XmlElement configsElement, XmlElement baseConfigElement, XmlElement sharedConfigElement, string configFilePath, ConfigurationImportPathResolver configImportResolver) : base(variablesReplacer)
 		{
 			Assert.ArgumentNotNull(variablesReplacer, nameof(variablesReplacer));
 			Assert.ArgumentNotNull(configsElement, nameof(configsElement));
@@ -33,13 +36,17 @@ namespace Leprechaun
 			_configsElement = configsElement;
 			_baseConfigElement = baseConfigElement;
 			_sharedConfigElement = sharedConfigElement;
+			_configFilePath = configFilePath;
+			_configImportResolver = configImportResolver;
+
+			ProcessImports();
 		}
 
 		public virtual IContainer Shared
 		{
 			get
 			{
-				if(_sharedConfig == null) LoadSharedConfiguration();
+				if (_sharedConfig == null) LoadSharedConfiguration();
 				return _sharedConfig;
 			}
 		}
@@ -52,6 +59,8 @@ namespace Leprechaun
 				return _configurations;
 			}
 		}
+
+		public string[] ImportedConfigFilePaths { get; protected set; }
 
 		protected virtual void LoadConfigurations()
 		{
@@ -91,5 +100,42 @@ namespace Leprechaun
 
 			_sharedConfig = sharedConfiguration;
 		}
+
+		protected virtual void ProcessImports()
+		{
+			var imports = _configsElement.Attributes?["import"]?.InnerText;
+
+			if (imports == null) return;
+
+			var allImportsGlobs = imports.Split(';');
+
+			var allImportsRepathedGlobs = allImportsGlobs.Select(glob =>
+			{
+				// non relative
+				if (!glob.StartsWith(".")) return glob;
+
+				// relative path (absolutize with root config file path as base)
+				return Path.Combine(Path.GetDirectoryName(_configFilePath), glob);
+			});
+
+			var allImportsFiles = allImportsRepathedGlobs
+				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
+				.ToArray();
+
+			foreach(var import in allImportsFiles)
+			{
+				var xml = new XmlDocument();
+				xml.Load(import);
+
+				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(xml.DocumentElement, true);
+
+				_configsElement.AppendChild(importedXml);
+			}
+
+			// we'll use this to watch imports for changes later
+			ImportedConfigFilePaths = allImportsFiles;
+		}
+
+		
 	}
 }

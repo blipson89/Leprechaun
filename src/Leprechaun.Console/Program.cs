@@ -55,12 +55,14 @@ namespace Leprechaun.Console
 
 		private static LeprechaunConfigurationBuilder BuildConfiguration()
 		{
+			var configPath = "Leprechaun.config";
+
 			var config = new XmlDocument();
-			config.Load("Leprechaun.config");
+			config.Load(configPath);
 
 			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
 
-			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"]);
+			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], configPath, new ConfigurationImportPathResolver());
 		}
 	}
 }
