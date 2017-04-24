@@ -31,14 +31,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Configy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Configy.1.0.0-pre02\lib\net45\Configy.dll</HintPath>
+      <HintPath>..\..\packages\Configy.1.0.0-pre03\lib\net45\Configy.dll</HintPath>
     </Reference>
     <Reference Include="Rainbow, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rainbow.Core.2.0.0-pre06\lib\net452\Rainbow.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sitecore.Kernel.NoReferences.8.2.161221\lib\NET452\Sitecore.Kernel.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\Sitecore.Kernel.NoReferences.8.2.170407\lib\NET452\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
