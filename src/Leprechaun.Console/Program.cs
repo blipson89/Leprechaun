@@ -11,15 +11,24 @@ namespace Leprechaun.Console
 	{
 		static void Main(string[] args)
 		{
-			// args:
-			// -watch
-			// -config=c:\foo.config
-			// ??
+			// PARSE ARGS
+			var argsParser = new CommandLineParser.CommandLineParser();
+			var parsedArgs = new ConsoleArgs();
 
+			argsParser.ExtractArgumentAttributes(parsedArgs);
+			argsParser.ParseCommandLine(args);
+
+			if (parsedArgs.Help)
+			{
+				argsParser.ShowUsage();
+				Environment.Exit(-1);
+			}
+
+			// RUN LEPRECHAUN
 			var timer = new Stopwatch();
 			timer.Start();
 
-			var configuration = BuildConfiguration();
+			var configuration = BuildConfiguration(parsedArgs);
 
 			// start pre-compiling templates (for Roslyn provider anyway)
 			// this lets C# be compiling in the background while we read the files to generate from disk
@@ -50,19 +59,26 @@ namespace Leprechaun.Console
 			System.Console.WriteLine($"Leprechaun has completed in {timer.ElapsedMilliseconds}ms.");
 			System.Console.ResetColor();
 
-			System.Console.ReadKey();
+			if (parsedArgs.NoExit)
+			{
+				System.Console.ReadKey();
+			}
 		}
 
-		private static LeprechaunConfigurationBuilder BuildConfiguration()
+		private static LeprechaunConfigurationBuilder BuildConfiguration(ConsoleArgs args)
 		{
-			var configPath = "Leprechaun.config";
+			if (args.Watch)
+			{
+				System.Console.WriteLine("Sorry, watch is not yet implemented.");
+				Environment.Exit(1);
+			}
 
 			var config = new XmlDocument();
-			config.Load(configPath);
+			config.Load(args.ConfigFilePath);
 
 			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
 
-			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], configPath, new ConfigurationImportPathResolver());
+			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver());
 		}
 	}
 }

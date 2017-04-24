@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLineArgumentsParser, Version=3.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommandLineArgumentsParser.3.0.9\lib\net45\CommandLineArgumentsParser.dll</HintPath>
+    </Reference>
     <Reference Include="Configy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Configy.1.0.0-pre03\lib\net45\Configy.dll</HintPath>
     </Reference>
@@ -120,6 +123,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConsoleArgs.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
