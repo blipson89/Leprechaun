@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Leprechaun.Logging;
 
 namespace Leprechaun
 {
@@ -10,6 +11,13 @@ namespace Leprechaun
 	/// </summary>
 	public class ConfigurationImportPathResolver
 	{
+		private readonly ILogger _logger;
+
+		public ConfigurationImportPathResolver(ILogger logger)
+		{
+			_logger = logger;
+		}
+
 		public virtual string[] ResolveImportPaths(string inputPath)
 		{
 			// normalize input path 
@@ -78,6 +86,13 @@ namespace Leprechaun
 			while (pathCandidates.Count > 0)
 			{
 				var currentPathCandidate = pathCandidates.Dequeue();
+
+				if (!Directory.Exists(currentPathCandidate))
+				{
+					_logger.Warn($"The import path {currentPathCandidate} did not exist, and will be skipped!");
+					continue;
+				}
+
 				var currentPathFiles = Directory.GetFiles(currentPathCandidate, finalSegment, SearchOption.TopDirectoryOnly);
 
 				results.AddRange(currentPathFiles);

@@ -83,7 +83,7 @@ namespace Leprechaun.Console
 
 			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
 
-			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver());
+			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver(new ConsoleLogger()));
 		}
 	}
 }

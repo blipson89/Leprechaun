@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Leprechaun.Logging;
 using Xunit;
 
 namespace Leprechaun.Tests
@@ -85,7 +86,35 @@ namespace Leprechaun.Tests
 
 		private ConfigurationImportPathResolver CreateTestResolver()
 		{
-			return new ConfigurationImportPathResolver();
+			return new ConfigurationImportPathResolver(new NullLogger());
+		}
+
+		private class NullLogger : ILogger
+		{
+			public void Info(string message)
+			{
+				
+			}
+
+			public void Debug(string message)
+			{
+				
+			}
+
+			public void Warn(string message)
+			{
+				
+			}
+
+			public void Error(string message)
+			{
+				
+			}
+
+			public void Error(Exception exception)
+			{
+				
+			}
 		}
 	}
 }
