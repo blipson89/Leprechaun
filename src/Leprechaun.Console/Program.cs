@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using Leprechaun.CodeGen;
@@ -26,8 +27,13 @@ namespace Leprechaun.Console
 			}
 
 			// RUN LEPRECHAUN
-			var timer = new Stopwatch();
-			timer.Start();
+			Ascii.Leprechaun();
+
+			var appRunTimer = new Stopwatch();
+			appRunTimer.Start();
+
+			var metadataTimer = new Stopwatch();
+			metadataTimer.Start();
 
 			var configuration = BuildConfiguration(parsedArgs);
 
@@ -45,6 +51,11 @@ namespace Leprechaun.Console
 			// we generate template data that will feed code generation
 			var metadata = orchestrator.GenerateMetadata(configuration.Configurations);
 
+			metadataTimer.Stop();
+			System.Console.ForegroundColor = ConsoleColor.Green;
+			System.Console.WriteLine($"> Loaded {metadata.Count} configurations ({metadata.Sum(m => m.Metadata.Count)} total templates) in {metadataTimer.ElapsedMilliseconds}ms");
+			System.Console.ResetColor();
+
 			// make sure we're done preloading the compiled codegen templates
 			preload.Wait();
 
@@ -60,9 +71,9 @@ namespace Leprechaun.Console
 				codeGen.GenerateCode(meta);
 			}
 
-			timer.Stop();
+			appRunTimer.Stop();
 			System.Console.ForegroundColor = ConsoleColor.Green;
-			System.Console.WriteLine($"Leprechaun has completed in {timer.ElapsedMilliseconds}ms.");
+			System.Console.WriteLine($"Leprechaun has completed in {appRunTimer.ElapsedMilliseconds}ms.");
 			System.Console.ResetColor();
 
 			if (parsedArgs.NoExit)
