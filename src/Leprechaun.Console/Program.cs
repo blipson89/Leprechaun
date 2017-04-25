@@ -27,7 +27,7 @@ namespace Leprechaun.Console
 			}
 
 			// RUN LEPRECHAUN
-			Ascii.Leprechaun();
+			if(!parsedArgs.NoSplash) Ascii.Leprechaun();
 
 			var appRunTimer = new Stopwatch();
 			appRunTimer.Start();

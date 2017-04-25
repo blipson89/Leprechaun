@@ -30,3 +30,15 @@ $solution = "$scriptRoot\..\Leprechaun.sln"
 & $msBuild $solution /p:Configuration=Release /t:Rebuild /m
 
 & $nuGet pack "$scriptRoot\..\src\Leprechaun\Leprechaun.csproj" -Symbols -Prop Configuration=Release
+& $nuGet pack "$scriptRoot\..\src\Leprechaun.Console\Leprechaun.Console.csproj" -Symbols -Prop Configuration=Release
+& $nuGet pack "$scriptRoot\..\src\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj" -Symbols -Prop Configuration=Release
+
+$assembly = Get-Item "$scriptRoot\..\src\Leprechaun\bin\Release\Leprechaun.dll" | Select-Object -ExpandProperty VersionInfo
+$targetAssemblyVersion = $assembly.ProductVersion
+$releaseZipName = "Leprechaun-$targetAssemblyVersion.zip"
+
+if((Test-Path $releaseZipName)) {
+	Remove-Item $releaseZipName -Force
+}
+
+& "$PSScriptRoot\..\Tools\7za.exe" a $releaseZipName "$PSScriptRoot\..\src\Leprechaun.Console\bin\Release\*" -mx9

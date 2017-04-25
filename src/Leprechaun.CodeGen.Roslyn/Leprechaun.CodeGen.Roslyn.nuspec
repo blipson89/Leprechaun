@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Leprechaun</id>
+    <id>Leprechaun.CodeGen.Roslyn</id>
     <version>$version$</version>
     <authors>Kam Figy</authors>
     <owners>Kam Figy</owners>
@@ -9,9 +9,10 @@
     <projectUrl>https://github.com/kamsar/Leprechaun</projectUrl>
     <iconUrl>http://kamsar.net/nuget/rainbow/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A Rainbow-based template code generation framework for Sitecore CMS</description>
-    <tags>sitecore codegen leprechaun rainbow</tags>
+    <description>Provides code generation to Leprechaun using C# scripts, executed with Roslyn.</description>
+    <tags>sitecore codegen leprechaun</tags>
     <dependencies>
+        <dependency id="Leprechaun" version="$version$" />
     </dependencies>
   </metadata>
 </package>
