@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Leprechaun.MetadataGeneration
@@ -64,6 +63,9 @@ namespace Leprechaun.MetadataGeneration
 			// this makes identifiers Pascal Case as .NET expects
 			name = Regex.Replace(name, "^([a-z])", match => match.Value.ToUpperInvariant()); // first letter
 			name = Regex.Replace(name, " ([a-z])", match => match.Value.ToUpperInvariant()); // subsequent words
+
+			// Normalize three or more letter acronyms to C#ean casing (e.g. XML -> Xml)
+			name = Regex.Replace(name, "([A-Z]{3,})", match => match.Value[0] + match.Value.Substring(1).ToLowerInvariant());
 
 			// allow for fields that start with a number (this is not allowed as an identifier)
 			if (char.IsDigit(name[0]))
