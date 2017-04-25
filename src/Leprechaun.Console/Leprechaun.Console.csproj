@@ -124,6 +124,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables\ChainedVariablesReplacer.cs" />
+    <Compile Include="Variables\ConfigPathVariableReplacer.cs" />
     <Compile Include="Variables\ConfigurationNameVariablesReplacer.cs" />
     <Compile Include="Variables\HelixConventionVariablesReplacer.cs" />
   </ItemGroup>

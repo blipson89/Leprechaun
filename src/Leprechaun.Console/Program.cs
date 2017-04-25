@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using Leprechaun.CodeGen;
@@ -81,7 +82,10 @@ namespace Leprechaun.Console
 			var config = new XmlDocument();
 			config.Load(args.ConfigFilePath);
 
-			var replacer = new ChainedVariablesReplacer(new ConfigurationNameVariablesReplacer(), new HelixConventionVariablesReplacer());
+			var replacer = new ChainedVariablesReplacer(
+				new ConfigurationNameVariablesReplacer(), 
+				new HelixConventionVariablesReplacer(),
+				new ConfigPathVariableReplacer(Path.GetDirectoryName(args.ConfigFilePath)));
 
 			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver(new ConsoleLogger()));
 		}
