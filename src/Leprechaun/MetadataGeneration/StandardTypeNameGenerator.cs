@@ -22,10 +22,15 @@ namespace Leprechaun.MetadataGeneration
 		/// </summary>
 		public virtual string GetFullTypeName(string fullPath)
 		{
-			string name = fullPath.Replace(_namespaceRoot, string.Empty).Trim('/').Replace('/', '.');
+			string name = fullPath.Trim('/');
+			if (fullPath.StartsWith(_namespaceRoot, StringComparison.OrdinalIgnoreCase))
+			{
+				name = name.Substring(_namespaceRoot.Length);
+			}
 
 			var nameParts = name.Split('/');
 
+			// Check for namespace elements that begin with a number (invalid for C#) and replace with a leading underscore
 			for (int cnt = 0; cnt < nameParts.Length; cnt++)
 			{
 				string namePart = nameParts[cnt];
