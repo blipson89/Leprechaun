@@ -103,7 +103,7 @@ namespace Leprechaun
 
 		protected virtual void ProcessImports()
 		{
-			var imports = _configsElement.Attributes?["import"]?.InnerText;
+			var imports = _configsElement.Attributes["import"]?.InnerText;
 
 			if (imports == null) return;
 
@@ -111,8 +111,11 @@ namespace Leprechaun
 
 			var allImportsRepathedGlobs = allImportsGlobs.Select(glob =>
 			{
-				// non relative
-				if (!glob.StartsWith(".")) return glob;
+				// fix issues if "; " is used as a separator
+				glob = glob.Trim();
+
+				// absolute path with drive letter, so use the path raw
+				if (glob[0] == ':') return glob;
 
 				// relative path (absolutize with root config file path as base)
 				return Path.Combine(Path.GetDirectoryName(_configFilePath), glob);
@@ -121,8 +124,8 @@ namespace Leprechaun
 			var allImportsFiles = allImportsRepathedGlobs
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
 				.ToArray();
-
-			foreach(var import in allImportsFiles)
+			
+			foreach (var import in allImportsFiles)
 			{
 				var xml = new XmlDocument();
 				xml.Load(import);

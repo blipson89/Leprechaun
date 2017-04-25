@@ -1,4 +1,4 @@
-﻿Log.Info($"Emitting diagnostic templates for {ConfigurationName}...");
+﻿Log.Debug($"Emitting diagnostic templates for {ConfigurationName}...");
 
 foreach (var template in Templates)
 {

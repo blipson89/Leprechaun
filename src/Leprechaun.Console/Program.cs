@@ -50,6 +50,11 @@ namespace Leprechaun.Console
 			// emit actual code using the codegens for each config
 			foreach (var meta in metadata)
 			{
+				System.Console.WriteLine();
+				System.Console.ForegroundColor = ConsoleColor.Cyan;
+				System.Console.WriteLine($"> Generating {meta.Configuration.Name} ({meta.Metadata.Count} templates)");
+				System.Console.ResetColor();
+
 				var codeGen = meta.Configuration.Resolve<ICodeGenerator>();
 				codeGen.GenerateCode(meta);
 			}

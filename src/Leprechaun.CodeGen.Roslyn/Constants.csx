@@ -1,6 +1,6 @@
 ﻿// Generates Sitecore Habitat-style constants classes
 
-Log.Info($"Emitting constants templates for {ConfigurationName}...");
+Log.Debug($"Emitting constants templates for {ConfigurationName}...");
 
 public string RenderFields(TemplateCodeGenerationMetadata template)
 {

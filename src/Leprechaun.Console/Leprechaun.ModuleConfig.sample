@@ -1,0 +1,15 @@
+﻿<!--
+	This is a sample of a configuration file you might use to configure a Helix-style module's code generation.
+	See Leprechaun.config for more details about how you'd configure this to be used.
+	
+	As long as the name conforms to Layer.ModuleName, the variables $(layer) and $(module) are expanded
+	from the default base config, enabling nearly config-free module models and consistent conventions.
+	
+	For example, if the base config defined:
+	<templatePredicate rootNamespace="Sample.$(layer).$(module)" />
+	
+	Then in this sample configuration it would expand those variables to be the equivalent of:
+	<templatePredicate rootNamespace="Sample.Feature.ModuleName" />
+-->
+<configuration name="Feature.ModuleName" extends="Sample.Base">
+</configuration>

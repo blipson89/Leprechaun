@@ -1,6 +1,6 @@
 ﻿// Generates Synthesis models
 
-Log.Info($"Emitting Synthesis templates for {ConfigurationName}...");
+Log.Debug($"Emitting Synthesis templates for {ConfigurationName}...");
 
 public string RenderTemplates()
 {
