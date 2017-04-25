@@ -18,6 +18,7 @@ namespace Leprechaun.MetadataGeneration
 				var predicate = configuration.Configuration.Resolve<ITemplatePredicate>();
 
 				var templates = configuration.Templates
+					.Where(template => predicate.Includes(template))
 					.Select(template => CreateTemplate(nameGenerator, predicate, template))
 					.OrderBy(template => template.Name, StringComparer.Ordinal)
 					.ToArray();
