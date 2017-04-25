@@ -22,9 +22,9 @@ namespace Leprechaun.Console
            |_|");
 			var version = $"Version {GetVersion()}";
 
-			System.Console.WriteLine();
 			System.Console.ForegroundColor = ConsoleColor.DarkGreen;
 			System.Console.WriteLine(new string(' ', 42 - version.Length) + version);
+			System.Console.WriteLine();
 
 			WriteBow(@"                 @@                 ");
 			WriteBow(@"                @><@               ");

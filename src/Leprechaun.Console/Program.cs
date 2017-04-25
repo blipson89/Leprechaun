@@ -53,18 +53,23 @@ namespace Leprechaun.Console
 
 			metadataTimer.Stop();
 			System.Console.ForegroundColor = ConsoleColor.Green;
-			System.Console.WriteLine($"> Loaded {metadata.Count} configurations ({metadata.Sum(m => m.Metadata.Count)} total templates) in {metadataTimer.ElapsedMilliseconds}ms");
+			System.Console.WriteLine($"Loaded metadata for {metadata.Count} configurations ({metadata.Sum(m => m.Metadata.Count)} total templates) in {metadataTimer.ElapsedMilliseconds}ms.");
 			System.Console.ResetColor();
 
 			// make sure we're done preloading the compiled codegen templates
 			preload.Wait();
+
+			System.Console.ForegroundColor = ConsoleColor.Green;
+			System.Console.WriteLine($"Code generator has loaded in {appRunTimer.ElapsedMilliseconds}ms.");
+			System.Console.ResetColor();
 
 			// emit actual code using the codegens for each config
 			foreach (var meta in metadata)
 			{
 				System.Console.WriteLine();
 				System.Console.ForegroundColor = ConsoleColor.Cyan;
-				System.Console.WriteLine($"> Generating {meta.Configuration.Name} ({meta.Metadata.Count} templates)");
+				var word = meta.Metadata.Count == 1 ? "template" : "templates";
+				System.Console.WriteLine($"> Generating {meta.Configuration.Name} ({meta.Metadata.Count} {word})");
 				System.Console.ResetColor();
 
 				var codeGen = meta.Configuration.Resolve<ICodeGenerator>();
@@ -72,6 +77,7 @@ namespace Leprechaun.Console
 			}
 
 			appRunTimer.Stop();
+			System.Console.WriteLine();
 			System.Console.ForegroundColor = ConsoleColor.Green;
 			System.Console.WriteLine($"Leprechaun has completed in {appRunTimer.ElapsedMilliseconds}ms.");
 			System.Console.ResetColor();
