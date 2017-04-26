@@ -49,7 +49,7 @@ namespace Leprechaun.CodeGen.Roslyn
 				.Wait();
 		}
 
-		protected virtual async Task EmitCode(IEnumerable<CSharpScriptCodeGeneratorContext> states)
+		protected virtual void EmitCode(IEnumerable<CSharpScriptCodeGeneratorContext> states)
 		{
 			var code = string.Join(Environment.NewLine, states.Select(state => state.Code.ToString()));
 
@@ -70,7 +70,7 @@ namespace Leprechaun.CodeGen.Roslyn
 			{
 				using (var writer = new StreamWriter(file))
 				{
-					await writer.WriteAsync(code);
+					writer.Write(code);
 				}
 			}
 
