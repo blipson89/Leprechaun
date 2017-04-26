@@ -41,4 +41,9 @@ if((Test-Path $releaseZipName)) {
 	Remove-Item $releaseZipName -Force
 }
 
-& "$PSScriptRoot\..\Tools\7za.exe" a $releaseZipName "$PSScriptRoot\..\src\Leprechaun.Console\bin\Release\*" -mx9
+$releaseRoot = "$PSScriptRoot\..\src\Leprechaun.Console\bin\Release"
+
+Remove-Item $releaseRoot\*.xml
+Remove-Item $releaseRoot\*.pdb
+
+& "$PSScriptRoot\..\Tools\7za.exe" a $releaseZipName "$releaseRoot\*" -mx9

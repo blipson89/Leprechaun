@@ -21,5 +21,6 @@ src/*/obj
 packages/*
 !packages/repositories.config
 Build/*.nupkg
+Build/*.zip
 
 src/Leprechaun.*.Tests/license.xml
