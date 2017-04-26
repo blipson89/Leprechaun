@@ -123,6 +123,7 @@ namespace Leprechaun
 
 			var allImportsFiles = allImportsRepathedGlobs
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
+				.Concat(new [] { _configFilePath })
 				.ToArray();
 			
 			foreach (var import in allImportsFiles)

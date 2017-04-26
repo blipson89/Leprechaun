@@ -49,7 +49,7 @@
       <HintPath>..\..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Rainbow, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rainbow.Core.2.0.0-pre06\lib\net452\Rainbow.dll</HintPath>
+      <HintPath>..\..\packages\Rainbow.Core.2.0.0-pre07\lib\net452\Rainbow.dll</HintPath>
     </Reference>
     <Reference Include="Rainbow.Storage.Yaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rainbow.Storage.Yaml.2.0.0-pre06\lib\net452\Rainbow.Storage.Yaml.dll</HintPath>
@@ -128,6 +128,7 @@
     <Compile Include="Variables\ConfigPathVariableReplacer.cs" />
     <Compile Include="Variables\ConfigurationNameVariablesReplacer.cs" />
     <Compile Include="Variables\HelixConventionVariablesReplacer.cs" />
+    <Compile Include="Watcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md">
