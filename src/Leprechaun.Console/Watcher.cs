@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Leprechaun.Logging;
 using Rainbow.Model;
 using Rainbow.Storage;
@@ -9,12 +10,17 @@ namespace Leprechaun.Console
 {
 	public static class Watcher
 	{
+		
+
 		public static void Watch(LeprechaunConfigurationBuilder configuration, ILogger logger, Action rebuildAction)
 		{
+			const int debounceInMs = 500;
+			Timer debouncer = new Timer(Rebuild);
+
 			void RebuildFromItemChange(IItemMetadata item, string database)
 			{
-				logger.Info($"{item.SerializedItemId} was changed.");
-				Rebuild();
+				logger.Info($"{item?.SerializedItemId ?? "Unknown"} was altered.");
+				debouncer.Change(debounceInMs, Timeout.Infinite);
 			}
 
 			void RebuildFromConfigChange(string configPath, TreeWatcher.TreeWatcherChangeType changeType)
@@ -26,10 +32,10 @@ namespace Leprechaun.Console
 				}
 
 				logger.Info($"{configPath} was changed.");
-				Rebuild();
+				debouncer.Change(debounceInMs, Timeout.Infinite);
 			}
 
-			void Rebuild()
+			void Rebuild(object ignored)
 			{
 				var timer = new Stopwatch();
 				timer.Start();
