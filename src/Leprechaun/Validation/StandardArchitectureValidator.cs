@@ -63,7 +63,7 @@ namespace Leprechaun.Validation
 		protected virtual bool ValidateTemplateNamesAreNovel(TemplateCodeGenerationMetadata[] allTemplates)
 		{
 			var groups = allTemplates
-				.GroupBy(template => template.CodeName, StringComparer.OrdinalIgnoreCase)
+				.GroupBy(template => template.FullTypeName, StringComparer.OrdinalIgnoreCase)
 				.Where(group => group.Count() > 1)
 				.ToArray();
 

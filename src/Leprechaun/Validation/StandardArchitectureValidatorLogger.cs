@@ -22,7 +22,7 @@ namespace Leprechaun.Validation
 
 		public virtual void DuplicateTemplateNames(IEnumerable<TemplateCodeGenerationMetadata> duplicates)
 		{
-			_logger.Error("Duplicate template names were found; fix this architecture smell by renaming one.");
+			_logger.Error("Duplicate template names in the same namespace were found; fix this architecture smell by renaming one.");
 			foreach (var dupe in duplicates)
 			{
 				_logger.Error($"> {dupe.Path} ({dupe.Id})");
