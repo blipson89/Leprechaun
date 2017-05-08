@@ -139,7 +139,5 @@ namespace Leprechaun
 			// we'll use this to watch imports for changes later
 			ImportedConfigFilePaths = allImportsFiles;
 		}
-
-		
 	}
 }

@@ -9,6 +9,7 @@ using System.Xml;
 using Leprechaun.CodeGen;
 using Leprechaun.Console.Variables;
 using Leprechaun.Model;
+using Rainbow.Settings;
 
 namespace Leprechaun.Console
 {
@@ -34,8 +35,6 @@ namespace Leprechaun.Console
 
 			var appRunTimer = new Stopwatch();
 			appRunTimer.Start();
-
-
 
 			var configuration = BuildConfiguration(parsedArgs);
 
@@ -144,7 +143,12 @@ namespace Leprechaun.Console
 				new HelixConventionVariablesReplacer(),
 				new ConfigPathVariableReplacer(Path.GetDirectoryName(args.ConfigFilePath)));
 
-			return new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver(new ConsoleLogger()));
+			var configObject = new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver(new ConsoleLogger()));
+
+			// configure Rainbow
+			RainbowSettings.Current = (RainbowSettings)configObject.Shared.Resolve<ILeprechaunRainbowSettings>();
+
+			return configObject;
 		}
 	}
 }
