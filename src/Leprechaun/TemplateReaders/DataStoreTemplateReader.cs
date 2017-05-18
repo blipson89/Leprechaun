@@ -73,6 +73,7 @@ namespace Leprechaun.TemplateReaders
 
 		protected virtual TemplateInfo ParseTemplate(IItemData templateItem)
 		{
+			if (templateItem == null) throw new ArgumentException("Template item passed to parse was null", nameof(templateItem));
 			if (templateItem.TemplateId != TemplateTemplateId) throw new ArgumentException("Template item passed to parse was not a Template item", nameof(templateItem));
 
 			var result = new TemplateInfo
