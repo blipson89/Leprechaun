@@ -24,3 +24,6 @@ Build/*.nupkg
 Build/*.zip
 
 src/Leprechaun.*.Tests/license.xml
+
+*.ncrunchproject
+*.ncrunchsolution
