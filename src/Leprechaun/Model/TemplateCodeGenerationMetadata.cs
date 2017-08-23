@@ -70,6 +70,7 @@ namespace Leprechaun.Model
 			get
 			{
 				var templates = new Queue<TemplateCodeGenerationMetadata>();
+				var fields = new HashSet<TemplateFieldCodeGenerationMetadata>();
 				templates.Enqueue(this);
 
 				while (templates.Count > 0)
@@ -77,7 +78,7 @@ namespace Leprechaun.Model
 					var current = templates.Dequeue();
 					foreach (var field in current.OwnFields)
 					{
-						yield return field;
+						fields.Add(field);
 					}
 
 					foreach (var baseTemplate in current.BaseTemplates)
@@ -85,6 +86,8 @@ namespace Leprechaun.Model
 						templates.Enqueue(baseTemplate);
 					}
 				}
+
+				return fields;
 			}
 		}
 	}
