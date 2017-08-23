@@ -44,7 +44,17 @@ namespace Leprechaun.Model
 		/// <summary>
 		/// Gets the full namespace for the template (e.g. RootNamespace.RelativeNamespace)
 		/// </summary>
-		public virtual string Namespace => $"{RootNamespace}.{RelativeNamespace}";
+		public virtual string Namespace
+		{
+			get
+			{
+				if (!string.IsNullOrWhiteSpace(RelativeNamespace))
+				{
+					return $"{RootNamespace}.{RelativeNamespace}";
+				}
+				return RootNamespace;
+			}
+		}
 
 		/// <summary>
 		/// Gets the full type name, qualified by namespace, of this template
