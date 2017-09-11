@@ -72,11 +72,17 @@ namespace Leprechaun.Model
 				var templates = new Queue<TemplateCodeGenerationMetadata>();
 				templates.Enqueue(this);
 
+				var knownFields = new HashSet<Guid>();
+
 				while (templates.Count > 0)
 				{
 					var current = templates.Dequeue();
 					foreach (var field in current.OwnFields)
 					{
+						if(knownFields.Contains(field.Id)) continue;
+
+						knownFields.Add(field.Id);
+
 						yield return field;
 					}
 
