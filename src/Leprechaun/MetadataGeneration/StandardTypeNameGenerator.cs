@@ -52,6 +52,10 @@ namespace Leprechaun.MetadataGeneration
 
 				name = ConvertToIdentifier(string.Concat(namespaceName, ".", typeName));
 			}
+			else
+			{
+				name = ConvertToIdentifier(name);
+			}
 
 			return name;
 		}
