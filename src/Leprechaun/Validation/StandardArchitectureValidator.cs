@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Leprechaun.Model;
 
 namespace Leprechaun.Validation
@@ -8,9 +9,13 @@ namespace Leprechaun.Validation
 	public class StandardArchitectureValidator : IArchitectureValidator
 	{
 		private readonly IArchitectureValidatorLogger _logger;
+		private readonly bool _allowFieldNamesIdenticalToTemplateName;
+		private readonly bool _allowNovelFieldNames;
 
-		public StandardArchitectureValidator(IArchitectureValidatorLogger logger)
+		public StandardArchitectureValidator(XmlNode configNode, IArchitectureValidatorLogger logger)
 		{
+			_allowNovelFieldNames = configNode.Attributes["allowNovelFieldNames"]?.Value == "true";
+			_allowFieldNamesIdenticalToTemplateName = configNode.Attributes["allowFieldNamesIdenticalToTemplateName"]?.Value == "true";
 			_logger = logger;
 		}
 
@@ -30,12 +35,12 @@ namespace Leprechaun.Validation
 			{
 				ValidateBaseTemplatesAreKnown(template);
 
-				if (!ValidateTemplateHasNoFieldsIdenticalToTemplateName(template))
+				if (!_allowFieldNamesIdenticalToTemplateName && !ValidateTemplateHasNoFieldsIdenticalToTemplateName(template))
 				{
 					errors = true;
 				}
 
-				if (!ValidateTemplateFieldNamesAreNovel(template, allTemplatesIndex))
+				if (!_allowNovelFieldNames && !ValidateTemplateFieldNamesAreNovel(template, allTemplatesIndex))
 				{
 					errors = true;
 				}
