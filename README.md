@@ -1,4 +1,5 @@
 # Leprechaun
+![Leprechaun](http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png)
 
 Leprechaun is a universal, open API for code generation from [Rainbow](https://github.com/kamsar/Rainbow) serialized Sitecore templates. Leprechaun uses state-of-the-art [Roslyn code generation](https://msdn.microsoft.com/en-us/magazine/mt707527.aspx) technology instead of T4 templates for speedy generation that doesn't require Visual Studio.
 
