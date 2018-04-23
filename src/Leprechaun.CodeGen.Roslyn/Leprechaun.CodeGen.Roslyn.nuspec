@@ -3,10 +3,10 @@
   <metadata>
     <id>Leprechaun.CodeGen.Roslyn</id>
     <version>$version$</version>
-    <authors>Kam Figy</authors>
-    <owners>Kam Figy</owners>
+    <authors>Ben Lipson,Kam Figy</authors>
+    <owners>Ben Lipson</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-    <projectUrl>https://github.com/kamsar/Leprechaun</projectUrl>
+    <projectUrl>https://github.com/blipson89/Leprechaun</projectUrl>
     <iconUrl>http://kamsar.net/nuget/rainbow/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides code generation to Leprechaun using C# scripts, executed with Roslyn.</description>

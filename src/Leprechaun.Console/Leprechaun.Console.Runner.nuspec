@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
     <metadata>
-        <id>Leprechaun.Console</id>
+        <id>Leprechaun.Console.Runner</id>
         <version>$version$</version>
         <authors>Ben Lipson,Kam Figy</authors>
         <owners>Ben Lipson</owners>
@@ -11,12 +11,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A CLI application to use the Leprechaun codegen framework for Sitecore.</description>
         <tags>sitecore codegen leprechaun</tags>
-        <dependencies>
-            <dependency id="Leprechaun" version="$version$" />
-            <dependency id="Leprechaun.CodeGen.Roslyn" version="$version$" />
-        </dependencies>
+        <dependencies/>
     </metadata>
     <files>
-        <file src="bin\Release\Leprechaun.Console.exe.config" target="content\bin" />
+        <file src="bin\Release\*" target="Tools\build\Leprechaun" />
+        <file src="..\..\build\Init.ps1" target="Tools\Init.ps1" />
     </files>
 </package>
