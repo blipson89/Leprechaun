@@ -6,6 +6,7 @@ namespace Leprechaun.Model
 	[DebuggerDisplay("{CodeName} ({Id})")]
 	public class TemplateFieldCodeGenerationMetadata
 	{
+		private string _type;
 		public TemplateFieldCodeGenerationMetadata(TemplateFieldInfo field, string codeName)
 		{
 			Field = field;
@@ -23,8 +24,11 @@ namespace Leprechaun.Model
 		public virtual string Path => Field.Path;
 
 		public virtual string HelpText => string.IsNullOrWhiteSpace(Field.HelpText) ? $"Represents the {DisplayName} field ({Id})." : Field.HelpText;
-
-		public virtual string Type => Field.Type;
+		public virtual string Type
+		{
+			get => _type ?? Field.Type;
+			set => _type = value;
+		}
 
 		public virtual string Source => Field.Source;
 

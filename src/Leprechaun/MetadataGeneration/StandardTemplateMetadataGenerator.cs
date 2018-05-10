@@ -1,13 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Leprechaun.Filters;
 using Leprechaun.Model;
+using Sitecore.Diagnostics;
 
 namespace Leprechaun.MetadataGeneration
 {
 	public class StandardTemplateMetadataGenerator : ITemplateMetadataGenerator
 	{
+		private IDictionary<Guid, string> _fieldMap = new Dictionary<Guid, string>();
+		public StandardTemplateMetadataGenerator(XmlNode configNode)
+		{
+			Assert.ArgumentNotNull(configNode, nameof(configNode));
+			CreateFieldmap(configNode);
+		}
+
+		protected virtual void CreateFieldmap(XmlNode configNode)
+		{
+			IEnumerable<XmlNode> nodes = configNode.ChildNodes.Cast<XmlNode>().Where(node => node.Name == "fieldType");
+
+			foreach (XmlNode node in nodes)
+			{
+				bool validId = Guid.TryParse(node.Attributes?["id"]?.Value, out Guid id);
+				string type = node.Attributes?["type"]?.Value;
+
+				if(validId && !string.IsNullOrEmpty(type))
+					_fieldMap.Add(id, type);
+			}
+		}
+
 		public virtual IReadOnlyList<ConfigurationCodeGenerationMetadata> Generate(params TemplateConfiguration[] configurations)
 		{
 			var results = new List<ConfigurationCodeGenerationMetadata>(configurations.Length);
@@ -49,6 +72,9 @@ namespace Leprechaun.MetadataGeneration
 			foreach (var field in template.OwnFields)
 			{
 				var currentField = new TemplateFieldCodeGenerationMetadata(field, nameGenerator.ConvertToIdentifier(field.Name));
+
+				if (_fieldMap.ContainsKey(currentField.Id))
+					currentField.Type = _fieldMap[currentField.Id];
 
 				fields.Add(currentField);
 			}
