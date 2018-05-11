@@ -136,6 +136,10 @@ namespace Leprechaun.Console
 		private static LeprechaunConfigurationBuilder BuildConfiguration(ConsoleArgs args)
 		{
 			var config = new XmlDocument();
+			if (string.IsNullOrEmpty(args.ConfigFilePath))
+			{
+				args.ConfigFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Leprechaun.config");
+			}
 			config.Load(args.ConfigFilePath);
 
 			var replacer = new ChainedVariablesReplacer(
