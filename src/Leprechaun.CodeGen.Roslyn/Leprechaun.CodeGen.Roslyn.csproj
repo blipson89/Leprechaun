@@ -132,18 +132,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Content Include="Scripts\Synthesis\Constants.csx">
+    <Content Include="Scripts\Habitat.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\Diagnostics.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-    <Content Include="Scripts\Synthesis\Generator.csx">
+    <Content Include="Scripts\Synthesis.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\GlassMapper\Constants.csx" />
-    <None Include="Scripts\GlassMapper\Generator.csx" />
+    <None Include="Scripts\Constants.csx" />
+    <None Include="Scripts\GlassMapper.csx" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
