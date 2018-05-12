@@ -86,6 +86,15 @@ There are a few ways possible you can integrate Leprechaun.
   </PropertyGroup>
 ```
 2. You can integrate it into your build scripts - example: you can wrap it in a gulp task
+```
+gulp.task('_Code-Generation', function (cb) {
+    exec('.\\lib\\tools\\Leprechaun\\Leprechaun.console.exe /c .\\src\\Leprechaun.config', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+})
+```
 3. You can create a project target
 ```
 <Target Name="Leprechaun">  
