@@ -51,7 +51,7 @@ Open up `Leprechaun.config` and update settings where applicable. Pay close atte
 2. `<configuration name="Sample.Base">`
     * Recommend changing this to `[SolutionName].Base`
 3. `<codeGenerator scripts="..." outputFile="...">`
-    * `scripts` are the CSX templates that will be used. Currently, Synthesis and Habitat (`Constants.csx`) examples are provided.
+    * `scripts` are the CSX templates that will be used. Currently, Synthesis, GlassMapper and Habitat examples are provided.
     * `outputFile` - I recommend `$(configDirectory)\$(layer)\$(module)\code\Templates.cs` for Habitat
 4. `<dataStore physicalRootPath="...">`
     * folder where Rainbow YAML files are.
