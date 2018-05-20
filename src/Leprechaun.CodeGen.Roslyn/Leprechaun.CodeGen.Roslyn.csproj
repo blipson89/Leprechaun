@@ -142,8 +142,8 @@
     <Content Include="Scripts\Synthesis.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Scripts\Constants.csx" />
-    <None Include="Scripts\GlassMapper.csx" />
+    <Content Include="Scripts\Constants.csx" />
+    <Content Include="Scripts\GlassMapper.csx" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
