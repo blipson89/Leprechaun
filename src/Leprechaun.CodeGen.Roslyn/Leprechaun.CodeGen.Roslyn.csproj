@@ -142,7 +142,6 @@
     <Content Include="Scripts\Synthesis.csx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\Constants.csx" />
     <Content Include="Scripts\GlassMapper.csx" />
   </ItemGroup>
   <ItemGroup>
