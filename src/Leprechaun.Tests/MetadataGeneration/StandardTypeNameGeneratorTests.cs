@@ -9,6 +9,7 @@ namespace Leprechaun.Tests.MetadataGeneration
 		[Theory,
 			InlineData("/Foo", "/Foo/Bar", "Bar"),
 			InlineData("/Foo/Bar", "/Foo/Bar/Baz/Quux", "Baz.Quux"),
+			InlineData("/Foo/Bar", "/Foo/Bar/Baz/9Foo9/Quux", "Baz._9Foo9.Quux"),
 			InlineData("/Foo", "/Foo/Name Transform.Test", "NameTransform.Test"),
 			InlineData("/Foo", "/Foo/Name Transform", "NameTransform")]
 		public void GetFullTypeName_ShouldPerformAsExpected(string rootNamespace, string fullPath, string expected)
@@ -23,6 +24,7 @@ namespace Leprechaun.Tests.MetadataGeneration
 			InlineData("9Foo9", "_9Foo9"), // identifier cannot begin with number
 			InlineData("Field Name", "FieldName"),
 			InlineData("field_name", "FieldName"),
+			InlineData("field_name_id", "FieldNameId"),
 			InlineData("Field.Name", "Field.Name")]
 		public void ConvertToIdentifier_ShouldPerformAsExpected(string input, string expected)
 		{
