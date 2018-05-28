@@ -24,38 +24,38 @@ public string RenderTemplates()
     foreach (var template in Templates)
     {
         localCode.AppendLine($@"
-        namespace {template.Namespace}.Models
-        {{
-            using System;
-	        using System.CodeDom.Compiler;
-	        using System.Collections.Generic;
-            using Helix.Foundation.ORM.Models;
-            using Glass.Mapper.Sc.Configuration.Attributes;
-            using Glass.Mapper.Sc.Fields;
-            using global::Sitecore.Data;
+namespace {template.Namespace}.Models
+{{
+    using System;
+    using System.CodeDom.Compiler;
+    using System.Collections.Generic;
+    using Helix.Foundation.ORM.Models;
+    using Glass.Mapper.Sc.Configuration.Attributes;
+    using Glass.Mapper.Sc.Fields;
+    using global::Sitecore.Data;
 
-	        /// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
-	        ///[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
-            [SitecoreType(TemplateId = {template.Namespace}.Constants.{template.CodeName}.TemplateIdString)]
-	        public partial interface I{template.CodeName} : {GetBaseInterfaces(template)}
-	        {{
-		        {RenderInterfaceFields(template)}
-	        }}
+    /// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
+    ///[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
+    [SitecoreType(TemplateId = {template.Namespace}.Constants.{template.CodeName}.TemplateIdString)]
+    public partial interface I{template.CodeName} : {GetBaseInterfaces(template)}
+    {{
+        {RenderInterfaceFields(template)}
+    }}
 
-        }}
+}}
 
-        namespace {template.Namespace}.Constants
-        {{
-            using global::Sitecore.Data;
+namespace {template.Namespace}.Constants
+{{
+    using global::Sitecore.Data;
 
-            public struct {template.CodeName}
-            {{
-                public const string TemplateIdString = ""{template.Id}"";
-                public static readonly ID TemplateId = new ID(TemplateIdString);
+    public struct {template.CodeName}
+    {{
+        public const string TemplateIdString = ""{template.Id}"";
+        public static readonly ID TemplateId = new ID(TemplateIdString);
 
-                { RenderConstantFields(template) }
-            }}
-        }}");
+        { RenderConstantFields(template) }
+    }}
+}}");
     }
 
     return localCode.ToString();
@@ -67,7 +67,7 @@ public string GetBaseInterfaces(TemplateCodeGenerationMetadata template)
 
     foreach (var baseTemplate in template.BaseTemplates)
     {
-        bases.Add($"{baseTemplate.Namespace}.I{baseTemplate.CodeName}");
+        bases.Add($"global::{baseTemplate.Namespace}.I{baseTemplate.CodeName}");
     }
 
     if (bases.Count == 0)
@@ -86,9 +86,9 @@ public string RenderInterfaceFields(TemplateCodeGenerationMetadata template)
     foreach (var field in template.OwnFields)
     {
         localCode.AppendLine($@"
-		        /// <summary>{field.HelpText}</summary>
-                [SitecoreField(FieldName = {template.Namespace}.Constants.{template.CodeName}.Fields.{field.CodeName}_FieldName)]
-		        {GetFieldType(field)} {field.CodeName} {{ get; }}");
+        /// <summary>{field.HelpText}</summary>
+        [SitecoreField(FieldName = {template.Namespace}.Constants.{template.CodeName}.Fields.{field.CodeName}_FieldName)]
+        {GetFieldType(field)} {field.CodeName} {{ get; }}");
     }
 
     return localCode.ToString();
@@ -167,18 +167,18 @@ public string RenderConstantFields(TemplateCodeGenerationMetadata template)
     var localCode = new System.Text.StringBuilder();
 
     localCode.Append($@"
-			    public struct Fields
-			    {{");
+        public struct Fields
+        {{");
 
     foreach (var field in template.OwnFields)
     {
         localCode.AppendLine($@"
-				    public static readonly ID {field.CodeName} = new ID(""{field.Id}"");
-				    public const string {field.CodeName}_FieldName = ""{field.Name}"";");
+        public static readonly ID {field.CodeName} = new ID(""{field.Id}"");
+        public const string {field.CodeName}_FieldName = ""{field.Name}"";");
     }
 
     localCode.Append(@"
-			    }");
+        }");
 
     return localCode.ToString();
 }
