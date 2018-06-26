@@ -48,4 +48,4 @@ $releaseRoot = "$PSScriptRoot\..\src\Leprechaun.Console\bin\Release"
 Remove-Item $releaseRoot\*.xml
 Remove-Item $releaseRoot\*.pdb
 
-#& "$PSScriptRoot\..\Tools\7za.exe" a $releaseZipName "$releaseRoot\*" -mx9
+& "$PSScriptRoot\..\Tools\7za.exe" a $releaseZipName "$releaseRoot\*" -mx9

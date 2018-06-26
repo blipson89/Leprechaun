@@ -51,7 +51,7 @@ Open up `Leprechaun.config` and update settings where applicable. Pay close atte
 2. `<configuration name="Sample.Base">`
     * Recommend changing this to `[SolutionName].Base`
 3. `<codeGenerator scripts="..." outputFile="...">`
-    * `scripts` are the CSX templates that will be used. Currently, Synthesis and Habitat (`Constants.csx`) examples are provided.
+    * `scripts` are the CSX templates that will be used. Currently, Synthesis, GlassMapper and Habitat examples are provided.
     * `outputFile` - I recommend `$(configDirectory)\$(layer)\$(module)\code\Templates.cs` for Habitat
 4. `<dataStore physicalRootPath="...">`
     * folder where Rainbow YAML files are.
@@ -86,6 +86,15 @@ There are a few ways possible you can integrate Leprechaun.
   </PropertyGroup>
 ```
 2. You can integrate it into your build scripts - example: you can wrap it in a gulp task
+```
+gulp.task('_Code-Generation', function (cb) {
+    exec('.\\lib\\tools\\Leprechaun\\Leprechaun.console.exe /c .\\src\\Leprechaun.config', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+})
+```
 3. You can create a project target
 ```
 <Target Name="Leprechaun">  

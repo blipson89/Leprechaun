@@ -7,7 +7,7 @@
     <owners>Ben Lipson</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/blipson89/Leprechaun</projectUrl>
-    <iconUrl>http://kamsar.net/nuget/rainbow/logo.png</iconUrl>
+    <iconUrl>http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides code generation to Leprechaun using C# scripts, executed with Roslyn.</description>
     <tags>sitecore codegen leprechaun</tags>

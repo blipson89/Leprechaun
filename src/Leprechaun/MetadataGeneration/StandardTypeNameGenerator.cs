@@ -66,7 +66,7 @@ namespace Leprechaun.MetadataGeneration
 		public virtual string ConvertToIdentifier(string name)
 		{
 			// Desnakeify case if it exists (e.g. foo_bar -> "foo bar")
-			name = name.Replace("_", " ");
+			name = Regex.Replace(name, @"(\w)_(\w)", "$1 $2");
 
 			// Uppercase any non-capitalized words (e.g. 'lord flowers' -> 'Lord Flowers')
 			// this makes identifiers Pascal Case as .NET expects

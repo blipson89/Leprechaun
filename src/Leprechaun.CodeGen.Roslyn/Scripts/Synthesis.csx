@@ -94,7 +94,7 @@ public string GetBaseInterfaces(TemplateCodeGenerationMetadata template)
 
 	foreach(var baseTemplate in template.BaseTemplates) 
 	{
-		bases.Add($"{baseTemplate.Namespace}.I{baseTemplate.CodeName}Item");
+		bases.Add($"global::{baseTemplate.Namespace}.I{baseTemplate.CodeName}Item");
 	}
 
 	if (bases.Count == 0)
