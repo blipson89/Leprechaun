@@ -136,10 +136,9 @@ namespace Leprechaun.Console
 		private static LeprechaunConfigurationBuilder BuildConfiguration(ConsoleArgs args)
 		{
 			var config = new XmlDocument();
-			if (string.IsNullOrEmpty(args.ConfigFilePath))
-			{
-				args.ConfigFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Leprechaun.config");
-			}
+
+			ResolveConfigPath(args);
+
 			config.Load(args.ConfigFilePath);
 
 			var replacer = new ChainedVariablesReplacer(
@@ -153,6 +152,21 @@ namespace Leprechaun.Console
 			RainbowSettings.Current = (RainbowSettings)configObject.Shared.Resolve<ILeprechaunRainbowSettings>();
 
 			return configObject;
+		}
+
+		private static void ResolveConfigPath(ConsoleArgs args)
+		{
+			if (string.IsNullOrEmpty(args.ConfigFilePath))
+			{
+				args.ConfigFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Leprechaun.config");
+			}
+			else
+			{
+				if (!Path.IsPathRooted(args.ConfigFilePath))
+				{
+					args.ConfigFilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, args.ConfigFilePath));
+				}
+			}
 		}
 	}
 }
