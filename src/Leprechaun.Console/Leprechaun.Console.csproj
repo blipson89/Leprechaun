@@ -37,7 +37,7 @@
       <HintPath>..\..\packages\CommandLineArgumentsParser.3.0.9\lib\net45\CommandLineArgumentsParser.dll</HintPath>
     </Reference>
     <Reference Include="Configy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Configy.1.0.0-pre03\lib\net45\Configy.dll</HintPath>
+      <HintPath>..\..\packages\Configy.1.0.0\lib\net45\Configy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>

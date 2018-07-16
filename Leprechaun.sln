@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Console", "src\L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.CodeGen.Roslyn", "src\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj", "{36AA27E4-033F-40CF-9318-131791352CE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Console.Tests", "src\Leprechaun.Console.Tests\Leprechaun.Console.Tests.csproj", "{B6175FFB-5DF5-4CD4-8988-E439F13DD823}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +35,15 @@ Global
 		{36AA27E4-033F-40CF-9318-131791352CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36AA27E4-033F-40CF-9318-131791352CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36AA27E4-033F-40CF-9318-131791352CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A806E6A-5823-47D6-A014-1628A99432E0}
 	EndGlobalSection
 EndGlobal

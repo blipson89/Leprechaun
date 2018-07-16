@@ -4,7 +4,7 @@ namespace Leprechaun.Console
 {
 	class ConsoleArgs
 	{
-		[ValueArgument(typeof(string), 'c', "config", Description = "Path to the config file to use. Defaults to Leprechaun.config.", DefaultValue = "Leprechaun.config")]
+		[ValueArgument(typeof(string), 'c', "config", Description = "Path to the config file to use. Defaults to Leprechaun.config.")]
 		public string ConfigFilePath { get; set; }
 
 		[SwitchArgument('w', "watch", false, Description = "If set, source files are watched for changes and automatically rebuilt.")]
