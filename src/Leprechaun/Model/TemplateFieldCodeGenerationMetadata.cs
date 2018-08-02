@@ -22,7 +22,7 @@ namespace Leprechaun.Model
 
 		public virtual string Path => Field.Path;
 
-		public virtual string HelpText => string.IsNullOrWhiteSpace(Field.HelpText) ? $"Represents the {DisplayName} field ({Id})." : Field.HelpText;
+		public virtual string HelpText => GetHelpText();
 
 		public virtual string Type => Field.Type;
 
@@ -36,5 +36,15 @@ namespace Leprechaun.Model
 		/// A unique name for this template field, usable as a C# identifier (e.g. property name)
 		/// </summary>
 		public virtual string CodeName { get; }
+
+		protected virtual string GetHelpText()
+		{
+			if(!string.IsNullOrWhiteSpace(Field.HelpText))
+				return Field.HelpText;
+
+			string fieldName = string.IsNullOrEmpty(DisplayName) ? Name : DisplayName;
+
+			return $"Represents the {fieldName} field ({Id}).";
+		}
 	}
 }
