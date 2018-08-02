@@ -58,6 +58,7 @@ Open up `Leprechaun.config` and update settings where applicable. Pay close atte
     * For **Helix** solutions: `$(configDirectory)\$(layer)\$(module)\serialization` *should* work
 5. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
     * Replace `Sample` with the appropriate namespace
+    * Also, check the `<include>` element inside the templatePredicate to ensure the path is correct for your solution (see [Troubleshooting](#Troubleshooting))
 
 
 Now that the base configuration is setup, it's time to install the module-level configs. Create a config file in each module that contains a configuration name in the format `Layer.Module` and have it extend the base configuration (Step 2 from the Initial Configuration section).
@@ -107,3 +108,13 @@ gulp.task('_Code-Generation', function (cb) {
 ### Watch
 
 Leprechaun has the ability to watch the yaml files and automatically regenerate models when there's a change. Run Leprechaun with the `/w` switch to turn this on
+
+## Troubleshooting
+
+### The model file is generated, but there are no templates in it!
+The template predicate is probably not set correctly for your solution. In `Leprechaun.config`, take a peek at the `<include>` in this section:
+```
+<templatePredicate type="Leprechaun.Filters.StandardTemplatePredicate, Leprechaun" rootNamespace="$(layer).$(module)" singleInstance="true">
+	<include name="Templates" path="/sitecore/templates/$(layer)/$(module)" />
+</templatePredicate>
+```
