@@ -28,7 +28,7 @@ namespace Leprechaun.Tests.TemplateReaders
 		[Theory, DataStoreTemplateReaderConventions]
 		public void ParseTemplate_WhenTemplateIsATemplate_ReturnTemplate(TestableDataSourceTemplateReader sut, IItemData templateItem)
 		{
-			sut.Public_ParseTemplate(templateItem).Id.ShouldBeEquivalentTo(templateItem.Id);
+			sut.Public_ParseTemplate(templateItem).Id.Should().Be(templateItem.Id);
 		}
 
 		#endregion

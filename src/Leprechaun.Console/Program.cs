@@ -13,7 +13,7 @@ using Rainbow.Settings;
 
 namespace Leprechaun.Console
 {
-	class Program
+	public class Program
 	{
 		static void Main(string[] args)
 		{
@@ -136,6 +136,9 @@ namespace Leprechaun.Console
 		private static LeprechaunConfigurationBuilder BuildConfiguration(ConsoleArgs args)
 		{
 			var config = new XmlDocument();
+
+			args.ConfigFilePath = EnsureAbsoluteConfigPath(args.ConfigFilePath);
+
 			config.Load(args.ConfigFilePath);
 
 			var replacer = new ChainedVariablesReplacer(
@@ -149,6 +152,20 @@ namespace Leprechaun.Console
 			RainbowSettings.Current = (RainbowSettings)configObject.Shared.Resolve<ILeprechaunRainbowSettings>();
 
 			return configObject;
+		}
+
+		internal static string EnsureAbsoluteConfigPath(string path)
+		{
+			// if the config file isn't specified, return the app-relative Leprechaun.config file
+			if (string.IsNullOrEmpty(path))
+				return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Leprechaun.config");
+
+			// If it's a relative path, merge the application root with the provided config file path
+			if (!Path.IsPathRooted(path))
+				return Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path));
+
+			// If it's a rooted path, return it
+			return path;
 		}
 	}
 }
