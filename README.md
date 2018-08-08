@@ -29,7 +29,9 @@ Ok, you're convinced. Now how do you set it up?
 ### Downloading Leprechaun
 There are two ways to download Leprechaun:
 1. The best way to download it is via the [Leprechaun-VERSION.zip](https://github.com/blipson89/Leprechaun/releases) file under Assets from the latest release. 
-2. Alternatively, it is available on NuGet [with dependencies](https://www.nuget.org/packages/Leprechaun.Console.Runner) (for running in a build; you will need to add the appropriate [script file(s)](https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts) to source control) or [without dependencies](https://www.nuget.org/packages/Leprechaun.Console).
+2. Alternatively, it is available on [NuGet](https://www.nuget.org/packages/Leprechaun.Console.Runner)
+    * When using this approach, ensure the appropriate [script file(s)](https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts) are added to source control
+
 
 ---
 
