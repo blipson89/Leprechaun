@@ -14,8 +14,11 @@ namespace Leprechaun.Validation
 
 		public StandardArchitectureValidator(XmlNode configNode, IArchitectureValidatorLogger logger)
 		{
-			_allowNovelFieldNames = configNode.Attributes["allowNovelFieldNames"]?.Value == "true";
-			_allowFieldNamesIdenticalToTemplateName = configNode.Attributes["allowFieldNamesIdenticalToTemplateName"]?.Value == "true";
+			if (configNode.Attributes != null)
+			{
+				_allowNovelFieldNames = configNode.Attributes["allowNovelFieldNames"]?.Value == "true";
+				_allowFieldNamesIdenticalToTemplateName = configNode.Attributes["allowFieldNamesIdenticalToTemplateName"]?.Value == "true";
+			}
 			_logger = logger;
 		}
 
@@ -26,6 +29,7 @@ namespace Leprechaun.Validation
 			// ReSharper disable once ReplaceWithSingleAssignment.False
 			bool errors = false;
 
+			// ReSharper disable once ConvertIfToOrExpression
 			if (!ValidateTemplateNamesAreNovel(allTemplates))
 			{
 				errors = true;
@@ -86,7 +90,7 @@ namespace Leprechaun.Validation
 		{
 			// check for a field named the same as its template; this is bad because you cannot have a property named the same as its enclosing class
 			var fieldsWithSameNameAsEnclosingTemplate = template.OwnFields
-				.Where(field => field.CodeName.Equals(template.CodeName))
+				.Where(field => FieldCodeNameEqualsTemplateCodeName(field, template))
 				.ToArray();
 
 			if (fieldsWithSameNameAsEnclosingTemplate.Length == 0) return true;
@@ -99,11 +103,17 @@ namespace Leprechaun.Validation
 			return false;
 		}
 
+		protected virtual bool FieldCodeNameEqualsTemplateCodeName(TemplateFieldCodeGenerationMetadata field, TemplateCodeGenerationMetadata template)
+		{
+			return field.CodeName.Equals(template.CodeName);
+		}
+
 		protected virtual bool ValidateTemplateFieldNamesAreNovel(TemplateCodeGenerationMetadata template, IReadOnlyDictionary<Guid, TemplateCodeGenerationMetadata> allTemplatesIndex)
 		{
 			// look for fields with identical names in the whole current template's inheritance tree
 			var fieldsWithIdenticalNames = GetAllBaseTemplates(template, allTemplatesIndex)
 				.SelectMany(currentTemplate => currentTemplate.OwnFields)
+				.Concat(template.OwnFields)
 				.GroupBy(field => field.CodeName, StringComparer.OrdinalIgnoreCase)
 				.Where(field => field.Count() > 1)
 				.ToArray();

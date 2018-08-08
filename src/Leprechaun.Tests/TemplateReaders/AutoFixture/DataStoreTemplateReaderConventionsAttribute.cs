@@ -1,9 +1,9 @@
 using System.Reflection;
+using AutoFixture;
+using AutoFixture.AutoNSubstitute;
+using AutoFixture.Kernel;
+using AutoFixture.Xunit2;
 using NSubstitute;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoNSubstitute;
-using Ploeh.AutoFixture.Kernel;
-using Ploeh.AutoFixture.Xunit2;
 using Rainbow.Model;
 using Sitecore;
 
@@ -11,10 +11,15 @@ namespace Leprechaun.Tests.TemplateReaders.AutoFixture
 {
 	public class DataStoreTemplateReaderConventionsAttribute : AutoDataAttribute
 	{
-		public DataStoreTemplateReaderConventionsAttribute() : base(
-			new Fixture().Customize(new AutoConfiguredNSubstituteCustomization()))
+		private static IFixture MakeFixture()
 		{
-			Fixture.Customizations.Add(new TemplateItemCustomization());
+			var fixture = new Fixture();
+			fixture.Customize(new AutoNSubstituteCustomization { ConfigureMembers = true });
+			fixture.Customizations.Add(new TemplateItemCustomization());
+			return fixture;
+		}
+		public DataStoreTemplateReaderConventionsAttribute() : base(MakeFixture)
+		{
 		}
 		public class TemplateItemCustomization : ISpecimenBuilder
 		{

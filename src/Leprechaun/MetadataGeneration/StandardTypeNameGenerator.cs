@@ -9,10 +9,12 @@ namespace Leprechaun.MetadataGeneration
 	public class StandardTypeNameGenerator : ITypeNameGenerator
 	{
 		private readonly string _namespaceRoot;
+		private readonly bool _keepLeadingUnderscores;
 
-		public StandardTypeNameGenerator(string namespaceRootPath)
+		public StandardTypeNameGenerator(string namespaceRootPath, bool keepLeadingUnderscores)
 		{
 			if(namespaceRootPath == "/") throw new NotSupportedException("Namespace root cannot be /, please use a sub-path e.g. /sitecore/templates");
+			_keepLeadingUnderscores = keepLeadingUnderscores;
 
 			_namespaceRoot = namespaceRootPath;
 		}
@@ -48,6 +50,10 @@ namespace Leprechaun.MetadataGeneration
 			if (name.Contains("."))
 			{
 				string typeName = name.Substring(name.LastIndexOf('.') + 1);
+
+				if (!_keepLeadingUnderscores)
+					typeName = typeName.TrimStart('_');
+
 				string namespaceName = ConvertToIdentifier(name.Substring(0, name.LastIndexOf('.')));
 
 				name = ConvertToIdentifier(string.Concat(namespaceName, ".", typeName));
@@ -66,7 +72,10 @@ namespace Leprechaun.MetadataGeneration
 		public virtual string ConvertToIdentifier(string name)
 		{
 			// Desnakeify case if it exists (e.g. foo_bar -> "foo bar")
-			name = name.Replace("_", " ");
+			name = Regex.Replace(name, @"(\w)_(\w)", "$1 $2");
+
+			if (!_keepLeadingUnderscores)
+				name = name.TrimStart('_');
 
 			// Uppercase any non-capitalized words (e.g. 'lord flowers' -> 'Lord Flowers')
 			// this makes identifiers Pascal Case as .NET expects

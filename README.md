@@ -48,28 +48,22 @@ Open up `Leprechaun.config` and update settings where applicable. Pay close atte
 1. `<configurations import=".....">`
     * This line is going to tell Leprechaun where to look for additional configurations, typically for modules. Wildcards accepted.
     * For **Helix** solutions: `.\*\*\code\CodeGen.config` *should* work.
-	* For **Helix** solutions using NuGet: `".\..\..\..\*\*\code\CodeGen.config"` *should* work (since this is based on the exe location and you must escape the solution's packages folder and then traverse into each layer and module).
+	    * For **Helix** solutions using NuGet: `".\..\..\..\*\*\code\CodeGen.config"` *should* work. This is assuming you leave the .exe in the packages folder.
 2. `<configuration name="Sample.Base">`
     * Recommend changing this to `[SolutionName].Base`
 3. `<codeGenerator scripts="..." outputFile="...">`
-    * `scripts` are the CSX templates that will be used. Currently, Synthesis and Habitat (`Constants.csx`) examples are provided.
+    * `scripts` are the CSX templates that will be used. Currently, Synthesis, GlassMapper and Habitat examples are provided.
     * `outputFile` - I recommend `$(configDirectory)\$(layer)\$(module)\code\Templates.cs` for Habitat
-	* For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\code\Models\Synthesis.Model.cs` *should* work (since from 1.0.1-pre02 on this is based on the exe location and you must escape the solution's packages folder and then traverse into each layer and module). 
+	    * For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\code\Models\Synthesis.Model.cs` *should* work. This is assuming you leave the .exe in the packages folder.
 4. `<dataStore physicalRootPath="...">`
     * folder where Rainbow YAML files are.
     * For **Helix** solutions: `$(configDirectory)\$(layer)\$(module)\serialization` *should* work
-	* For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\serialization`
+	    * For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\serialization`
 5. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
     * Replace `Sample` with the appropriate namespace
-6. `<rainbowSettings type="Leprechaun.Console.LeprechaunRainbowSettings, Leprechaun.Console"
-						 serializationFolderPathMaxLength="..." 
-						 maxItemNameLengthBeforeTruncation="..."...`
-	 * If you altered the path lengths in your Unicorn configuration (which is quite likely), you will need to adjust them here as the comment mentions	
-7. `<templatePredicate type="Leprechaun.Filters.StandardTemplatePredicate, Leprechaun" rootNamespace="$(layer).$(module)" singleInstance="true">
-			<include name="..." path="/sitecore/templates/$(layer)/$(module)" />
-		</templatePredicate>`
-	* Make sure that the name matches what you've configured in Unicorn for your data templates.  For instance, while not standard, you may have changed this to something like `$(layer).$(module).Templates` so that your folder names match the layer and module (similar to adding the layer/module path to config files).
-
+    * Make sure that the `<include>` matches the path your data templates.(see [Troubleshooting](#Troubleshooting))
+6. `<rainbowSettings type="Leprechaun.Console.LeprechaunRainbowSettings, Leprechaun.Console" ... />`
+    * If you altered the path lengths in your Unicorn configuration, you will need to adjust them here as the comment mentions	
 
 Now that the base configuration is setup, it's time to install the module-level configs. Create a config file in each module that contains a configuration name in the format `Layer.Module` and have it extend the base configuration (Step 2 from the Initial Configuration section).
 
@@ -90,23 +84,38 @@ Inside this config block, you *can* override any configurations from the main co
 ### Integration
 There are a few ways possible you can integrate Leprechaun.
 
-1. You can integrate it directly into your build as a pre-build event. Example:
+**Example 1: Pre-Build Event in MSBuild**
 ```
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)\lib\tools\Leprechaun\Leprechaun.console.exe /c $(SolutionDir)\src\Leprechaun.config</PreBuildEvent>
   </PropertyGroup>
 ```
-2. You can integrate it into your build scripts.
-	* Gulp example (for use with NuGet package 1.0.1-pre02+; adapted from @sitecoremaster's [blog post](http://sitecoremaster.com/programming/how-to-use-leprechaun-to-auto-generate-glass-mapper-models-when-using-unicorn/)):
-		```// Run Leprechaun to Code Generate Models
-		gulp.task('07-Code-Generate-Models', function(x) {
-		  exec('.\\packages\\Leprechaun.Console.Runner.1.0.1-pre02\\Tools\\Build\\Leprechaun\\Leprechaun.console.exe /c ..\\..\\..\\..\\..\\src\\Foundation\\CodeGen\\code\\Leprechaun.config', function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			x(err);
-		  });
-		});
-3. You can create a project target
+
+**Example 2: Create a gulp task from a custom install location**
+```
+gulp.task('_Code-Generation', function (cb) {
+    exec('.\\lib\\tools\\Leprechaun\\Leprechaun.console.exe /c .\\src\\Leprechaun.config', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+})
+```
+
+**Example 3: Create a gulp task from the default NuGet location**
+
+```
+// Run Leprechaun to Code Generate Models
+gulp.task('07-Code-Generate-Models', function(cb) {
+    exec('.\\packages\\Leprechaun.Console.Runner.1.0.1\\Tools\\Build\\Leprechaun\\Leprechaun.console.exe /c ..\\..\\..\\..\\..\\src\\Foundation\\CodeGen\\code\\Leprechaun.config', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+```
+
+**Example 4: You can create a project target**
 ```
 <Target Name="Leprechaun">  
     <Exec Command="$(SolutionDir)\lib\tools\Leprechaun\Leprechaun.console.exe /c $(SolutionDir)\src\Leprechaun.config"/>  
@@ -123,9 +132,22 @@ Leprechaun has the ability to watch the yaml files and automatically regenerate 
 
 ### Migration from Synthesis Code Gen
 
-If you are migrating from Synthesis Code Gen and models in source control and Synthesis AutoRegenerate on non-local environments to code generation in CI builds (which are more maintainable from a Continuous Delivery perspective), you may want to note the following:
+If you are migrating from Synthesis Code Gen, have your models in source control, and Synthesis AutoRegenerate on non-local environments, you may want to note the following:
 
 1. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
 	* You may want to use `$(layer).$(module).Models` if you used the [default namespace](https://github.com/blipson89/Synthesis/blob/master/Source/Synthesis/Standard%20Config%20Files/Synthesis.config#L29).
-2. You will no longer need your models in source control, so you may want to remove those from being tracked in your source control and block them from being added (using .gitignore or similar functionality)
-3. You will probably want to disable Synthesis AutoRegenerate in non-local environments (or all if you switch to using the Watch switch on your local) by removing it or transforming its event nodes out of the config in those environments.
+2. You will no longer need your models in source control. You should remove them from source control and add them to your ignores (e.g. `.gitignore` or similar functionality)
+3. You should disable Synthesis AutoRegenerate in non-local environments by removing it or transforming its event nodes out of the config in those environments.
+    * Recommendation: disable Synthesis AutoRegenerate on local environments as well, and use Leprechaun's watch instead
+
+---
+
+## Troubleshooting
+
+### The model file is generated, but there are no templates in it!
+The template predicate is probably not set correctly for your solution. In `Leprechaun.config`, take a peek at the `<include>` in this section:
+```
+<templatePredicate type="Leprechaun.Filters.StandardTemplatePredicate, Leprechaun" rootNamespace="$(layer).$(module)" singleInstance="true">
+	<include name="Templates" path="/sitecore/templates/$(layer)/$(module)" />
+</templatePredicate>
+```
