@@ -80,7 +80,7 @@ namespace Leprechaun.TemplateReaders
 			{
 				Id = templateItem.Id,
 				BaseTemplateIds = ParseBaseTemplatesAndRejectIgnoredBaseTemplates(GetFieldValue(templateItem, BaseTemplateFieldId, string.Empty)),
-				HelpText = GetFieldValue(templateItem, HelpTextFieldId, string.Empty),
+				HelpText = GetFieldValue(templateItem, HelpTextFieldId, string.Empty).Replace("\n","\\\""),
 				Name = templateItem.Name,
 				OwnFields = ParseTemplateFields(templateItem),
 				Path = templateItem.Path

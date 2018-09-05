@@ -113,7 +113,7 @@ public string RenderInterfaceFields(TemplateCodeGenerationMetadata template)
 	foreach (var field in template.OwnFields)
 	{
 		localCode.AppendLine($@"
-		/// <summary>{field.HelpText}</summary>
+		/// <summary>{field.HelpText.Replace("\n", "\n		/// ")}</summary>
 		[IndexFieldAttribute(""{GetSearchFieldName(field)}"")]
 		I{GetFieldType(field)} {field.CodeName} {{ get; }}");
 	}
@@ -129,7 +129,7 @@ public string RenderFields(TemplateCodeGenerationMetadata template)
 	{
 		localCode.AppendLine($@"
 		private {GetFieldType(field)} {GetBackingFieldName(field)};
-		/// <summary>{field.HelpText}</summary>
+		/// <summary>{field.HelpText.Replace("\n", "\n		/// ")}</summary>
 		[IndexFieldAttribute(""{GetSearchFieldName(field)}"")]
 		public I{GetFieldType(field)} {field.CodeName} => {GetBackingFieldName(field)} ?? ({GetBackingFieldName(field)} = new {GetFieldType(field)}(new LazyField(() => InnerItem.Fields[""{{{field.Id}}}""], ""{template.Path}"", ""{field.Name}""), GetSearchFieldValue(""{GetSearchFieldName(field)}"")));
 		");
