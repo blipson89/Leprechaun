@@ -14,8 +14,8 @@ namespace {template.Namespace}
 	using global::Sitecore.ContentSearch;
 	using global::Sitecore.Data;
 	using global::Sitecore.Data.Items;
-	using System.CodeDom.Compiler;
-	using System.Collections.Generic;
+	using global::System.CodeDom.Compiler;
+	using global::System.Collections.Generic;
 	using Synthesis;
 	using Synthesis.FieldTypes;
 	using Synthesis.FieldTypes.Interfaces;
