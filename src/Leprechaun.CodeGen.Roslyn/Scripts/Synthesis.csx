@@ -160,7 +160,7 @@ public string GetFieldType(TemplateFieldCodeGenerationMetadata field)
 		case "Droplist":
 		case "Grouped Droplist": return "TextField";
 		case "Multilist":
-        case "Multilist with Search":
+		case "Multilist with Search":
 		case "Treelist":
 		case "TreelistEx": return "ItemReferenceListField";
 		case "Name Value List": return "DictionaryField";
