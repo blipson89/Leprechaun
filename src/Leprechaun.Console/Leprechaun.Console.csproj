@@ -129,6 +129,7 @@
     <Compile Include="Variables\ConfigPathVariableReplacer.cs" />
     <Compile Include="Variables\ConfigurationNameVariablesReplacer.cs" />
     <Compile Include="Variables\HelixConventionVariablesReplacer.cs" />
+    <Compile Include="Variables\MultiTenantHelixConventionVariablesReplacer.cs" />
     <Compile Include="Watcher.cs" />
   </ItemGroup>
   <ItemGroup>

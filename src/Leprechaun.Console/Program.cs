@@ -144,6 +144,7 @@ namespace Leprechaun.Console
 			var replacer = new ChainedVariablesReplacer(
 				new ConfigurationNameVariablesReplacer(),
 				new HelixConventionVariablesReplacer(),
+				new MultiTenantHelixConventionVariablesReplacer(),
 				new ConfigPathVariableReplacer(Path.GetDirectoryName(args.ConfigFilePath)));
 
 			var configObject = new LeprechaunConfigurationBuilder(replacer, config.DocumentElement["configurations"], config.DocumentElement["defaults"], config.DocumentElement["shared"], args.ConfigFilePath, new ConfigurationImportPathResolver(new ConsoleLogger()));
