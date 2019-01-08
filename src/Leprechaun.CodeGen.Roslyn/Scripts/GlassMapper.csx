@@ -1,4 +1,4 @@
-﻿// Generates Synthesis models
+﻿// Generates GlassMapper models
 
 Log.Debug($"Emitting GlassMapper templates for {ConfigurationName}...");
 

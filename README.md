@@ -87,14 +87,14 @@ Inside this config block, you *can* override any configurations from the main co
 There are a few ways possible you can integrate Leprechaun.
 
 **Example 1: Pre-Build Event in MSBuild**
-```
+```xml
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)\lib\tools\Leprechaun\Leprechaun.console.exe /c $(SolutionDir)\src\Leprechaun.config</PreBuildEvent>
   </PropertyGroup>
 ```
 
 **Example 2: Create a gulp task from a custom install location**
-```
+```js
 gulp.task('_Code-Generation', function (cb) {
     exec('.\\lib\\tools\\Leprechaun\\Leprechaun.console.exe /c .\\src\\Leprechaun.config', function (err, stdout, stderr) {
         console.log(stdout);
@@ -106,7 +106,7 @@ gulp.task('_Code-Generation', function (cb) {
 
 **Example 3: Create a gulp task from the default NuGet location**
 
-```
+```js
 // Run Leprechaun to Code Generate Models
 gulp.task('07-Code-Generate-Models', function(cb) {
     exec('.\\packages\\Leprechaun.Console.Runner.1.0.1\\Tools\\Build\\Leprechaun\\Leprechaun.console.exe /c ..\\..\\..\\..\\..\\src\\Foundation\\CodeGen\\code\\Leprechaun.config', function (err, stdout, stderr) {
@@ -118,7 +118,7 @@ gulp.task('07-Code-Generate-Models', function(cb) {
 ```
 
 **Example 4: You can create a project target**
-```
+```xml
 <Target Name="Leprechaun">  
     <Exec Command="$(SolutionDir)\lib\tools\Leprechaun\Leprechaun.console.exe /c $(SolutionDir)\src\Leprechaun.config"/>  
 </Target>  
@@ -148,7 +148,7 @@ If you are migrating from Synthesis Code Gen, have your models in source control
 
 ### The model file is generated, but there are no templates in it!
 The template predicate is probably not set correctly for your solution. In `Leprechaun.config`, take a peek at the `<include>` in this section:
-```
+```xml
 <templatePredicate type="Leprechaun.Filters.StandardTemplatePredicate, Leprechaun" rootNamespace="$(layer).$(module)" singleInstance="true">
 	<include name="Templates" path="/sitecore/templates/$(layer)/$(module)" />
 </templatePredicate>
