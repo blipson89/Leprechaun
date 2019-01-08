@@ -14,7 +14,7 @@ namespace Leprechaun.Tests.Filters
 		[Fact]
 		public void ctor_ThrowsArgumentNullException_WhenNodeIsNull()
 		{
-			Assert.Throws<ArgumentNullException>(() => new StandardTemplatePredicate(null, null, null));
+			Xunit.Assert.Throws<ArgumentNullException>(() => new StandardTemplatePredicate(null, null, null));
 		}
 
 		//

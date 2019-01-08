@@ -3,9 +3,9 @@ using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
+using Leprechaun.TemplateReaders;
 using NSubstitute;
 using Rainbow.Model;
-using Sitecore;
 
 namespace Leprechaun.Tests.TemplateReaders.AutoFixture
 {
@@ -29,7 +29,7 @@ namespace Leprechaun.Tests.TemplateReaders.AutoFixture
 				if (pi != null && pi.Name == "templateItem")
 				{
 					var itemData = context.Resolve(typeof(IItemData)) as IItemData;
-					itemData.TemplateId.Returns(TemplateIDs.Template.Guid);
+					itemData.TemplateId.Returns(DataStoreTemplateReader.TemplateTemplateId);
 					return itemData;
 				}
 

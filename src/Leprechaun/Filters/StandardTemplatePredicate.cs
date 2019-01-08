@@ -6,8 +6,6 @@ using Configy.Containers;
 using Leprechaun.Filters.Exclusions;
 using Leprechaun.Model;
 using Rainbow.Storage;
-using Sitecore.Diagnostics;
-using Sitecore.StringExtensions;
 
 namespace Leprechaun.Filters
 {
@@ -102,7 +100,7 @@ namespace Leprechaun.Filters
 					continue;
 				}
 
-				throw new InvalidOperationException("Multiple predicate include nodes had the same name '{0}'. This is not allowed. Note that this can occur if you did not specify the name attribute and two include entries end in an item with the same name. Use the name attribute on the include tag to give a unique name.".FormatWith(preset.Name));
+				throw new InvalidOperationException($"Multiple predicate include nodes had the same name '{preset.Name}'. This is not allowed. Note that this can occur if you did not specify the name attribute and two include entries end in an item with the same name. Use the name attribute on the include tag to give a unique name.");
 			}
 
 			return presets;
@@ -164,7 +162,7 @@ namespace Leprechaun.Filters
 			// ReSharper disable once PossibleNullReferenceException
 			var attribute = node.Attributes[attributeName];
 
-			if (attribute == null) throw new InvalidOperationException("Missing expected '{0}' attribute on '{1}' node while processing predicate: {2}".FormatWith(attributeName, node.Name, node.OuterXml));
+			if (attribute == null) throw new InvalidOperationException($"Missing expected '{attributeName}' attribute on '{node.Name}' node while processing predicate: {node.OuterXml}");
 
 			return attribute.Value;
 		}
