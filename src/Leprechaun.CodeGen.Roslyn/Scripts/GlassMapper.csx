@@ -24,7 +24,7 @@ public string RenderTemplates()
     foreach (var template in Templates)
     {
         localCode.AppendLine($@"
-namespace {template.Namespace}.Models
+namespace {template.Namespace}
 {{
     using System;
     using System.CodeDom.Compiler;
