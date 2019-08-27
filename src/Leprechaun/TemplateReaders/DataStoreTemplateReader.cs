@@ -111,7 +111,8 @@ namespace Leprechaun.TemplateReaders
 						Section = section.Name,
 						SortOrder = GetFieldValueAsInt(field, SortOrderFieldId, 100),
 						Source = GetFieldValue(field, SourceFieldId, string.Empty),
-						Type = GetFieldValue(field, FieldTypeFieldId, string.Empty)
+						Type = GetFieldValue(field, FieldTypeFieldId, string.Empty),
+						AllFields = GetAllFields(field)
 					});
 				}
 			}
@@ -180,5 +181,42 @@ namespace Leprechaun.TemplateReaders
 		}
 
 		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => new HashSet<Guid> { TemplateIDs.StandardTemplate.Guid, TemplateIDs.Folder.Guid };
+
+        protected virtual Dictionary<Guid, string> GetAllFields(IItemData item)
+        {
+			var allFields = new Dictionary<Guid, string>();
+
+            foreach (var field in item.SharedFields)
+            {
+                if (!allFields.ContainsKey(field.FieldId))
+                {
+                    allFields.Add(field.FieldId, field.Value);
+                }
+            }
+
+            foreach (var language in item.UnversionedFields)
+            {
+                foreach (var field in language.Fields)
+                {
+					if (!allFields.ContainsKey(field.FieldId))
+                    {
+                        allFields.Add(field.FieldId, field.Value);
+                    }
+				}
+            }
+
+            foreach (var version in item.Versions)
+            {
+                foreach (var field in version.Fields)
+                {
+					if (!allFields.ContainsKey(field.FieldId))
+                    {
+                        allFields.Add(field.FieldId, field.Value);
+                    }
+				}
+            }
+
+            return allFields;
+        }
 	}
 }

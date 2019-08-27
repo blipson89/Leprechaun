@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Leprechaun.Model
@@ -31,6 +32,8 @@ namespace Leprechaun.Model
 		public virtual string Section => Field.Section;
 
 		public virtual int SortOrder => Field.SortOrder;
+
+        public virtual Dictionary<Guid, string> AllFields => Field.AllFields;
 
 		/// <summary>
 		/// A unique name for this template field, usable as a C# identifier (e.g. property name)
