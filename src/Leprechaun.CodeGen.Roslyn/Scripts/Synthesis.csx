@@ -14,22 +14,25 @@ namespace {template.Namespace}
 	using global::Sitecore.ContentSearch;
 	using global::Sitecore.Data;
 	using global::Sitecore.Data.Items;
-	using System.CodeDom.Compiler;
-	using System.Collections.Generic;
+	using global::System.CodeDom.Compiler;
+	using global::System.Collections.Generic;
 	using Synthesis;
 	using Synthesis.FieldTypes;
 	using Synthesis.FieldTypes.Interfaces;
 	using Synthesis.Initializers;
 	using Synthesis.Synchronization;
+	using System.CodeDom.Compiler;	
 
 	/// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
-	[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
+	[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]	
+	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
 	public interface I{template.CodeName}Item : {GetBaseInterfaces(template)}
 	{{
 		{RenderInterfaceFields(template)}
 	}}
 
 	/// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
+	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
 	public class {template.CodeName} : StandardTemplateItem, I{template.CodeName}Item
 	{{
 		public {template.CodeName}(Item innerItem) : base(innerItem)
@@ -52,6 +55,7 @@ namespace {template.Namespace}
 		{RenderFields(template)}
 	}}
 
+	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
 	public class {template.CodeName}Initializer : ITemplateInitializer
 	{{
 		public ID InitializesTemplateId => new ID(""{{{template.Id}}}"");
@@ -160,6 +164,7 @@ public string GetFieldType(TemplateFieldCodeGenerationMetadata field)
 		case "Droplist":
 		case "Grouped Droplist": return "TextField";
 		case "Multilist":
+		case "Multilist with Search":
 		case "Treelist":
 		case "TreelistEx": return "ItemReferenceListField";
 		case "Name Value List": return "DictionaryField";

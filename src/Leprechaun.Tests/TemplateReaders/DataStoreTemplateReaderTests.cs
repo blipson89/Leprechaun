@@ -16,13 +16,13 @@ namespace Leprechaun.Tests.TemplateReaders
 		[Theory, DataStoreTemplateReaderConventions]
 		public void ParseTemplate_WhenTemplateItemIsNull_ThrowException(TestableDataSourceTemplateReader sut)
 		{
-			Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(null));
+			Xunit.Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(null));
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
 		public void ParseTemplate_WhenTemplateIsNotTemplate_ThrowException(TestableDataSourceTemplateReader sut, IItemData invalidTemplateItem)
 		{
-			Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(invalidTemplateItem));
+			Xunit.Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(invalidTemplateItem));
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
