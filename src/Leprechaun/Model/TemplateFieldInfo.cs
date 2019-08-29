@@ -7,9 +7,8 @@ namespace Leprechaun.Model
 	[DebuggerDisplay("{Path} ({Id})")]
 	public class TemplateFieldInfo
 	{
-        public TemplateFieldInfo()
-        {
-            AllFields = new Dictionary<Guid, string>();
+		public TemplateFieldInfo()
+		{
 		}
 
 		public Guid Id { get; set; }
@@ -30,6 +29,6 @@ namespace Leprechaun.Model
 
 		public int SortOrder { get; set; }
 
-		public Dictionary<Guid, string> AllFields { get; set; }
+		public IDictionary<Guid, string> AllFields { get; set; } = new Dictionary<Guid, string>();
 	}
 }

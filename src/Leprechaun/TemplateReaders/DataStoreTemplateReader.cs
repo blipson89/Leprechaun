@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Leprechaun.Model;
@@ -124,25 +125,19 @@ namespace Leprechaun.TemplateReaders
 
 		protected virtual string GetFieldValue(IItemData item, Guid fieldId, string defaultValue)
 		{
-			foreach (var field in item.SharedFields)
+			foreach (IItemFieldValue field in item.SharedFields)
 			{
 				if (field.FieldId == fieldId) return field.Value;
 			}
 
-			foreach (var language in item.UnversionedFields)
+			foreach (IItemFieldValue field in item.UnversionedFields.SelectMany(uf => uf.Fields))
 			{
-				foreach (var field in language.Fields)
-				{
-					if (field.FieldId == fieldId) return field.Value;
-				}
+				if (field.FieldId == fieldId) return field.Value;
 			}
 
-			foreach (var version in item.Versions)
+			foreach (IItemFieldValue field in item.Versions.SelectMany(v => v.Fields))
 			{
-				foreach (var field in version.Fields)
-				{
-					if (field.FieldId == fieldId) return field.Value;
-				}
+				if (field.FieldId == fieldId) return field.Value;
 			}
 
 			return defaultValue;
@@ -159,7 +154,7 @@ namespace Leprechaun.TemplateReaders
 
 		protected virtual Guid[] ParseBaseTemplatesAndRejectIgnoredBaseTemplates(string value)
 		{
-			var ignoredIds = IgnoredBaseTemplateIds;
+			ICollection<Guid> ignoredIds = IgnoredBaseTemplateIds;
 
 			return ParseMultilistValue(value)
 				.Where(id => !ignoredIds.Contains(id))
@@ -169,15 +164,7 @@ namespace Leprechaun.TemplateReaders
 		protected virtual Guid[] ParseMultilistValue(string value)
 		{
 			return value.Split('|')
-				.Select(item =>
-				{
-					if (Guid.TryParse(item, out Guid result))
-					{
-						return result;
-					}
-
-					return Guid.Empty;
-				})
+				.Select(item => Guid.TryParse(item, out Guid result) ? result : Guid.Empty)
 				.Where(item => item != Guid.Empty)
 				.ToArray();
 		}
@@ -188,41 +175,26 @@ namespace Leprechaun.TemplateReaders
 			FolderId
 		};
 
-        protected virtual Dictionary<Guid, string> GetAllFields(IItemData item)
-        {
+		protected virtual IDictionary<Guid, string> GetAllFields(IItemData item)
+		{
 			var allFields = new Dictionary<Guid, string>();
 
-            foreach (var field in item.SharedFields)
-            {
-                if (!allFields.ContainsKey(field.FieldId))
-                {
-                    allFields.Add(field.FieldId, field.Value);
-                }
-            }
+			foreach (IItemFieldValue field in item.SharedFields)
+			{
+				allFields[field.FieldId] = field.Value;
+			}
 
-            foreach (var language in item.UnversionedFields)
-            {
-                foreach (var field in language.Fields)
-                {
-					if (!allFields.ContainsKey(field.FieldId))
-                    {
-                        allFields.Add(field.FieldId, field.Value);
-                    }
-				}
-            }
+			foreach (IItemFieldValue field in item.UnversionedFields.SelectMany(f => f.Fields))
+			{
+				allFields[field.FieldId] = field.Value;
+			}
 
-            foreach (var version in item.Versions)
-            {
-                foreach (var field in version.Fields)
-                {
-					if (!allFields.ContainsKey(field.FieldId))
-                    {
-                        allFields.Add(field.FieldId, field.Value);
-                    }
-				}
-            }
+			foreach (IItemFieldValue field in item.Versions.SelectMany(v => v.Fields))
+			{
+				allFields[field.FieldId] = field.Value;
+			}
 
-            return allFields;
-        }
+			return allFields;
+		}
 	}
 }

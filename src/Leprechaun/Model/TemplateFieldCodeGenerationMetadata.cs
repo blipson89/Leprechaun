@@ -33,7 +33,7 @@ namespace Leprechaun.Model
 
 		public virtual int SortOrder => Field.SortOrder;
 
-        public virtual Dictionary<Guid, string> AllFields => Field.AllFields;
+		public virtual IDictionary<Guid, string> AllFields => Field.AllFields;
 
 		/// <summary>
 		/// A unique name for this template field, usable as a C# identifier (e.g. property name)
