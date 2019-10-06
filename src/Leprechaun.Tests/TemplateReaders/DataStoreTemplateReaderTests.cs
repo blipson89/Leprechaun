@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Leprechaun.Model;
 using Leprechaun.TemplateReaders;
@@ -16,13 +18,13 @@ namespace Leprechaun.Tests.TemplateReaders
 		[Theory, DataStoreTemplateReaderConventions]
 		public void ParseTemplate_WhenTemplateItemIsNull_ThrowException(TestableDataSourceTemplateReader sut)
 		{
-			Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(null));
+			Xunit.Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(null));
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
 		public void ParseTemplate_WhenTemplateIsNotTemplate_ThrowException(TestableDataSourceTemplateReader sut, IItemData invalidTemplateItem)
 		{
-			Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(invalidTemplateItem));
+			Xunit.Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(invalidTemplateItem));
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
@@ -30,6 +32,19 @@ namespace Leprechaun.Tests.TemplateReaders
 		{
 			sut.Public_ParseTemplate(templateItem).Id.Should().Be(templateItem.Id);
 		}
+
+		#endregion
+
+		#region GetAllFields
+		[Theory, DataStoreTemplateReaderConventions]
+		public void GetAllFields_Includes_AllFields(TestableDataSourceTemplateReader sut, IItemData itemData)
+		{
+			var allFields = sut.Public_GetAllFields(itemData);
+			itemData.SharedFields.Select(x => x.FieldId).All(allFields.Keys.Contains).Should().BeTrue();
+			itemData.UnversionedFields.SelectMany(x => x.Fields.Select(y => y.FieldId)).All(allFields.Keys.Contains).Should().BeTrue();
+			itemData.Versions.SelectMany(x => x.Fields.Select(y => y.FieldId)).All(allFields.Keys.Contains).Should().BeTrue();
+		}
+
 
 		#endregion
 	}
@@ -43,6 +58,11 @@ namespace Leprechaun.Tests.TemplateReaders
 		public TemplateInfo Public_ParseTemplate(IItemData templateItem)
 		{
 			return ParseTemplate(templateItem);
+		}
+
+		public IDictionary<Guid, string> Public_GetAllFields(IItemData item)
+		{
+			return GetAllFields(item);
 		}
 	}
 }
