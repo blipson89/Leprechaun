@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Leprechaun.CodeGen.Roslyn</RootNamespace>
     <AssemblyName>Leprechaun.CodeGen.Roslyn</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

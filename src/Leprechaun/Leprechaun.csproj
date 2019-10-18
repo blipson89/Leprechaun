@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Leprechaun</RootNamespace>
     <AssemblyName>Leprechaun</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -38,6 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Configy" Version="1.0.0" />
-    <PackageReference Include="Rainbow.Core" Version="2.0.0" />
+    <PackageReference Include="Rainbow.Core" Version="2.1.1" />
   </ItemGroup>
 </Project>

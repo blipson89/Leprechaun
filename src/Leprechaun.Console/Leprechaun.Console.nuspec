@@ -17,6 +17,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\net46\Leprechaun.Console.exe.config" target="content\bin" />
+        <file src="bin\Release\net472\Leprechaun.Console.exe.config" target="content\bin" />
     </files>
 </package>

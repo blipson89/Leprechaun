@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Leprechaun.Console</RootNamespace>
     <AssemblyName>Leprechaun.Console</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -65,9 +65,9 @@
   <ItemGroup>
     <PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
     <PackageReference Include="Configy" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.0.0" />
-    <PackageReference Include="NETStandard.Library" Version="1.6.1" />
-    <PackageReference Include="Rainbow.Storage.Yaml" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Rainbow.Storage.Yaml" Version="2.1.1" />
+    <PackageReference Include="Sitecore.Kernel" Version="9.2.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.1" />
