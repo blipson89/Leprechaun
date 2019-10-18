@@ -72,9 +72,9 @@ namespace Leprechaun.Console
 		{
 			var attribute = Assembly
 					.GetEntryAssembly()
-					.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false) as AssemblyInformationalVersionAttribute[];
+					.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false) as AssemblyFileVersionAttribute[];
 
-			return attribute?.FirstOrDefault()?.InformationalVersion ?? Assembly.GetEntryAssembly().GetName().Version.ToString(3);
+			return attribute?.FirstOrDefault()?.Version ?? Assembly.GetEntryAssembly().GetName().Version.ToString(3);
 		}
 	}
 }
