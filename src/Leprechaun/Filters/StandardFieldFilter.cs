@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Leprechaun.Model;
-using Sitecore.Diagnostics;
 
 namespace Leprechaun.Filters
 {

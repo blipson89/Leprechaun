@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Configy.Containers;
+using Leprechaun.Extensions;
 using Leprechaun.Filters.Exclusions;
 using Leprechaun.Model;
 using Rainbow.Storage;
-using Sitecore.Diagnostics;
-using Sitecore.StringExtensions;
 
 namespace Leprechaun.Filters
 {
@@ -102,7 +101,7 @@ namespace Leprechaun.Filters
 					continue;
 				}
 
-				throw new InvalidOperationException("Multiple predicate include nodes had the same name '{0}'. This is not allowed. Note that this can occur if you did not specify the name attribute and two include entries end in an item with the same name. Use the name attribute on the include tag to give a unique name.".FormatWith(preset.Name));
+				throw new InvalidOperationException($"Multiple predicate include nodes had the same name '{preset.Name}'. This is not allowed. Note that this can occur if you did not specify the name attribute and two include entries end in an item with the same name. Use the name attribute on the include tag to give a unique name.");
 			}
 
 			return presets;
@@ -116,7 +115,7 @@ namespace Leprechaun.Filters
 
 		protected virtual TemplateTreeRoot CreateIncludeEntry(XmlNode configuration)
 		{
-			string path = GetExpectedAttribute(configuration, "path");
+			string path = configuration.GetExpectedAttribute("path");
 
 			// ReSharper disable once PossibleNullReferenceException
 			var name = configuration.Attributes["name"];
@@ -137,13 +136,13 @@ namespace Leprechaun.Filters
 		{
 			if (excludeNode.HasAttribute("path"))
 			{
-				return new PathBasedPresetTreeExclusion(GetExpectedAttribute(excludeNode, "path"), root);
+				return new PathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("path"), root);
 			}
 
 			var exclusions = excludeNode.ChildNodes
 				.OfType<XmlElement>()
 				.Where(element => element.Name.Equals("except") && element.HasAttribute("name"))
-				.Select(element => GetExpectedAttribute(element, "name"))
+				.Select(element => element.GetExpectedAttribute("name"))
 				.ToArray();
 
 			if (excludeNode.HasAttribute("children"))
@@ -153,21 +152,12 @@ namespace Leprechaun.Filters
 
 			if (excludeNode.HasAttribute("childrenOfPath"))
 			{
-				return new ChildrenOfPathBasedPresetTreeExclusion(GetExpectedAttribute(excludeNode, "childrenOfPath"), exclusions, root);
+				return new ChildrenOfPathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("childrenOfPath"), exclusions, root);
 			}
 
 			throw new InvalidOperationException($"Unable to parse invalid exclusion value: {excludeNode.OuterXml}");
 		}
 
-		protected static string GetExpectedAttribute(XmlNode node, string attributeName)
-		{
-			// ReSharper disable once PossibleNullReferenceException
-			var attribute = node.Attributes[attributeName];
-
-			if (attribute == null) throw new InvalidOperationException("Missing expected '{0}' attribute on '{1}' node while processing predicate: {2}".FormatWith(attributeName, node.Name, node.OuterXml));
-
-			return attribute.Value;
-		}
 
 		IEnumerable<TreeRoot> ITreeRootFactory.CreateTreeRoots()
 		{

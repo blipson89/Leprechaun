@@ -6,7 +6,6 @@ using Leprechaun.MetadataGeneration;
 using Leprechaun.Model;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
-using Sitecore.Diagnostics;
 
 namespace Leprechaun
 {

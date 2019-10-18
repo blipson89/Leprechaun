@@ -21,9 +21,10 @@ namespace Leprechaun.Console
  |_____\___| .__/|_|  \___|\___|_| |_|\__,_|\__,_|_| |_|
            |_|");
 			var version = $"Version {GetVersion()}";
+			int versionPadding = version.Length < 42 ? 42 - version.Length : 0;
 
 			System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-			System.Console.WriteLine(new string(' ', 42 - version.Length) + version);
+			System.Console.WriteLine(new string(' ', versionPadding) + version);
 			System.Console.WriteLine();
 
 			WriteBow(@"                 @@                 ");
@@ -71,9 +72,9 @@ namespace Leprechaun.Console
 		{
 			var attribute = Assembly
 					.GetEntryAssembly()
-					.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false) as AssemblyInformationalVersionAttribute[];
+					.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false) as AssemblyFileVersionAttribute[];
 
-			return attribute?.FirstOrDefault()?.InformationalVersion ?? Assembly.GetEntryAssembly().GetName().Version.ToString(3);
+			return attribute?.FirstOrDefault()?.Version ?? Assembly.GetEntryAssembly().GetName().Version.ToString(3);
 		}
 	}
 }

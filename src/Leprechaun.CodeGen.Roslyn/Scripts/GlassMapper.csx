@@ -1,4 +1,4 @@
-﻿// Generates Synthesis models
+﻿// Generates GlassMapper models
 
 Log.Debug($"Emitting GlassMapper templates for {ConfigurationName}...");
 
@@ -24,7 +24,7 @@ public string RenderTemplates()
     foreach (var template in Templates)
     {
         localCode.AppendLine($@"
-namespace {template.Namespace}.Models
+namespace {template.Namespace}
 {{
     using System;
     using System.CodeDom.Compiler;
@@ -33,10 +33,12 @@ namespace {template.Namespace}.Models
     using Glass.Mapper.Sc.Configuration.Attributes;
     using Glass.Mapper.Sc.Fields;
     using global::Sitecore.Data;
+	using System.CodeDom.Compiler;
 
     /// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
     ///[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
     [SitecoreType(TemplateId = {template.Namespace}.Constants.{template.CodeName}.TemplateIdString)]
+	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
     public partial interface I{template.CodeName} : {GetBaseInterfaces(template)}
     {{
         {RenderInterfaceFields(template)}
@@ -47,7 +49,9 @@ namespace {template.Namespace}.Models
 namespace {template.Namespace}.Constants
 {{
     using global::Sitecore.Data;
+	using System.CodeDom.Compiler;
 
+	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
     public struct {template.CodeName}
     {{
         public const string TemplateIdString = ""{template.Id}"";

@@ -11,7 +11,6 @@ using Leprechaun.MetadataGeneration;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
 using Rainbow.Storage;
-using Sitecore.Diagnostics;
 
 namespace Leprechaun
 {
