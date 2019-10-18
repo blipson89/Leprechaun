@@ -7,6 +7,7 @@ jobs:
   - task: GitVersion@5
     inputs:
       runtime: 'core'
+      configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
       updateAssemblyInfoFilename: 'src/SharedAssemblyInfo.cs'
   - task: NuGetToolInstaller@1
