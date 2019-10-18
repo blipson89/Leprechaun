@@ -51,7 +51,7 @@ namespace Leprechaun.Tests.TemplateReaders
 
 	public class TestableDataSourceTemplateReader : DataStoreTemplateReader
 	{
-		public TestableDataSourceTemplateReader(IDataStore dataStore) : base(dataStore)
+		public TestableDataSourceTemplateReader(IDataStore dataStore) : base(null, dataStore)
 		{
 		}
 

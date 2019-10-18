@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
+using Leprechaun.Extensions;
 using Leprechaun.Model;
 using Rainbow.Model;
 using Rainbow.Storage;
@@ -27,9 +29,32 @@ namespace Leprechaun.TemplateReaders
 
 		private readonly IDataStore _dataStore;
 
-		public DataStoreTemplateReader(IDataStore dataStore)
+		public DataStoreTemplateReader(XmlNode configNode, IDataStore dataStore)
 		{
 			_dataStore = dataStore;
+			ParseExcludedTemplates(configNode);
+		}
+
+		protected void ParseExcludedTemplates(XmlNode configNode)
+		{
+			IEnumerable<XmlNode> nodes = configNode.ChildNodes
+				.Cast<XmlNode>()
+				.Where(node => node.Name == "excludedBaseTemplate")
+				.ToList();
+
+			foreach (XmlNode excludedTemplate in nodes)
+			{
+				var id = excludedTemplate.GetExpectedAttribute("id");
+				if (Guid.TryParse(id, out Guid templateId))
+				{
+					_ignoredBaseTemplateIds.Add(templateId);
+				}
+				else
+				{
+					throw new InvalidOperationException($"'{id}' is not a valid Guid in '{excludedTemplate.OuterXml}'");
+				}
+			}
+
 		}
 
 		public TemplateInfo[] GetTemplates(params TreeRoot[] rootPaths)
@@ -169,11 +194,14 @@ namespace Leprechaun.TemplateReaders
 				.ToArray();
 		}
 
-		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => new HashSet<Guid>
+		private readonly HashSet<Guid> _ignoredBaseTemplateIds = new HashSet<Guid>
 		{
 			StandardTemplateId,
 			FolderId
 		};
+
+		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => _ignoredBaseTemplateIds;
+		
 
 		protected virtual IDictionary<Guid, string> GetAllFields(IItemData item)
 		{

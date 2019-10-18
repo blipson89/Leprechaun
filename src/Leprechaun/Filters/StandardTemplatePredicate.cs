@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Configy.Containers;
+using Leprechaun.Extensions;
 using Leprechaun.Filters.Exclusions;
 using Leprechaun.Model;
 using Rainbow.Storage;
@@ -114,7 +115,7 @@ namespace Leprechaun.Filters
 
 		protected virtual TemplateTreeRoot CreateIncludeEntry(XmlNode configuration)
 		{
-			string path = GetExpectedAttribute(configuration, "path");
+			string path = configuration.GetExpectedAttribute("path");
 
 			// ReSharper disable once PossibleNullReferenceException
 			var name = configuration.Attributes["name"];
@@ -135,13 +136,13 @@ namespace Leprechaun.Filters
 		{
 			if (excludeNode.HasAttribute("path"))
 			{
-				return new PathBasedPresetTreeExclusion(GetExpectedAttribute(excludeNode, "path"), root);
+				return new PathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("path"), root);
 			}
 
 			var exclusions = excludeNode.ChildNodes
 				.OfType<XmlElement>()
 				.Where(element => element.Name.Equals("except") && element.HasAttribute("name"))
-				.Select(element => GetExpectedAttribute(element, "name"))
+				.Select(element => element.GetExpectedAttribute("name"))
 				.ToArray();
 
 			if (excludeNode.HasAttribute("children"))
@@ -151,21 +152,12 @@ namespace Leprechaun.Filters
 
 			if (excludeNode.HasAttribute("childrenOfPath"))
 			{
-				return new ChildrenOfPathBasedPresetTreeExclusion(GetExpectedAttribute(excludeNode, "childrenOfPath"), exclusions, root);
+				return new ChildrenOfPathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("childrenOfPath"), exclusions, root);
 			}
 
 			throw new InvalidOperationException($"Unable to parse invalid exclusion value: {excludeNode.OuterXml}");
 		}
 
-		protected static string GetExpectedAttribute(XmlNode node, string attributeName)
-		{
-			// ReSharper disable once PossibleNullReferenceException
-			var attribute = node.Attributes[attributeName];
-
-			if (attribute == null) throw new InvalidOperationException($"Missing expected '{attributeName}' attribute on '{node.Name}' node while processing predicate: {node.OuterXml}");
-
-			return attribute.Value;
-		}
 
 		IEnumerable<TreeRoot> ITreeRootFactory.CreateTreeRoots()
 		{
