@@ -21,9 +21,10 @@ namespace Leprechaun.Console
  |_____\___| .__/|_|  \___|\___|_| |_|\__,_|\__,_|_| |_|
            |_|");
 			var version = $"Version {GetVersion()}";
+			int versionPadding = version.Length < 42 ? 42 - version.Length : 0;
 
 			System.Console.ForegroundColor = ConsoleColor.DarkGreen;
-			System.Console.WriteLine(new string(' ', 42 - version.Length) + version);
+			System.Console.WriteLine(new string(' ', versionPadding) + version);
 			System.Console.WriteLine();
 
 			WriteBow(@"                 @@                 ");
