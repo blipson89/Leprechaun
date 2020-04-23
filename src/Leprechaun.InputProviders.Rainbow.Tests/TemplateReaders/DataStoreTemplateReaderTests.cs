@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Leprechaun.InputProviders.Rainbow.TemplateReaders;
+using Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders.AutoFixture;
 using Leprechaun.Model;
-using Leprechaun.TemplateReaders;
-using Leprechaun.Tests.TemplateReaders.AutoFixture;
 using Rainbow.Model;
 using Rainbow.Storage;
 using Xunit;
 
-namespace Leprechaun.Tests.TemplateReaders
+namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders
 {
 	public class DataStoreTemplateReaderTests
 	{

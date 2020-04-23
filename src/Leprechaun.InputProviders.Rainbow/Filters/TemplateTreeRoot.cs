@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Leprechaun.Filters;
 using Rainbow.Storage;
 
-namespace Leprechaun.Filters
+namespace Leprechaun.InputProviders.Rainbow.Filters
 {
 	public class TemplateTreeRoot : TreeRoot
 	{

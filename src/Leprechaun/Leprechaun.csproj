@@ -38,6 +38,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Configy" Version="1.0.0" />
-    <PackageReference Include="Rainbow.Core" Version="2.1.1" />
   </ItemGroup>
 </Project>

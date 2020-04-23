@@ -13,13 +13,13 @@ namespace Leprechaun.Filters.Exclusions
 		private readonly string[] _exceptions;
 		private readonly string _excludeChildrenOfPath;
 
-		public ChildrenOfPathBasedPresetTreeExclusion(string excludeChildrenOfPath, string[] exceptions, TemplateTreeRoot root)
+		public ChildrenOfPathBasedPresetTreeExclusion(string excludeChildrenOfPath, string[] exceptions, string rootPath)
 		{
 			_excludeChildrenOfPath = excludeChildrenOfPath;
 
 			// path that does not start with / is relative to the parent include root path
 			// eg include /foo, path 'bar' => /foo/bar
-			if (!_excludeChildrenOfPath.StartsWith("/")) _excludeChildrenOfPath = $"{root.Path.TrimEnd('/')}/{_excludeChildrenOfPath}";
+			if (!_excludeChildrenOfPath.StartsWith("/")) _excludeChildrenOfPath = $"{rootPath.TrimEnd('/')}/{_excludeChildrenOfPath}";
 
 			// normalize the root path to have a trailing slash which will make the path match only children
 			// (like implicit matching)

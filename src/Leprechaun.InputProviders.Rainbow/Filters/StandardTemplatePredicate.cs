@@ -4,11 +4,12 @@ using System.Linq;
 using System.Xml;
 using Configy.Containers;
 using Leprechaun.Extensions;
+using Leprechaun.Filters;
 using Leprechaun.Filters.Exclusions;
 using Leprechaun.Model;
 using Rainbow.Storage;
 
-namespace Leprechaun.Filters
+namespace Leprechaun.InputProviders.Rainbow.Filters
 {
 	public class StandardTemplatePredicate : ITemplatePredicate, ITreeRootFactory
 	{
@@ -136,7 +137,7 @@ namespace Leprechaun.Filters
 		{
 			if (excludeNode.HasAttribute("path"))
 			{
-				return new PathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("path"), root);
+				return new PathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("path"), root.Path);
 			}
 
 			var exclusions = excludeNode.ChildNodes
@@ -147,12 +148,12 @@ namespace Leprechaun.Filters
 
 			if (excludeNode.HasAttribute("children"))
 			{
-				return new ChildrenOfPathBasedPresetTreeExclusion(root.Path, exclusions, root);
+				return new ChildrenOfPathBasedPresetTreeExclusion(root.Path, exclusions, root.Path);
 			}
 
 			if (excludeNode.HasAttribute("childrenOfPath"))
 			{
-				return new ChildrenOfPathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("childrenOfPath"), exclusions, root);
+				return new ChildrenOfPathBasedPresetTreeExclusion(excludeNode.GetExpectedAttribute("childrenOfPath"), exclusions, root.Path);
 			}
 
 			throw new InvalidOperationException($"Unable to parse invalid exclusion value: {excludeNode.OuterXml}");

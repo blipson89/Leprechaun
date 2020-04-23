@@ -3,11 +3,11 @@ using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
-using Leprechaun.TemplateReaders;
+using Leprechaun.InputProviders.Rainbow.TemplateReaders;
 using NSubstitute;
 using Rainbow.Model;
 
-namespace Leprechaun.Tests.TemplateReaders.AutoFixture
+namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders.AutoFixture
 {
 	public class DataStoreTemplateReaderConventionsAttribute : AutoDataAttribute
 	{

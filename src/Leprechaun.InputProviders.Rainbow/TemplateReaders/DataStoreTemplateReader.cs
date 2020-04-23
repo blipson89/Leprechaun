@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Leprechaun.Extensions;
+using Leprechaun.Filters;
+using Leprechaun.InputProviders.Rainbow.Filters;
 using Leprechaun.Model;
+using Leprechaun.TemplateReaders;
 using Rainbow.Model;
 using Rainbow.Storage;
 
-namespace Leprechaun.TemplateReaders
+namespace Leprechaun.InputProviders.Rainbow.TemplateReaders
 {
 	public class DataStoreTemplateReader : ITemplateReader
 	{
@@ -37,6 +39,9 @@ namespace Leprechaun.TemplateReaders
 
 		protected void ParseExcludedTemplates(XmlNode configNode)
 		{
+			if (configNode?.ChildNodes == null)
+				return;
+
 			IEnumerable<XmlNode> nodes = configNode.ChildNodes
 				.Cast<XmlNode>()
 				.Where(node => node.Name == "excludedBaseTemplate")
@@ -55,6 +60,15 @@ namespace Leprechaun.TemplateReaders
 				}
 			}
 
+		}
+
+		public TemplateInfo[] GetTemplates(ITemplatePredicate predicate)
+		{
+			if (predicate is StandardTemplatePredicate standardPredicate)
+			{
+				return GetTemplates(standardPredicate.GetRootPaths());
+			}
+			return new TemplateInfo[0];
 		}
 
 		public TemplateInfo[] GetTemplates(params TreeRoot[] rootPaths)

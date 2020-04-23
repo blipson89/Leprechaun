@@ -29,3 +29,4 @@ src/Leprechaun.*.Tests/license.xml
 *.ncrunchproject
 *.ncrunchsolution
 *.crunchsolution.cache
+/_NCrunch_Leprechaun

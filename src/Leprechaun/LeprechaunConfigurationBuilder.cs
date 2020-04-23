@@ -10,7 +10,6 @@ using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
-using Rainbow.Storage;
 
 namespace Leprechaun
 {
@@ -72,7 +71,6 @@ namespace Leprechaun
 			foreach (var configuration in configurations)
 			{
 				// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
-				configuration.AssertSingleton(typeof(IDataStore));
 				configuration.AssertSingleton(typeof(IFieldFilter));
 				configuration.AssertSingleton(typeof(ITemplatePredicate));
 				configuration.AssertSingleton(typeof(ITypeNameGenerator));

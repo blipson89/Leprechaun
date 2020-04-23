@@ -57,9 +57,7 @@ namespace Leprechaun
 			Assert.IsNotNull(templateReader, "templateReader != null");
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
 
-			var roots = templatePredicate.GetRootPaths();
-
-			return templateReader.GetTemplates(roots);
+			return templateReader.GetTemplates(templatePredicate);
 		}
 
 		protected virtual void FilterIgnoredFields(IEnumerable<TemplateConfiguration> configurations)

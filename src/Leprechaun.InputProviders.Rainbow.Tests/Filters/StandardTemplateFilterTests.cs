@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using FluentAssertions;
-using Leprechaun.Filters;
+using Leprechaun.InputProviders.Rainbow.Filters;
 using Leprechaun.Model;
 using Xunit;
 
-namespace Leprechaun.Tests.Filters
+namespace Leprechaun.InputProviders.Rainbow.Tests.Filters
 {
 	public class StandardTemplateFilterTests
 	{
@@ -113,7 +113,7 @@ namespace Leprechaun.Tests.Filters
 			var assembly = Assembly.GetExecutingAssembly();
 			string text;
 			// ReSharper disable AssignNullToNotNullAttribute
-			using (var textStreamReader = new StreamReader(assembly.GetManifestResourceStream("Leprechaun.Tests.Filters.TestConfiguration.xml")))
+			using (var textStreamReader = new StreamReader(assembly.GetManifestResourceStream("Leprechaun.InputProviders.Rainbow.Tests.Filters.TestConfiguration.xml")))
 			// ReSharper restore AssignNullToNotNullAttribute
 			{
 				text = textStreamReader.ReadToEnd();
