@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using Configy;
@@ -6,12 +10,14 @@ using Configy.Containers;
 using Configy.Parsing;
 using Leprechaun.CodeGen;
 using Leprechaun.Filters;
+using Leprechaun.InputProviders;
 using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
+using Leprechaun.Modules;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
 
-namespace Leprechaun
+namespace Leprechaun.Configuration
 {
 	public class LeprechaunConfigurationBuilder : XmlContainerBuilder
 	{
@@ -38,6 +44,7 @@ namespace Leprechaun
 			_configImportResolver = configImportResolver;
 
 			ProcessImports();
+			InitializeInputProvider();
 		}
 
 		public virtual IContainer Shared
@@ -93,9 +100,15 @@ namespace Leprechaun
 			// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
 			sharedConfiguration.AssertSingleton(typeof(ITemplateMetadataGenerator));
 			sharedConfiguration.AssertSingleton(typeof(IArchitectureValidator));
+			sharedConfiguration.AssertSingleton(typeof(IInputProvider));
 			sharedConfiguration.Assert(typeof(ILogger));
 
 			_sharedConfig = sharedConfiguration;
+		}
+
+		public void InitializeInputProvider()
+		{
+			Shared.Resolve<IInputProvider>().Initialize(this);
 		}
 
 		protected virtual void ProcessImports()
@@ -120,9 +133,9 @@ namespace Leprechaun
 
 			var allImportsFiles = allImportsRepathedGlobs
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
-				.Concat(new [] { _configFilePath })
+				.Concat(new[] { _configFilePath })
 				.ToArray();
-			
+
 			foreach (var import in allImportsFiles)
 			{
 				var xml = new XmlDocument();

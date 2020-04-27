@@ -1,14 +1,18 @@
-﻿using Rainbow.Settings;
+﻿using Leprechaun.Configuration;
+using Leprechaun.Modules;
+using Rainbow.Settings;
 
-namespace Leprechaun.Console
+namespace Leprechaun.InputProviders.Rainbow.Modules
 {
 	// overrides Rainbow to get its settings from Leprechaun's settings instead of Rainbow.config
-	public class LeprechaunRainbowSettings : RainbowSettings, ILeprechaunRainbowSettings
+	public class RainbowSettingsModule : RainbowSettings, ILeprechaunRainbowSettings
 	{
-		public LeprechaunRainbowSettings(int serializationFolderPathMaxLength, int maxItemNameLengthBeforeTruncation)
+		public RainbowSettingsModule(int serializationFolderPathMaxLength, int maxItemNameLengthBeforeTruncation)
 		{
 			SfsSerializationFolderPathMaxLength = serializationFolderPathMaxLength;
 			SfsMaxItemNameLengthBeforeTruncation = maxItemNameLengthBeforeTruncation;
+
+			RainbowSettings.Current = this;
 		}
 
 		public override int SfsMaxItemNameLengthBeforeTruncation { get; }

@@ -1,8 +1,9 @@
 ﻿using CommandLineParser.Arguments;
+using Leprechaun.Execution;
 
 namespace Leprechaun.Console
 {
-	class ConsoleArgs
+	class ConsoleArgs : IRuntimeArgs
 	{
 		[ValueArgument(typeof(string), 'c', "config", Description = "Path to the config file to use. Defaults to Leprechaun.config.")]
 		public string ConfigFilePath { get; set; }

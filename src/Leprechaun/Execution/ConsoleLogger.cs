@@ -2,36 +2,36 @@
 using System.Text;
 using Leprechaun.Logging;
 
-namespace Leprechaun.Console
+namespace Leprechaun.Execution
 {
 	public class ConsoleLogger : ILogger
 	{
 		public void Info(string message)
 		{
-			System.Console.ForegroundColor = ConsoleColor.White;
-			System.Console.WriteLine(message);
-			System.Console.ResetColor();
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.WriteLine(message);
+			Console.ResetColor();
 		}
 
 		public void Debug(string message)
 		{
-			System.Console.ForegroundColor = ConsoleColor.DarkGray;
-			System.Console.WriteLine(message);
-			System.Console.ResetColor();
+			Console.ForegroundColor = ConsoleColor.DarkGray;
+			Console.WriteLine(message);
+			Console.ResetColor();
 		}
 
 		public void Warn(string message)
 		{
-			System.Console.ForegroundColor = ConsoleColor.Yellow;
-			System.Console.WriteLine(message);
-			System.Console.ResetColor();
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine(message);
+			Console.ResetColor();
 		}
 
 		public void Error(string message)
 		{
-			System.Console.ForegroundColor = ConsoleColor.Red;
-			System.Console.WriteLine(message);
-			System.Console.ResetColor();
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine(message);
+			Console.ResetColor();
 		}
 
 		public void Error(Exception exception)

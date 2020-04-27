@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Leprechaun.Configuration;
 using Leprechaun.Logging;
 using Xunit;
 

@@ -2,17 +2,17 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Leprechaun.Configuration;
+using Leprechaun.Execution;
 using Leprechaun.Logging;
 using Rainbow.Model;
 using Rainbow.Storage;
 
-namespace Leprechaun.Console
+namespace Leprechaun.InputProviders.Rainbow
 {
-	public static class Watcher
+	public class RainbowWatcher : IWatcher
 	{
-		
-
-		public static void Watch(LeprechaunConfigurationBuilder configuration, ILogger logger, Action rebuildAction)
+		public void Watch(LeprechaunConfigurationBuilder configuration, ILogger logger, Action rebuildAction)
 		{
 			const int debounceInMs = 500;
 			Timer debouncer = new Timer(Rebuild);

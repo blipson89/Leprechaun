@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Leprechaun.Logging;
 
-namespace Leprechaun
+namespace Leprechaun.Configuration
 {
 	/// <summary>
 	/// Resolves imported config files' paths.

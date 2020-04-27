@@ -45,7 +45,7 @@
     <None Include="ConfigurationImportPathResolverTests\Directory2\Bar.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Leprechaun.Console\Leprechaun.config">
+    <None Include="..\Leprechaun.InputProviders.Rainbow\Leprechaun.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
