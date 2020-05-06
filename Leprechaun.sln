@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.InputProviders.R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.InputProviders.Rainbow.Tests", "src\Leprechaun.InputProviders.Rainbow.Tests\Leprechaun.InputProviders.Rainbow.Tests.csproj", "{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.InputProviders.Sitecore", "Leprechaun.InputProviders.Sitecore", "{99A3B091-2383-4CB0-8CE2-0B35C4BD9A71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.InputProviders.Sitecore", "src\Leprechaun.InputProviders.Sitecore\Leprechaun.InputProviders.Sitecore.csproj", "{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +79,7 @@ Global
 		{B6175FFB-5DF5-4CD4-8988-E439F13DD823} = {272E3BBF-F284-40DD-8D7B-8F173B7B76BD}
 		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9} = {4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}
 		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA} = {4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5} = {99A3B091-2383-4CB0-8CE2-0B35C4BD9A71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A806E6A-5823-47D6-A014-1628A99432E0}
