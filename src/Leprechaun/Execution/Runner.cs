@@ -136,10 +136,12 @@ namespace Leprechaun.Execution
 
 		private LeprechaunConfigurationBuilder BuildConfiguration(IRuntimeArgs args)
 		{
-			var config = new XmlDocument();
-
+			XmlDocument config = new XmlDocument();
 			args.ConfigFilePath = EnsureAbsoluteConfigPath(args.ConfigFilePath);
-			config.Load(args.ConfigFilePath);
+			if (Path.GetExtension(args.ConfigFilePath) == ".json")
+				config = JsonConvert.DeserializeXmlNode(File.ReadAllText(args.ConfigFilePath));
+			else
+				config.Load(args.ConfigFilePath);
 			var replacer = GetVariablesReplacer(args);
 
 			XmlElement configsElement = config.DocumentElement["configurations"];

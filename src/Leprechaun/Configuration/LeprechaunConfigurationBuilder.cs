@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -15,6 +13,7 @@ using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
+using Newtonsoft.Json;
 
 namespace Leprechaun.Configuration
 {
@@ -132,21 +131,44 @@ namespace Leprechaun.Configuration
 
 			var allImportsFiles = allImportsRepathedGlobs
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
-				.Concat(new[] { _configFilePath })
-				.ToArray();
-
-			foreach (var import in allImportsFiles)
+				.Concat(new[] {_configFilePath})
+				.ToList();
+			Queue<string> configsToProcess = new Queue<string>(allImportsFiles);
+			while(configsToProcess.Count > 0)
 			{
+				var import = configsToProcess.Dequeue();
 				var xml = new XmlDocument();
-				xml.Load(import);
+				XmlElement nodeToImport;
+				if (Path.GetExtension(import) == ".json")
+				{
+					var xmlConfig = JsonConvert.DeserializeXmlNode(File.ReadAllText(import), "module");
+					nodeToImport = (XmlElement)xmlConfig.SelectSingleNode("/module/leprechaun")?.FirstChild;
+					if (nodeToImport == null)
+					{
+						allImportsFiles.Remove(import);
+						continue;
+					}
+					var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
+					if (string.IsNullOrEmpty(namespaceUri))
+					{
+						throw new InvalidOperationException($"module does not have namespace: '{import}'");
+					}
+					nodeToImport.SetAttribute("name", namespaceUri);
+				}
+				else
+				{
+					xml.Load(import);
+					nodeToImport = xml.DocumentElement;
+				}
 
-				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(xml.DocumentElement, true);
+				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
 
 				_configsElement.AppendChild(importedXml);
+
 			}
 
 			// we'll use this to watch imports for changes later
-			ImportedConfigFilePaths = allImportsFiles;
+			ImportedConfigFilePaths = allImportsFiles.ToArray();
 		}
 	}
 }
