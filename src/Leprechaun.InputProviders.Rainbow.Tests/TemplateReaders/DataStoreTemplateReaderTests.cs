@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Leprechaun.Adapters;
 using Leprechaun.InputProviders.Rainbow.TemplateReaders;
 using Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders.AutoFixture;
 using Leprechaun.Model;
@@ -22,13 +23,13 @@ namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
-		public void ParseTemplate_WhenTemplateIsNotTemplate_ThrowException(TestableDataSourceTemplateReader sut, IItemData invalidTemplateItem)
+		public void ParseTemplate_WhenTemplateIsNotTemplate_ThrowException(TestableDataSourceTemplateReader sut, IItemDataAdapter invalidTemplateItem)
 		{
 			Xunit.Assert.Throws<ArgumentException>(() => sut.Public_ParseTemplate(invalidTemplateItem));
 		}
 
 		[Theory, DataStoreTemplateReaderConventions]
-		public void ParseTemplate_WhenTemplateIsATemplate_ReturnTemplate(TestableDataSourceTemplateReader sut, IItemData templateItem)
+		public void ParseTemplate_WhenTemplateIsATemplate_ReturnTemplate(TestableDataSourceTemplateReader sut, IItemDataAdapter templateItem)
 		{
 			sut.Public_ParseTemplate(templateItem).Id.Should().Be(templateItem.Id);
 		}
@@ -37,7 +38,7 @@ namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders
 
 		#region GetAllFields
 		[Theory, DataStoreTemplateReaderConventions]
-		public void GetAllFields_Includes_AllFields(TestableDataSourceTemplateReader sut, IItemData itemData)
+		public void GetAllFields_Includes_AllFields(TestableDataSourceTemplateReader sut, IItemDataAdapter itemData)
 		{
 			var allFields = sut.Public_GetAllFields(itemData);
 			itemData.SharedFields.Select(x => x.FieldId).All(allFields.Keys.Contains).Should().BeTrue();
@@ -55,12 +56,12 @@ namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders
 		{
 		}
 
-		public TemplateInfo Public_ParseTemplate(IItemData templateItem)
+		public TemplateInfo Public_ParseTemplate(IItemDataAdapter templateItem)
 		{
 			return ParseTemplate(templateItem);
 		}
 
-		public IDictionary<Guid, string> Public_GetAllFields(IItemData item)
+		public IDictionary<Guid, string> Public_GetAllFields(IItemDataAdapter item)
 		{
 			return GetAllFields(item);
 		}

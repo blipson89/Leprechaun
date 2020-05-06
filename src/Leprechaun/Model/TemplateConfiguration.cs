@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Configy.Containers;
 
 namespace Leprechaun.Model
@@ -11,6 +12,6 @@ namespace Leprechaun.Model
 		}
 
 		public IContainer Configuration { get; }
-		public IEnumerable<TemplateInfo> Templates { get; set; }
+		public IEnumerable<TemplateInfo> Templates { get; set; } = Enumerable.Empty<TemplateInfo>();
 	}
 }

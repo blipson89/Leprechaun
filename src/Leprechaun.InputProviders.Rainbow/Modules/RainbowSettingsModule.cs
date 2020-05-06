@@ -1,6 +1,4 @@
-﻿using Leprechaun.Configuration;
-using Leprechaun.Modules;
-using Rainbow.Settings;
+﻿using Rainbow.Settings;
 
 namespace Leprechaun.InputProviders.Rainbow.Modules
 {

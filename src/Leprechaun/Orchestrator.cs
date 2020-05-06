@@ -9,7 +9,7 @@ using Leprechaun.Validation;
 
 namespace Leprechaun
 {
-	public class Orchestrator
+	public class Orchestrator : IOrchestrator
 	{
 		private readonly ITemplateMetadataGenerator _metadataGenerator;
 		private readonly IArchitectureValidator _architectureValidator;

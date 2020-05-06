@@ -83,4 +83,6 @@ public void $UnitUnderTest$_$Action$_$Expected$()&#xD;
 public void $UnitUnderTest$_$Action$_$Expected$([Greedy]$SutType$ sut)&#xD;
 {&#xD;
 	&#xD;
-}</s:String></wpf:ResourceDictionary>
+}</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Sitecore/@EntryIndexedValue">True</s:Boolean>
+	</wpf:ResourceDictionary>

@@ -11,6 +11,7 @@ using Leprechaun.CodeGen;
 using Leprechaun.Configuration;
 using Leprechaun.Model;
 using Leprechaun.Variables;
+using Newtonsoft.Json;
 
 namespace Leprechaun.Execution
 {
@@ -35,7 +36,7 @@ namespace Leprechaun.Execution
 			});
 
 			// the orchestrator controls the overall codegen flow
-			var orchestrator = configuration.Shared.Resolve<Orchestrator>();
+			var orchestrator = configuration.Shared.Resolve<IOrchestrator>();
 
 			var metadata = GenerateMetadata(orchestrator, configuration);
 
@@ -74,7 +75,7 @@ namespace Leprechaun.Execution
 			Console.ResetColor();
 		}
 
-		private void GenerateWatch(Orchestrator orchestrator, LeprechaunConfigurationBuilder configuration)
+		private void GenerateWatch(IOrchestrator orchestrator, LeprechaunConfigurationBuilder configuration)
 		{
 			try
 			{
@@ -108,7 +109,7 @@ namespace Leprechaun.Execution
 			}
 		}
 
-		private IReadOnlyList<ConfigurationCodeGenerationMetadata> GenerateMetadata(Orchestrator orchestrator, LeprechaunConfigurationBuilder configuration)
+		private IReadOnlyList<ConfigurationCodeGenerationMetadata> GenerateMetadata(IOrchestrator orchestrator, LeprechaunConfigurationBuilder configuration)
 		{
 			var metadataTimer = new Stopwatch();
 			metadataTimer.Start();

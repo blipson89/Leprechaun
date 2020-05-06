@@ -44,7 +44,7 @@
   </ItemGroup>
 	<ItemGroup>
 		<None Include="app.config" />
-		<None Include="..\Leprechaun.Console\Leprechaun.config">
+		<None Include="..\Leprechaun.InputProviders.Rainbow\Leprechaun.config">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

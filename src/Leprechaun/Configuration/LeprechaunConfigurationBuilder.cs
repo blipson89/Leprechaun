@@ -13,7 +13,6 @@ using Leprechaun.Filters;
 using Leprechaun.InputProviders;
 using Leprechaun.Logging;
 using Leprechaun.MetadataGeneration;
-using Leprechaun.Modules;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
 

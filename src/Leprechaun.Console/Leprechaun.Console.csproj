@@ -53,10 +53,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Leprechaun.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj" />
@@ -65,7 +61,6 @@
   <ItemGroup>
     <PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
     <PackageReference Include="Configy" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
     <PackageReference Include="Sitecore.Kernel" Version="9.2.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.0" />

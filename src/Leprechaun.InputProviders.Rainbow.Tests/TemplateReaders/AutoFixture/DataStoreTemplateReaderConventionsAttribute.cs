@@ -3,9 +3,9 @@ using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
-using Leprechaun.InputProviders.Rainbow.TemplateReaders;
+using Leprechaun.Adapters;
+using Leprechaun.TemplateReaders;
 using NSubstitute;
-using Rainbow.Model;
 
 namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders.AutoFixture
 {
@@ -28,8 +28,8 @@ namespace Leprechaun.InputProviders.Rainbow.Tests.TemplateReaders.AutoFixture
 				var pi = request as ParameterInfo;
 				if (pi != null && pi.Name == "templateItem")
 				{
-					var itemData = context.Resolve(typeof(IItemData)) as IItemData;
-					itemData.TemplateId.Returns(DataStoreTemplateReader.TemplateTemplateId);
+					var itemData = context.Resolve(typeof(IItemDataAdapter)) as IItemDataAdapter;
+					itemData.TemplateId.Returns(BaseTemplateReader.TemplateTemplateId);
 					return itemData;
 				}
 
