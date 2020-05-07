@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Leprechaun.Console</RootNamespace>
     <AssemblyName>Leprechaun.Console</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -26,6 +26,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Leprechaun.Console.nuspec" />
+    <None Remove="Leprechaun.Console.Runner.nuspec" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -60,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
-    <PackageReference Include="Configy" Version="1.0.0" />
+    <PackageReference Include="Configy" Version="1.1.0-pre01" />
     <PackageReference Include="Sitecore.Kernel" Version="9.2.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.0" />

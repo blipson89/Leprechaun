@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<RootNamespace>Leprechaun.Console.Tests</RootNamespace>
 		<AssemblyName>Leprechaun.Console.Tests</AssemblyName>
@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Configy">
-      <Version>1.0.0</Version>
+      <Version>1.1.0-pre01</Version>
     </PackageReference>
     <PackageReference Include="FluentAssertions">
       <Version>5.3.0</Version>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Leprechaun.InputProviders.Sitecore</RootNamespace>
     <AssemblyName>Leprechaun.InputProviders.Sitecore</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

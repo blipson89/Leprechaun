@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Leprechaun.CodeGen.Roslyn</RootNamespace>
     <AssemblyName>Leprechaun.CodeGen.Roslyn</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -56,7 +56,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Configy" Version="1.0.0" />
+    <PackageReference Include="Configy" Version="1.1.0-pre01" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.1.0" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
