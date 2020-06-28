@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\SharedProperties.targets" />
+  <PropertyGroup>
+	<PackageId>Leprechaun.Cli</PackageId>
+	<Description>dotnet CLI tool for Leprechaun</Description>
+	<PackageTags>sitecore codegen leprechaun</PackageTags>
+  </PropertyGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>

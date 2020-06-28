@@ -33,6 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.Cli", "Leprechau
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Cli", "src\Leprechaun.Cli\Leprechaun.Cli.csproj", "{110690BB-5928-4CC9-AD8A-8B3A91A54206}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Files", ".Solution Files", "{43F3796E-E984-47B2-9F48-C996A5F3D7AD}"
+	ProjectSection(SolutionItems) = preProject
+		src\SharedProperties.targets = src\SharedProperties.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

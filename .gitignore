@@ -23,6 +23,7 @@ packages/*
 !packages/repositories.config
 Build/*.nupkg
 Build/*.zip
+build/packages
 
 src/Leprechaun.*.Tests/license.xml
 

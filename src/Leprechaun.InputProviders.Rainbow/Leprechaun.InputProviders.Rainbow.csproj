@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedProperties.targets" />
+  <PropertyGroup>
+	<PackageId>Leprechaun.InputProviders.Rainbow</PackageId>
+	<Description>Input Provider for Leprechaun to allow for reading Rainbow serialized items.</Description>
+	<PackageTags>sitecore codegen leprechaun rainbow</PackageTags>
+  </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Leprechaun.InputProviders.Rainbow</RootNamespace>
     <AssemblyName>Leprechaun.InputProviders.Rainbow</AssemblyName>
@@ -25,14 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Leprechaun.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
