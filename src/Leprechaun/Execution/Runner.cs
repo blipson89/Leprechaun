@@ -165,7 +165,16 @@ namespace Leprechaun.Execution
 
 			// If it's a relative path, merge the application root with the provided config file path
 			if (!Path.IsPathRooted(path))
-				return Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path));
+			{
+				string exeRelativePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path));
+				if (File.Exists(exeRelativePath))
+					return exeRelativePath;
+				string dirRelativePath = Path.Combine(Directory.GetCurrentDirectory(), path);
+				if (File.Exists(dirRelativePath))
+					return dirRelativePath;
+
+				throw new FileNotFoundException($"Unable to find relative config file in the following paths: '{exeRelativePath}' or '{dirRelativePath}'");
+			}
 
 			// If it's a rooted path, return it
 			return path;

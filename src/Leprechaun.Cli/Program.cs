@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Leprechaun.Execution;
 
 namespace Leprechaun.Cli
@@ -25,7 +26,15 @@ namespace Leprechaun.Cli
 			appRunTimer.Start();
 
 			var runner = new Runner();
-			runner.Run(parsedArgs);
+			try
+			{
+				runner.Run(parsedArgs);
+			}
+			catch(FileNotFoundException ex)
+			{
+				WriteError(ex);
+				Environment.Exit(1);
+			}
 
 			appRunTimer.Stop();
 
@@ -33,6 +42,15 @@ namespace Leprechaun.Cli
 			{
 				System.Console.ReadKey();
 			}
+		}
+
+		static void WriteError(Exception ex)
+		{
+			var oldColor = Console.ForegroundColor;
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.WriteLine($"ERROR: {ex.Message}");
+			Console.WriteLine(ex.StackTrace);
+			Console.ForegroundColor = oldColor;
 		}
     }
 }
