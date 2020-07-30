@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Configy">
-      <Version>1.1.0-pre01</Version>
+      <Version>1.1.0-pre02</Version>
     </PackageReference>
     <PackageReference Include="FluentAssertions">
       <Version>5.3.0</Version>
