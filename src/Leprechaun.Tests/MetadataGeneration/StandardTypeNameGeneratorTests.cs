@@ -14,9 +14,9 @@ namespace Leprechaun.Tests.MetadataGeneration
 			InlineData("/Foo/Bar", "/Foo/Bar/Baz/9Foo9/Quux", "Baz._9Foo9.Quux"),
 			InlineData("/Foo", "/Foo/Name Transform.Test", "NameTransform.Test"),
 			InlineData("/Foo", "/Foo/Name Transform", "NameTransform")]
-		public void GetFullTypeName_ShouldPerformAsExpected(string rootNamespace, string fullPath, string expected, bool keepLeadingUnderscores = false)
+		public void GetFullTypeName_ShouldPerformAsExpected(string rootNamespace, string fullPath, string expected, bool keepLeadingUnderscores = false, string userscoreReplaceString = "")
 		{
-			var sut = new StandardTypeNameGenerator(rootNamespace, keepLeadingUnderscores);
+			var sut = new StandardTypeNameGenerator(rootNamespace, keepLeadingUnderscores, userscoreReplaceString);
 			sut.GetFullTypeName(fullPath).Should().Be(expected);
 		}
 
@@ -29,9 +29,9 @@ namespace Leprechaun.Tests.MetadataGeneration
 			InlineData("field_name", "FieldName"),
 			InlineData("field_name_id", "FieldNameId"),
 			InlineData("Field.Name", "Field.Name")]
-		public void ConvertToIdentifier_ShouldPerformAsExpected(string input, string expected, bool keepLeadingUnderscores = false)
+		public void ConvertToIdentifier_ShouldPerformAsExpected(string input, string expected, bool keepLeadingUnderscores = false, string userscoreReplaceString = "")
 		{
-			var sut = new StandardTypeNameGenerator(string.Empty, keepLeadingUnderscores);
+			var sut = new StandardTypeNameGenerator(string.Empty, keepLeadingUnderscores, userscoreReplaceString);
 
 			sut.ConvertToIdentifier(input).Should().Be(expected);
 		}

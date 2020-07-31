@@ -10,12 +10,13 @@ namespace Leprechaun.MetadataGeneration
 	{
 		private readonly string _namespaceRoot;
 		private readonly bool _keepLeadingUnderscores;
+		private readonly string _userscoreReplaceString;
 
-		public StandardTypeNameGenerator(string namespaceRootPath, bool keepLeadingUnderscores)
+		public StandardTypeNameGenerator(string namespaceRootPath, bool keepLeadingUnderscores, string userscoreReplaceString)
 		{
 			if(namespaceRootPath == "/") throw new NotSupportedException("Namespace root cannot be /, please use a sub-path e.g. /sitecore/templates");
 			_keepLeadingUnderscores = keepLeadingUnderscores;
-
+			_userscoreReplaceString = userscoreReplaceString;
 			_namespaceRoot = namespaceRootPath;
 		}
 
@@ -52,7 +53,14 @@ namespace Leprechaun.MetadataGeneration
 				string typeName = name.Substring(name.LastIndexOf('.') + 1);
 
 				if (!_keepLeadingUnderscores)
+				{
 					typeName = typeName.TrimStart('_');
+
+					if (!string.IsNullOrEmpty(_userscoreReplaceString))
+					{
+						typeName = _userscoreReplaceString + typeName;
+					}
+				}
 
 				string namespaceName = ConvertToIdentifier(name.Substring(0, name.LastIndexOf('.')));
 
@@ -60,6 +68,16 @@ namespace Leprechaun.MetadataGeneration
 			}
 			else
 			{
+				if (!_keepLeadingUnderscores)
+				{
+					name = name.TrimStart('_');
+
+					if (!string.IsNullOrEmpty(_userscoreReplaceString))
+					{
+						name = _userscoreReplaceString + name;
+					}
+				}
+
 				name = ConvertToIdentifier(name);
 			}
 
@@ -75,7 +93,9 @@ namespace Leprechaun.MetadataGeneration
 			name = Regex.Replace(name, @"(\w)_(\w)", "$1 $2");
 
 			if (!_keepLeadingUnderscores)
+			{
 				name = name.TrimStart('_');
+			}
 
 			// Uppercase any non-capitalized words (e.g. 'lord flowers' -> 'Lord Flowers')
 			// this makes identifiers Pascal Case as .NET expects

@@ -37,17 +37,35 @@ namespace Leprechaun.TemplateReaders
 
 		protected void ParseExcludedTemplates(XmlNode configNode)
 		{
-			IEnumerable<XmlNode> nodes = configNode.ChildNodes
+			IEnumerable<XmlNode> excludedBaseNodes = configNode.ChildNodes
 				.Cast<XmlNode>()
 				.Where(node => node.Name == "excludedBaseTemplate")
 				.ToList();
 
-			foreach (XmlNode excludedTemplate in nodes)
+			foreach (XmlNode excludedBaseTemplate in excludedBaseNodes)
+			{
+				var id = excludedBaseTemplate.GetExpectedAttribute("id");
+				if (Guid.TryParse(id, out Guid templateId))
+				{
+					_ignoredBaseTemplateIds.Add(templateId);
+				}
+				else
+				{
+					throw new InvalidOperationException($"'{id}' is not a valid Guid in '{excludedBaseTemplate.OuterXml}'");
+				}
+			}
+
+			IEnumerable<XmlNode> excludedNodes = configNode.ChildNodes
+				.Cast<XmlNode>()
+				.Where(node => node.Name == "excludedTemplate")
+				.ToList();
+
+			foreach (XmlNode excludedTemplate in excludedNodes)
 			{
 				var id = excludedTemplate.GetExpectedAttribute("id");
 				if (Guid.TryParse(id, out Guid templateId))
 				{
-					_ignoredBaseTemplateIds.Add(templateId);
+					_ignoredTemplateIds.Add(templateId);
 				}
 				else
 				{
@@ -76,12 +94,19 @@ namespace Leprechaun.TemplateReaders
 		protected virtual IEnumerable<TemplateInfo> ParseTemplates(IItemData root)
 		{
 			var processQueue = new Queue<IItemData>();
+			ICollection<Guid> ignoredTemplateIds = IgnoredTemplateIds;
 
 			processQueue.Enqueue(root);
 
 			while (processQueue.Count > 0)
 			{
 				var currentTemplate = processQueue.Dequeue();
+
+				// If the template is in the ignored template list, do not parse it
+				if (ignoredTemplateIds.Contains(currentTemplate.Id))
+				{
+					continue;
+				}
 
 				// if it's a template we parse it and skip adding children (nested templates not really allowed)
 				if (currentTemplate.TemplateId == TemplateTemplateId)
@@ -200,8 +225,15 @@ namespace Leprechaun.TemplateReaders
 			FolderId
 		};
 
+		private readonly HashSet<Guid> _ignoredTemplateIds = new HashSet<Guid>
+		{
+			StandardTemplateId,
+			FolderId
+		};
+
 		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => _ignoredBaseTemplateIds;
-		
+		protected virtual ICollection<Guid> IgnoredTemplateIds => _ignoredTemplateIds;
+
 
 		protected virtual IDictionary<Guid, string> GetAllFields(IItemData item)
 		{

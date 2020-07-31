@@ -29,16 +29,14 @@ namespace {template.Namespace}
     using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
-    using Helix.Foundation.ORM.Models;
     using Glass.Mapper.Sc.Configuration.Attributes;
     using Glass.Mapper.Sc.Fields;
     using global::Sitecore.Data;
-	using System.CodeDom.Compiler;
 
     /// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
     ///[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
     [SitecoreType(TemplateId = {template.Namespace}.Constants.{template.CodeName}.TemplateIdString)]
-	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
+    [GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
     public partial interface I{template.CodeName} : {GetBaseInterfaces(template)}
     {{
         {RenderInterfaceFields(template)}
@@ -49,9 +47,9 @@ namespace {template.Namespace}
 namespace {template.Namespace}.Constants
 {{
     using global::Sitecore.Data;
-	using System.CodeDom.Compiler;
+    using System.CodeDom.Compiler;
 
-	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
+    [GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
     public struct {template.CodeName}
     {{
         public const string TemplateIdString = ""{template.Id}"";
