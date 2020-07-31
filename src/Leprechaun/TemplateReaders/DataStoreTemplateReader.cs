@@ -225,11 +225,7 @@ namespace Leprechaun.TemplateReaders
 			FolderId
 		};
 
-		private readonly HashSet<Guid> _ignoredTemplateIds = new HashSet<Guid>
-		{
-			StandardTemplateId,
-			FolderId
-		};
+		private readonly HashSet<Guid> _ignoredTemplateIds = new HashSet<Guid>();
 
 		protected virtual ICollection<Guid> IgnoredBaseTemplateIds => _ignoredBaseTemplateIds;
 		protected virtual ICollection<Guid> IgnoredTemplateIds => _ignoredTemplateIds;
