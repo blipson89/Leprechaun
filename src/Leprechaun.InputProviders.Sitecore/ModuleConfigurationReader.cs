@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Leprechaun.Utility.ErrorWriter;
 using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Configuration;
 using Sitecore.DevEx.Serialization.Client.Configuration;
@@ -37,7 +39,16 @@ namespace Leprechaun.InputProviders.Sitecore
 		{
 			if (_modules != null) return _modules;
 			var resolveRootConfiguration = Task.Run(async () => await _rootConfigurationManager.ResolveRootConfiguration(_configRootDirectory));
-			resolveRootConfiguration.Wait();
+			try
+			{
+				resolveRootConfiguration.Wait();
+			}
+			catch (AggregateException ex)
+			{
+				if(ex.Message.Contains("Couldn't resolve a root configuration"))
+					WriteError("The path to the sitecore.json file could not be resolved. Check the 'configRootDirectory' property on the 'moduleConfigReader' in your Leprechaun.config.", ex);
+				Environment.Exit(1);
+			}
 
 
 			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result,

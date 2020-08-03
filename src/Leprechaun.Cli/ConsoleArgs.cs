@@ -19,5 +19,8 @@ namespace Leprechaun.Cli
 
 		[SwitchArgument('g', "grumpycat", false, Description = "Disables the ASCII art splash screen. You hate fun.")]
 		public bool NoSplash { get; set; }
+
+		[ValueArgument(typeof(string), 'p', "plugins", Description = "Path to the folder where plugins will be located. ./Leprechaun")]
+		public string PluginPath { get; set; }
 	}
 }
