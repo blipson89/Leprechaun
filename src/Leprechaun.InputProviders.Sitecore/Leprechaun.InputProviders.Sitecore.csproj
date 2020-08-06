@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
+	<Import Project="..\SharedProperties.targets" />
+	<PropertyGroup>
+    <PackageId>Leprechaun.InputProviders.Sitecore</PackageId>
+    <Description>Input Provider for Leprechaun to allow for reading Sitecore serialized items.</Description>
+    <PackageTags>sitecore codegen leprechaun</PackageTags>
+	</PropertyGroup>
+	<PropertyGroup>
     <RootNamespace>Leprechaun.InputProviders.Sitecore</RootNamespace>
     <AssemblyName>Leprechaun.InputProviders.Sitecore</AssemblyName>
     <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
