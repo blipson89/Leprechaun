@@ -38,8 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Files", ".Solutio
 		src\SharedProperties.targets = src\SharedProperties.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Cli.Scs", "src\Leprechaun.Cli\Leprechaun.Cli.Scs.csproj", "{9D0A3288-1501-4F10-8892-3B8690C4D422}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,10 +80,6 @@ Global
 		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D0A3288-1501-4F10-8892-3B8690C4D422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D0A3288-1501-4F10-8892-3B8690C4D422}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D0A3288-1501-4F10-8892-3B8690C4D422}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D0A3288-1501-4F10-8892-3B8690C4D422}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,7 +94,6 @@ Global
 		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA} = {4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}
 		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5} = {99A3B091-2383-4CB0-8CE2-0B35C4BD9A71}
 		{110690BB-5928-4CC9-AD8A-8B3A91A54206} = {9078A9C6-D5D9-4DFE-AB2B-AF5BF633F6D9}
-		{9D0A3288-1501-4F10-8892-3B8690C4D422} = {9078A9C6-D5D9-4DFE-AB2B-AF5BF633F6D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A806E6A-5823-47D6-A014-1628A99432E0}

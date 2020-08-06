@@ -17,6 +17,18 @@ namespace Leprechaun.Cli
 			argsParser.ExtractArgumentAttributes(parsedArgs);
 			argsParser.ParseCommandLine(args);
 
+			if (parsedArgs.Legacy)
+			{
+				LegacyProgram.Run(args);
+			}
+			else
+			{
+				Run(parsedArgs, argsParser);
+			}
+		}
+
+		private static void Run(ConsoleArgs parsedArgs, CommandLineParser.CommandLineParser argsParser)
+		{
 			if (parsedArgs.Help)
 			{
 				argsParser.ShowUsage();
@@ -26,6 +38,7 @@ namespace Leprechaun.Cli
 			AssemblyLoadContext.Default.Resolving += (context, name) =>
 			{
 				var pluginDir = ResolvePluginPath(parsedArgs.PluginPath);
+
 				// Try to load from the plugins directory. Else, fall back to the app directory
 				if (File.Exists(Path.Combine(pluginDir, $"{name.Name}.dll")))
 					return context.LoadFromAssemblyPath(Path.Combine(pluginDir, $"{name.Name}.dll"));
@@ -57,7 +70,7 @@ namespace Leprechaun.Cli
 		public static string ResolvePluginPath(string path)
 		{
 			if (string.IsNullOrEmpty(path))
-				return AppDomain.CurrentDomain.BaseDirectory;
+				return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plugins");
 
 			if (!Path.IsPathRooted(path))
 			{

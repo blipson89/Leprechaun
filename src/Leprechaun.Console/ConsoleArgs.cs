@@ -19,5 +19,11 @@ namespace Leprechaun.Console
 
 		[SwitchArgument('g', "grumpycat", false, Description = "Disables the ASCII art splash screen. You hate fun.")]
 		public bool NoSplash { get; set; }
+
+		[SwitchArgument('l', "legacy", false, Description = "Use legacy console app. Required for input providers that don't support .NET Core (like Rainbow)")]
+		public bool Legacy { get; set; }
+
+		[ValueArgument(typeof(string), 'p', "plugins", Description = "Path to the folder where plugins will be located. ./Leprechaun")]
+		public string PluginPath { get; set; }
 	}
 }
