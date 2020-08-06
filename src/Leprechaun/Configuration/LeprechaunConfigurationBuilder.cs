@@ -148,6 +148,10 @@ namespace Leprechaun.Configuration
 						allImportsFiles.Remove(import);
 						continue;
 					}
+
+					if (nodeToImport.HasAttribute("name"))
+						continue;
+
 					var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
 					if (string.IsNullOrEmpty(namespaceUri))
 					{
