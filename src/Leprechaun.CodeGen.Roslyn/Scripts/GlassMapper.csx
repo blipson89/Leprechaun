@@ -38,7 +38,7 @@ namespace {template.Namespace}
     /// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
     ///[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]
     [SitecoreType(TemplateId = {template.Namespace}.Constants.{template.CodeName}.TemplateIdString)]
-	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
     public partial interface I{template.CodeName} : {GetBaseInterfaces(template)}
     {{
         {RenderInterfaceFields(template)}
@@ -51,7 +51,7 @@ namespace {template.Namespace}.Constants
     using global::Sitecore.Data;
 	using System.CodeDom.Compiler;
 
-	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
     public struct {template.CodeName}
     {{
         public const string TemplateIdString = ""{template.Id}"";
