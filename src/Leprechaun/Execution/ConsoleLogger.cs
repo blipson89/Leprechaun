@@ -39,6 +39,13 @@ namespace Leprechaun.Execution
 			Error(FormatExceptionAsText(exception));
 		}
 
+		public void Error(string message, Exception exception)
+		{
+			Error(message);
+			Error("--- Full error below ---");
+			Error(exception);
+		}
+
 		protected virtual string FormatExceptionAsText(Exception exception)
 		{
 			var exMessage = new StringBuilder();

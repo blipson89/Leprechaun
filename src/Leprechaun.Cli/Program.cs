@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Loader;
 using Leprechaun.Execution;
-using static Leprechaun.Utility.ErrorWriter;
 
 namespace Leprechaun.Cli
 {
@@ -43,7 +42,7 @@ namespace Leprechaun.Cli
 			}
 			catch (FileNotFoundException ex)
 			{
-				WriteError(ex);
+				new ConsoleLogger().Error(ex);
 				Environment.Exit(1);
 			}
 

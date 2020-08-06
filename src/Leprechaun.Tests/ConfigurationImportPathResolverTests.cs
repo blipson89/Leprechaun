@@ -116,6 +116,11 @@ namespace Leprechaun.Tests
 			{
 				
 			}
+
+			public void Error(string message, Exception exception)
+			{
+				
+			}
 		}
 	}
 }
