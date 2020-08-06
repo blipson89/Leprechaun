@@ -91,17 +91,31 @@ namespace Leprechaun.CodeGen.Roslyn
 				{
 					var scriptPath = script.Trim();
 
-					// not an absolute drive path, in which case we want to prepend the current exe path to it
-					if (scriptPath[1] != ':')
-					{
-						scriptPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, scriptPath);
-					}
-
-					if(!File.Exists(scriptPath)) throw new FileNotFoundException($"Code generation script '{scriptPath}' was not found on disk.");
+					ResolveScriptPath(scriptPath);
 
 					return GetScript(scriptPath);
 				})
 				.ToArray();
+		}
+
+		protected virtual string ResolveScriptPath(string path)
+		{
+			if (File.Exists(path))
+				return path;
+			var directoryRelativePath = "";
+			var exeRelativePath = "";
+
+			if (!Path.IsPathRooted(path))
+			{
+				directoryRelativePath = Path.Combine(Directory.GetCurrentDirectory(), path);
+				if (File.Exists(directoryRelativePath))
+					return directoryRelativePath;
+
+				exeRelativePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
+				if (File.Exists(exeRelativePath))
+					return exeRelativePath;
+			}
+			throw new FileNotFoundException($"Code generation script '{path}' was not found on disk.\n\nLooked in '{directoryRelativePath}' and '{exeRelativePath}'");
 		}
 	}
 }
