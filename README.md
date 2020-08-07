@@ -73,8 +73,8 @@ dotnet tool uninstall --global Leprechaun.Cli
 
 #### General Steps
 1. Grab the version of `Leprechaun.config` associated with your version of Leprechaun from GitHub:
-    * [Leprechaun.config (for Rainbow)](/)
-    * [Leprechaun.config (for Sitecore Serialization)](/)
+    * [Leprechaun.config (for Rainbow)](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config)
+    * [Leprechaun.config (for Sitecore Serialization)](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)
 1. Place the `Leprechaun.config` file somewhere close to the source code. In Helix solutions, I would recommend `src/`.
 1. Grab a script template. Some pre-configured ones can be [found here (link)](https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts).
 1. Open up `Leprechaun.config` and update settings where applicable. Pay close attention to the following:
