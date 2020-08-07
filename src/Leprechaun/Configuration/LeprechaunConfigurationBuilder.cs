@@ -7,6 +7,7 @@ using Configy;
 using Configy.Containers;
 using Configy.Parsing;
 using Leprechaun.CodeGen;
+using Leprechaun.Execution;
 using Leprechaun.Filters;
 using Leprechaun.InputProviders;
 using Leprechaun.Logging;
@@ -93,15 +94,32 @@ namespace Leprechaun.Configuration
 		{
 			var definition = new ContainerDefinition(_sharedConfigElement);
 
-			var sharedConfiguration = GetContainer(definition);
+			try
+			{
+				var sharedConfiguration = GetContainer(definition);
 
-			// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
-			sharedConfiguration.AssertSingleton(typeof(ITemplateMetadataGenerator));
-			sharedConfiguration.AssertSingleton(typeof(IArchitectureValidator));
-			sharedConfiguration.AssertSingleton(typeof(IInputProvider));
-			sharedConfiguration.Assert(typeof(ILogger));
+				// Assert that expected dependencies exist - and in the case of data stores are specifically singletons (WEIRD things happen otherwise)
+				sharedConfiguration.AssertSingleton(typeof(ITemplateMetadataGenerator));
+				sharedConfiguration.AssertSingleton(typeof(IArchitectureValidator));
+				sharedConfiguration.AssertSingleton(typeof(IInputProvider));
+				sharedConfiguration.Assert(typeof(ILogger));
 
-			_sharedConfig = sharedConfiguration;
+				_sharedConfig = sharedConfiguration;
+			}
+			catch (InvalidOperationException ex)
+			{
+				if (ex.Message.Contains("Leprechaun.InputProviders.Rainbow"))
+				{
+					new ConsoleLogger().Error("Unable to resolve dependency. If you are using Rainbow, ensure you have the /r switch in the command line arguments.", ex);
+				}
+				else
+				{
+					new ConsoleLogger().Error($"{ex.Message}.\n\nCheck your configuration files to make sure it is typed correctly. " +
+											$"If so, ensure that the dlls are in the correct location. " +
+											$"You may need to use the /p switch to specify this location", ex);
+				}
+				Environment.Exit(1);
+			}
 		}
 
 		public void InitializeInputProvider()

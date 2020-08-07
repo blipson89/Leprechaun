@@ -63,7 +63,7 @@
   <ItemGroup>
     <PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
     <PackageReference Include="Configy" Version="1.1.0-pre02" />
-    <PackageReference Include="Sitecore.Kernel" Version="9.2.0" />
+    <PackageReference Include="Sitecore.Kernel" Version="9.3.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.1" />

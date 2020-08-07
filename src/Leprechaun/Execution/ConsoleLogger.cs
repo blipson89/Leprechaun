@@ -42,6 +42,7 @@ namespace Leprechaun.Execution
 		public void Error(string message, Exception exception)
 		{
 			Error(message);
+			Error("");
 			Error("--- Full error below ---");
 			Error(exception);
 		}

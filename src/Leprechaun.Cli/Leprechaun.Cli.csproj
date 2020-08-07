@@ -28,14 +28,17 @@
 		<None Include="..\Leprechaun.InputProviders.Sitecore\bin\Release\netcoreapp3.1\*">
 			<Pack>true</Pack>
 			<PackagePath>tools\netcoreapp3.1\any\Plugins</PackagePath>
+			<Visible>false</Visible>
 		</None>
 		<None Include="..\Leprechaun.Console\bin\Release\net472\*">
 			<Pack>true</Pack>
 			<PackagePath>tools\netcoreapp3.1\any\Legacy</PackagePath>
+			<Visible>false</Visible>
 		</None>
 		<None Include="..\Leprechaun.InputProviders.Rainbow\bin\Release\net472\*Rainbow*.*">
 			<Pack>true</Pack>
 			<PackagePath>tools\netcoreapp3.1\any\Legacy</PackagePath>
+			<Visible>false</Visible>
 		</None>
 	</ItemGroup>
 </Project>
