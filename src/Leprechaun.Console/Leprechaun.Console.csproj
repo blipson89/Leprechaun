@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedProperties.targets" />
+  <PropertyGroup>
+	<PackageId>Leprechaun.Console</PackageId>
+	<Description>A CLI application to use the Leprechaun codegen framework for Sitecore.</Description>
+    <PackageTags>sitecore codegen leprechaun</PackageTags>
+  </PropertyGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>Leprechaun.Console</RootNamespace>
@@ -27,12 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
+    <None Remove="Leprechaun.Console.nuspec" />
+    <None Remove="Leprechaun.Console.Runner.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -53,10 +55,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Leprechaun.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj" />
@@ -64,10 +62,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
-    <PackageReference Include="Configy" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
-    <PackageReference Include="Rainbow.Storage.Yaml" Version="2.1.1" />
-    <PackageReference Include="Sitecore.Kernel" Version="9.2.0" />
+    <PackageReference Include="Configy" Version="1.1.0-pre02" />
+    <PackageReference Include="Sitecore.Kernel" Version="9.3.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.1" />

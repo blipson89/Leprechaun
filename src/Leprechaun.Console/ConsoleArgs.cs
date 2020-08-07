@@ -1,8 +1,9 @@
 ﻿using CommandLineParser.Arguments;
+using Leprechaun.Execution;
 
 namespace Leprechaun.Console
 {
-	class ConsoleArgs
+	class ConsoleArgs : IRuntimeArgs
 	{
 		[ValueArgument(typeof(string), 'c', "config", Description = "Path to the config file to use. Defaults to Leprechaun.config.")]
 		public string ConfigFilePath { get; set; }
@@ -18,5 +19,11 @@ namespace Leprechaun.Console
 
 		[SwitchArgument('g', "grumpycat", false, Description = "Disables the ASCII art splash screen. You hate fun.")]
 		public bool NoSplash { get; set; }
+
+		[SwitchArgument('r', "rainbow", false, Description = "Use legacy console app. Required for input providers that don't support .NET Core (like Rainbow)")]
+		public bool Rainbow { get; set; }
+
+		[ValueArgument(typeof(string), 'p', "plugins", Description = "Path to the folder where plugins will be located. ./Leprechaun")]
+		public string PluginPath { get; set; }
 	}
 }

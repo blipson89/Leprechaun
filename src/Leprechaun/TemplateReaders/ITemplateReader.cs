@@ -1,10 +1,10 @@
-﻿using Leprechaun.Model;
-using Rainbow.Storage;
+﻿using Leprechaun.Filters;
+using Leprechaun.Model;
 
 namespace Leprechaun.TemplateReaders
 {
 	public interface ITemplateReader
 	{
-		TemplateInfo[] GetTemplates(params TreeRoot[] rootPaths);
+		TemplateInfo[] GetTemplates(ITemplatePredicate predicate);
 	}
 }

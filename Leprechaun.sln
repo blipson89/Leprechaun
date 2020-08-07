@@ -1,17 +1,42 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun", "src\Leprechaun\Leprechaun.csproj", "{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun", "src\Leprechaun\Leprechaun.csproj", "{FA3E85A5-31ED-458F-A864-54FF20FAAE5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Tests", "src\Leprechaun.Tests\Leprechaun.Tests.csproj", "{35E11AFB-E613-4804-BD26-F928DE00EF39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Tests", "src\Leprechaun.Tests\Leprechaun.Tests.csproj", "{35E11AFB-E613-4804-BD26-F928DE00EF39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Console", "src\Leprechaun.Console\Leprechaun.Console.csproj", "{13EC2417-AE21-44D2-81EA-97514B140E92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Console", "src\Leprechaun.Console\Leprechaun.Console.csproj", "{13EC2417-AE21-44D2-81EA-97514B140E92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.CodeGen.Roslyn", "src\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj", "{36AA27E4-033F-40CF-9318-131791352CE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.CodeGen.Roslyn", "src\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj", "{36AA27E4-033F-40CF-9318-131791352CE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leprechaun.Console.Tests", "src\Leprechaun.Console.Tests\Leprechaun.Console.Tests.csproj", "{B6175FFB-5DF5-4CD4-8988-E439F13DD823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Console.Tests", "src\Leprechaun.Console.Tests\Leprechaun.Console.Tests.csproj", "{B6175FFB-5DF5-4CD4-8988-E439F13DD823}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.InputProviders.Rainbow", "src\Leprechaun.InputProviders.Rainbow\Leprechaun.InputProviders.Rainbow.csproj", "{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun", "Leprechaun", "{FDF95596-995C-4626-9FD0-3B47876088BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.CodeGen.Roslyn", "Leprechaun.CodeGen.Roslyn", "{B2567995-58E3-4323-B6C1-E5093ADEA48A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.Console", "Leprechaun.Console", "{272E3BBF-F284-40DD-8D7B-8F173B7B76BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.InputProviders.Rainbow", "Leprechaun.InputProviders.Rainbow", "{4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.InputProviders.Rainbow.Tests", "src\Leprechaun.InputProviders.Rainbow.Tests\Leprechaun.InputProviders.Rainbow.Tests.csproj", "{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.InputProviders.Sitecore", "Leprechaun.InputProviders.Sitecore", "{99A3B091-2383-4CB0-8CE2-0B35C4BD9A71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.InputProviders.Sitecore", "src\Leprechaun.InputProviders.Sitecore\Leprechaun.InputProviders.Sitecore.csproj", "{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Leprechaun.Cli", "Leprechaun.Cli", "{9078A9C6-D5D9-4DFE-AB2B-AF5BF633F6D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Leprechaun.Cli", "src\Leprechaun.Cli\Leprechaun.Cli.csproj", "{110690BB-5928-4CC9-AD8A-8B3A91A54206}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Files", ".Solution Files", "{43F3796E-E984-47B2-9F48-C996A5F3D7AD}"
+	ProjectSection(SolutionItems) = preProject
+		src\SharedProperties.targets = src\SharedProperties.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +64,36 @@ Global
 		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6175FFB-5DF5-4CD4-8988-E439F13DD823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110690BB-5928-4CC9-AD8A-8B3A91A54206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FA3E85A5-31ED-458F-A864-54FF20FAAE5F} = {FDF95596-995C-4626-9FD0-3B47876088BA}
+		{35E11AFB-E613-4804-BD26-F928DE00EF39} = {FDF95596-995C-4626-9FD0-3B47876088BA}
+		{13EC2417-AE21-44D2-81EA-97514B140E92} = {272E3BBF-F284-40DD-8D7B-8F173B7B76BD}
+		{36AA27E4-033F-40CF-9318-131791352CE2} = {B2567995-58E3-4323-B6C1-E5093ADEA48A}
+		{B6175FFB-5DF5-4CD4-8988-E439F13DD823} = {272E3BBF-F284-40DD-8D7B-8F173B7B76BD}
+		{05B6F2BF-C394-4DDC-83FE-11551CBB3AD9} = {4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}
+		{114D6644-CC1B-42BE-AB90-19CB9EBF94BA} = {4E2CD23B-63D7-4220-889F-B6B16F3B5FA2}
+		{6D2F6A0A-087F-4BDC-B719-42C24AE0A0F5} = {99A3B091-2383-4CB0-8CE2-0B35C4BD9A71}
+		{110690BB-5928-4CC9-AD8A-8B3A91A54206} = {9078A9C6-D5D9-4DFE-AB2B-AF5BF633F6D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A806E6A-5823-47D6-A014-1628A99432E0}

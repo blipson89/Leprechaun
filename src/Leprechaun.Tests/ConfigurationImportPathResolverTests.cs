@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Leprechaun.Configuration;
 using Leprechaun.Logging;
 using Xunit;
 
@@ -112,6 +113,11 @@ namespace Leprechaun.Tests
 			}
 
 			public void Error(Exception exception)
+			{
+				
+			}
+
+			public void Error(string message, Exception exception)
 			{
 				
 			}

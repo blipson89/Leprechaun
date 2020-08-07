@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
-using Rainbow.Storage;
 
 namespace Leprechaun.Filters
 {
-	public class TemplateTreeRoot : TreeRoot
+	public class TemplateTreeRoot : ITemplateTreeRoot
 	{
-		public TemplateTreeRoot(string name, string path) : base(name, path, "master")
+		public TemplateTreeRoot(string name, string path)
 		{
 			Exclusions = new List<IPresetTreeExclusion>();
+			Name = name;
+			Path = path;
 		}
 
 		public IList<IPresetTreeExclusion> Exclusions { get; set; }
+		public string Name { get; }
+		public string Path { get; }
 	}
 }

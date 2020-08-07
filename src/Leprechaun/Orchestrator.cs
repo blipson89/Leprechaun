@@ -9,7 +9,7 @@ using Leprechaun.Validation;
 
 namespace Leprechaun
 {
-	public class Orchestrator
+	public class Orchestrator : IOrchestrator
 	{
 		private readonly ITemplateMetadataGenerator _metadataGenerator;
 		private readonly IArchitectureValidator _architectureValidator;
@@ -57,9 +57,7 @@ namespace Leprechaun
 			Assert.IsNotNull(templateReader, "templateReader != null");
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
 
-			var roots = templatePredicate.GetRootPaths();
-
-			return templateReader.GetTemplates(roots);
+			return templateReader.GetTemplates(templatePredicate);
 		}
 
 		protected virtual void FilterIgnoredFields(IEnumerable<TemplateConfiguration> configurations)

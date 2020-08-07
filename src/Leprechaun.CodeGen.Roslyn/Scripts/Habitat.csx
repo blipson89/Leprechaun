@@ -51,7 +51,7 @@ namespace {GenericRootNamespace}
 	using global::Sitecore.Data;
 	using System.CodeDom.Compiler;
 
-	[GeneratedCode(""Leprechaun"", ""1.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
 	public struct Templates
 	{{
 		{RenderTemplates()}

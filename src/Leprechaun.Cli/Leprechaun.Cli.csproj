@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\SharedProperties.targets" />
+	<PropertyGroup>
+		<PackageId>Leprechaun.Cli</PackageId>
+		<Description>dotnet CLI tool for Leprechaun</Description>
+		<PackageTags>sitecore codegen leprechaun</PackageTags>
+	</PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>leprechaun</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PreserveCompilationContext>false</PreserveCompilationContext>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommandLineArgumentsParser" Version="3.0.9" />
+		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Leprechaun.CodeGen.Roslyn\Leprechaun.CodeGen.Roslyn.csproj" />
+		<ProjectReference Include="..\Leprechaun\Leprechaun.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\Leprechaun.InputProviders.Sitecore\bin\Release\netcoreapp3.1\*">
+			<Pack>true</Pack>
+			<PackagePath>tools\netcoreapp3.1\any\Plugins</PackagePath>
+			<Visible>false</Visible>
+		</None>
+		<None Include="..\Leprechaun.Console\bin\Release\net472\*">
+			<Pack>true</Pack>
+			<PackagePath>tools\netcoreapp3.1\any\Legacy</PackagePath>
+			<Visible>false</Visible>
+		</None>
+		<None Include="..\Leprechaun.InputProviders.Rainbow\bin\Release\net472\*Rainbow*.*">
+			<Pack>true</Pack>
+			<PackagePath>tools\netcoreapp3.1\any\Legacy</PackagePath>
+			<Visible>false</Visible>
+		</None>
+	</ItemGroup>
+</Project>
