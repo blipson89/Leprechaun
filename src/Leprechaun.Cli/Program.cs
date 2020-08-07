@@ -17,7 +17,7 @@ namespace Leprechaun.Cli
 			argsParser.ExtractArgumentAttributes(parsedArgs);
 			argsParser.ParseCommandLine(args);
 
-			if (parsedArgs.Legacy)
+			if (parsedArgs.Rainbow)
 			{
 				LegacyProgram.Run(args);
 			}

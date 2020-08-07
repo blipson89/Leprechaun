@@ -165,7 +165,7 @@ In the following example, the "`items`" section is setup by Sitecore and was onl
 ### Integration
 There are a few ways possible you can integrate Leprechaun.
 
-**NOTE: in all examples below, add the switch /l (lowercase L) before the /c if you are using Rainbow**
+**NOTE: in all examples below, add the switch /r before the /c if you are using Rainbow**
 
 **Example 1: Pre-Build Event in MSBuild**
 ```xml
@@ -236,7 +236,7 @@ The best way to upgrade your `Leprechaun.config` is to compare your file against
 
 ### Updating your build process
 1. Install the `leprechaun.cli` dotnet tool (see installation section above)
-1. Update build scripts to add the `/l` (lowercase L) switch before the `/c` if you are using Rainbow (i.e. `dotnet leprechaun /l /c "path/to/config/file"`)
+1. Update build scripts to add the `/r` switch before the `/c` if you are using Rainbow (i.e. `dotnet leprechaun /r /c "path/to/config/file"`)
 
 ---
 

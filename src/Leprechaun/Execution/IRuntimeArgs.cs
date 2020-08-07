@@ -11,7 +11,7 @@
 		bool NoExit { get; set; }
 
 		bool NoSplash { get; set; }
-		bool Legacy { get; set; }
+		bool Rainbow { get; set; }
 		string PluginPath { get; set; }
 	}
 }
