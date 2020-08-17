@@ -167,15 +167,15 @@ namespace Leprechaun.Configuration
 						continue;
 					}
 
-					if (nodeToImport.HasAttribute("name"))
-						continue;
-
-					var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
-					if (string.IsNullOrEmpty(namespaceUri))
+					if (!nodeToImport.HasAttribute("name"))
 					{
-						throw new InvalidOperationException($"module does not have namespace: '{import}'");
+						var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
+						if (string.IsNullOrEmpty(namespaceUri))
+						{
+							throw new InvalidOperationException($"module does not have namespace: '{import}'");
+						}
+						nodeToImport.SetAttribute("name", namespaceUri);
 					}
-					nodeToImport.SetAttribute("name", namespaceUri);
 				}
 				else
 				{
