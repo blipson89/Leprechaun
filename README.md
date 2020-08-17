@@ -80,7 +80,8 @@ dotnet tool uninstall --global Leprechaun.Cli
 1. Open up `Leprechaun.config` and update settings where applicable. Pay close attention to the following:
     1. `<configurations import=".....">`
         * This line is going to tell Leprechaun where to look for additional configurations, typically for modules. Wildcards accepted.
-        * For **Helix** solutions: `.\*\*\code\CodeGen.config` *should* work.
+        * For **Helix** solutions with Rainbow: `.\*\*\code\CodeGen.config` *should* work.
+        * For **Helix** Solutions with Sitecore Serialization: `**\*.module.json` *should* work.
     1. `<configuration name="Sample.Base">`
         * Recommend changing this to `[SolutionName].Base`
     1. `<codeGenerator scripts="..." outputFile="...">`
@@ -127,7 +128,7 @@ Examples:
 ```
 
 #### Sitecore Serialization
-For Sitecore Serialization, rather than create a specific module file, you can add a `leprechaun` node do the `.module.json` file. The `leprechaun` node is a json representation of the xml in the `Leprechaun.config` file. You do not need to specify the configuration name, as it will default to the `namespace` attribute in the json file.
+For Sitecore Serialization, rather than create a specific module file, you can add a `leprechaun` node do the `.module.json` file. The `leprechaun` node is a json representation of the xml in the `Leprechaun.config` file.
 
 In the following example, the "`items`" section is setup by Sitecore and was only included as a point of reference.
 
@@ -154,8 +155,9 @@ In the following example, the "`items`" section is setup by Sitecore and was onl
   },
   "leprechaun": {
     "configuration": {
-      "@extends": "Sample.Base"
-    }
+      "@extends": "Sample.Base",
+      "@name": "Feature.Sample"
+    },
   }
 }
 ```

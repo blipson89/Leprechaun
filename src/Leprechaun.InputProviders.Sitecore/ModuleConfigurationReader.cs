@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Leprechaun.InputProviders.Sitecore.Extensions;
 using Microsoft.Extensions.Logging;
 using Sitecore.DevEx.Configuration;
 using Sitecore.DevEx.Serialization.Client.Configuration;
@@ -58,7 +59,7 @@ namespace Leprechaun.InputProviders.Sitecore
 				new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>()))); // TODO
 			moduleConfigurations.Wait();
 			
-			return _modules = moduleConfigurations.Result.ToDictionary(m => m.Namespace);
+			return _modules = moduleConfigurations.Result.ToDictionary(m => m.GetLeprechaunModuleName());
 		}
 	}
 }
