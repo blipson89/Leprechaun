@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Leprechaun.Filters;
@@ -38,6 +39,14 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 					var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore);
 					return ParseTemplates(itemAdapter);
 				})
+				.ToArray();
+		}
+
+		protected override Guid[] ParseMultilistValue(string value)
+		{
+			return value.Split(new []{'\r','\n','|'}, StringSplitOptions.RemoveEmptyEntries)
+				.Select(item => Guid.TryParse(item, out Guid result) ? result : Guid.Empty)
+				.Where(item => item != Guid.Empty)
 				.ToArray();
 		}
 	}
