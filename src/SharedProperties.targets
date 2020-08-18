@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<VersionPrefix>2.0.1</VersionPrefix>
-		<VersionSuffix></VersionSuffix>
+		<VersionPrefix>2.0.2</VersionPrefix>
+		<VersionSuffix>beta.1</VersionSuffix>
 		<Authors>Ben Lipson,Kam Figy</Authors>
 		<owners>Ben Lipson</owners>
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
