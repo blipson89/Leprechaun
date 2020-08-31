@@ -85,7 +85,7 @@ dotnet tool uninstall --global Leprechaun.Cli
     1. `<configuration name="Sample.Base">`
         * Recommend changing this to `[SolutionName].Base`
     1. `<codeGenerator scripts="..." outputFile="...">`
-        * `scripts` are the script templates that will be used. Pre-configured ones can be downloaded from 
+        * `scripts` are the script templates that will be used. Pre-configured ones can be downloaded from https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts
         * `outputFile` - I recommend `$(configDirectory)\$(layer)\$(module)\code\Templates.cs` for Habitat
             * For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\code\Models\Synthesis.Model.cs` *should* work. This is assuming you leave the .exe in the packages folder.
     1. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
