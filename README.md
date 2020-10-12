@@ -13,7 +13,7 @@ Why not?
 
 Leprechaun generates models based off of the yaml files outputted by Rainbow. Since these yaml files are on disk already, there's no need for Sitecore to be running or for Visual Studio to be open in order to generate the models. Without these dependencies, you can generate models as a pre-build step. 
 ### It's Helix-Friendly
-Most everything in Leprechaun is config-based. The base [Leprechaun.config](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.Console/Leprechaun.config) file contains everything needed for Leprechaun to get started for a single project. However, these configs can be extended and overridden. For each module you have, create a `CodeGen.config` file and have it extend another config.
+Most everything in Leprechaun is config-based. The base Leprechaun.config ([for Rainbow](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config), [for Sitecore Serialization](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)) file contains everything needed for Leprechaun to get started for a single project. However, these configs can be extended and overridden. For each module you have, create a `CodeGen.config` file and have it extend another config.
 
 For example, a module named `Feature.Promo` would contain a `CodeGen.config` file like this:
 
