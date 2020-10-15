@@ -82,7 +82,7 @@ namespace Leprechaun.Configuration
 				configuration.AssertSingleton(typeof(ITemplatePredicate));
 				configuration.AssertSingleton(typeof(ITypeNameGenerator));
 				configuration.AssertSingleton(typeof(ITemplateReader));
-				configuration.AssertSingleton(typeof(IRenderingReader));
+				//configuration.AssertSingleton(typeof(IRenderingReader));
 				configuration.Assert(typeof(ICodeGenerator));
 
 				// register the container with itself. how meta!
