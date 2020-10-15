@@ -6,22 +6,18 @@ using System.Linq;
 namespace Leprechaun.Model
 {
 	[DebuggerDisplay("{FullTypeName} ({Id})")]
-	public class TemplateCodeGenerationMetadata
+	public class TemplateCodeGenerationMetadata : BaseCodeGenerationMetadata
 	{
-		private readonly string _fullTypeName;
-
-		public TemplateCodeGenerationMetadata(TemplateInfo templateInfo, string fullTypeName, string rootNamespace, IEnumerable<TemplateFieldCodeGenerationMetadata> ownFields)
+		
+		public TemplateCodeGenerationMetadata(TemplateInfo templateInfo, string fullTypeName, string rootNamespace, IEnumerable<TemplateFieldCodeGenerationMetadata> ownFields):
+			base(fullTypeName,rootNamespace)
 		{
 			TemplateInfo = templateInfo;
-			RootNamespace = rootNamespace;
-			_fullTypeName = fullTypeName;
 			OwnFields = ownFields.ToArray();
 		}
 
 		public virtual TemplateInfo TemplateInfo { get; }
-
-		public virtual string RootNamespace { get; }
-
+		
 		public virtual string Path => TemplateInfo.Path;
 
 		public virtual Guid Id => TemplateInfo.Id;
@@ -30,11 +26,7 @@ namespace Leprechaun.Model
 
 		public virtual string HelpText => string.IsNullOrWhiteSpace(TemplateInfo.HelpText) ? $"Represents the {TemplateInfo.Name} field ({Id})." : TemplateInfo.HelpText;
 
-		/// <summary>
-		/// A unique name for this template, usable as a name for a C# class. e.g. for "Foo Bar" this would be "FooBar"
-		/// </summary>
-		public virtual string CodeName => _fullTypeName.Contains(".") ? _fullTypeName.Substring(_fullTypeName.LastIndexOf('.') + 1) : _fullTypeName;
-
+		
 		/// <summary>
 		/// Gets a namespace-formatted relative path from the root template path to this template
 		/// e.g. if root is /Foo, and this template's path is /Foo/Bar/Baz/Quux, this would be "Bar.Baz"
@@ -55,13 +47,7 @@ namespace Leprechaun.Model
 				return RootNamespace;
 			}
 		}
-
-		/// <summary>
-		/// Gets the full type name, qualified by namespace, of this template
-		/// e.g. RootNamespace.RelativeNamespace.CodeName
-		/// </summary>
-		public virtual string FullTypeName => $"{RootNamespace}.{_fullTypeName}";
-
+		
 		/// <summary>
 		/// The template's fields that should get passed to code generation
 		/// </summary>
