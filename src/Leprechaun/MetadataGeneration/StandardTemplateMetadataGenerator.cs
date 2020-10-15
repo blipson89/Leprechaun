@@ -22,8 +22,13 @@ namespace Leprechaun.MetadataGeneration
 					.Select(template => CreateTemplate(nameGenerator, predicate, template))
 					.OrderBy(template => template.Name, StringComparer.Ordinal)
 					.ToArray();
+				var renderings =configuration.Renderings
+					.Where(rendering => predicate.Includes(rendering))
+					.Select(rendering => CreateRendering(nameGenerator, predicate, rendering))
+					.OrderBy(rendering => rendering.Name, StringComparer.Ordinal)
+					.ToArray();
 
-				results.Add(new ConfigurationCodeGenerationMetadata(configuration.Configuration, templates));
+				results.Add(new ConfigurationCodeGenerationMetadata(configuration.Configuration, templates, renderings));
 			}
 
 			ApplyBaseTemplates(results);
@@ -40,6 +45,12 @@ namespace Leprechaun.MetadataGeneration
 			var fields = CreateTemplateFields(template, nameGenerator);
 
 			return new TemplateCodeGenerationMetadata(template, fullName, predicate.GetRootNamespace(template), fields);
+		}
+
+		protected virtual RenderingCodeGenerationMetadata CreateRendering(ITypeNameGenerator nameGenerator, ITemplatePredicate predicate, RenderingInfo rendering)
+		{
+			var fullName = nameGenerator.GetFullTypeName(rendering.Path);
+			return new RenderingCodeGenerationMetadata(rendering, fullName, predicate.GetRootNamespace(null));
 		}
 
 		protected virtual IEnumerable<TemplateFieldCodeGenerationMetadata> CreateTemplateFields(TemplateInfo template, ITypeNameGenerator nameGenerator)

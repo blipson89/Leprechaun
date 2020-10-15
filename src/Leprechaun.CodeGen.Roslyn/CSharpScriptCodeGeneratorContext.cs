@@ -17,6 +17,8 @@ namespace Leprechaun.CodeGen.Roslyn
 
 		public IReadOnlyCollection<TemplateCodeGenerationMetadata> Templates => _metadata.Metadata;
 
+		public IReadOnlyCollection<RenderingCodeGenerationMetadata> Renderings  => _metadata.RenderingMetadata;
+
 		public string ConfigurationName => _metadata.Configuration.Name;
 
 		public string GenericRootNamespace => _metadata.RootNamespace;

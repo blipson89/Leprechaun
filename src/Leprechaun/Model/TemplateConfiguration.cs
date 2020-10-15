@@ -13,5 +13,6 @@ namespace Leprechaun.Model
 
 		public IContainer Configuration { get; }
 		public IEnumerable<TemplateInfo> Templates { get; set; } = Enumerable.Empty<TemplateInfo>();
+		public IEnumerable<RenderingInfo> Renderings { get; set; }
 	}
 }
