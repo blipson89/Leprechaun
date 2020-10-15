@@ -70,6 +70,11 @@ namespace Leprechaun
 			var renderingReader = configuration.Resolve<IRenderingReader>();
 			var templatePredicate = configuration.Resolve<ITemplatePredicate>();
 
+			if (renderingReader == null)
+			{
+				return new RenderingInfo[0];
+			}
+
 			Assert.IsNotNull(renderingReader, "renderingReader != null");
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
 
