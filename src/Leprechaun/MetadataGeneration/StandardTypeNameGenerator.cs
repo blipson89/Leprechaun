@@ -89,6 +89,10 @@ namespace Leprechaun.MetadataGeneration
 			if (char.IsDigit(name[0]))
 				name = "_" + name;
 
+			//keep spaces as undescores
+			name = name.Replace(" ", "_");
+			
+
 			// replace invalid chars for an identifier with nothing (removes spaces, etc)
 			return Regex.Replace(name, "[^a-zA-Z0-9_\\.]+", string.Empty);
 		}
