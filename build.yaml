@@ -12,7 +12,7 @@ jobs:
       updateAssemblyInfoFilename: 'src/SharedAssemblyInfo.cs'
   - task: NuGetToolInstaller@1
     inputs:
-      versionSpec: '5.2.0'
+      versionSpec: '5.x'
       checkLatest: true
   - task: NuGetCommand@2
     inputs:
