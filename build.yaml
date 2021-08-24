@@ -29,6 +29,7 @@ jobs:
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'GitVersion.NuGetVersion'
       includeSymbols: true
+      nobuild: true
   - task: DotNetCoreCLI@2
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     displayName: "Push to Artifact feed"
