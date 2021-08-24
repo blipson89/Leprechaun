@@ -10,37 +10,37 @@ jobs:
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
       updateAssemblyInfoFilename: 'src/SharedAssemblyInfo.cs'
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: '5.x'
-      checkLatest: true
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
+    displayName: "Dotnet Restore"
     inputs:
       command: 'restore'
-      restoreSolution: '**/*.sln'
       feedsToUse: 'config'
       nugetConfigPath: 'NuGet.config'
-  - task: VSBuild@1
+  - task: DotNetCoreCLI@2
+    displayName: "Build"
     inputs:
-      solution: '**\*.sln'
-      configuration: '$(BuildConfiguration)'
-  - task: NuGetCommand@2
+      command: 'build'
+      arguments: --no-restore -c "Release"
+  - task: DotNetCoreCLI@2
+    displayName: "Dotnet Pack"
     inputs:
       command: 'pack'
       packagesToPack: '**/*.csproj'
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'GitVersion.NuGetVersion'
       includeSymbols: true
-  - task: NuGetCommand@2
-    inputs:
-      command: 'pack'
-      packagesToPack: '**/Leprechaun.Console.Runner.nuspec'
-      versioningScheme: 'byEnvVar'
-      versionEnvVar: 'GitVersion.NuGetVersion'
-      includeSymbols: true
-  - task: NuGetCommand@2
+      nobuild: true
+  - task: DotNetCoreCLI@2
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    displayName: "Push to Artifact feed"
     inputs:
       command: 'push'
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
       nuGetFeedType: 'internal'
-      publishVstsFeed: '8e7d8e9a-96b7-4364-985a-625841ad216e/f096d8c4-c6ef-4c3f-ab64-f47f1c625b2e'
+      publishVstsFeed: 'Leprechaun'
+  - task: PublishPipelineArtifact@1
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
+    displayName: "Publish Build Artifact"
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)'
+      artifactName: Packages
+    
