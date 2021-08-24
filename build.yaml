@@ -35,8 +35,9 @@ jobs:
     displayName: "Push to Artifact feed"
     inputs:
       command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
       nuGetFeedType: 'internal'
-      publishVstsFeed: 'Leprechaun'
+      publishVstsFeed: '8e7d8e9a-96b7-4364-985a-625841ad216e/f096d8c4-c6ef-4c3f-ab64-f47f1c625b2e'
   - task: PublishPipelineArtifact@1
     condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/main'))
     displayName: "Publish Build Artifact"
