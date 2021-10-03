@@ -6,6 +6,14 @@ namespace Leprechaun.Execution
 {
 	public class ConsoleLogger : ILogger
 	{
+		// ReSharper disable once InconsistentNaming
+		private static readonly Lazy<ConsoleLogger> _instance = new Lazy<ConsoleLogger>(() => new ConsoleLogger());
+		private static ConsoleLogger Instance => _instance.Value;
+		private bool _debug = false;
+		public void SetDebug(bool debug)
+		{
+			Instance._debug = debug;
+		}
 		public void Info(string message)
 		{
 			Console.ForegroundColor = ConsoleColor.White;
@@ -52,6 +60,13 @@ namespace Leprechaun.Execution
 			var exMessage = new StringBuilder();
 			exMessage.AppendFormat("ERROR: {0} ({1})", exception.Message, exception.GetType().FullName);
 			exMessage.AppendLine();
+
+			if (!Instance._debug)
+			{
+				exMessage.AppendLine();
+				exMessage.AppendLine("To see the full stacktrace, use the /debug flag when running Leprechaun");
+				return exMessage.ToString();
+			}
 
 			if (exception.StackTrace != null)
 				exMessage.Append(exception.StackTrace.Trim());

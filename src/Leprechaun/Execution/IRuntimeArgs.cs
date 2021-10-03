@@ -13,5 +13,6 @@
 		bool NoSplash { get; set; }
 		bool Rainbow { get; set; }
 		string PluginPath { get; set; }
+		bool Debug { get; set; }
 	}
 }
