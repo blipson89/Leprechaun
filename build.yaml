@@ -9,6 +9,7 @@ jobs:
       versionSpec: '5.x'
   - task: gitversion/execute@0
     inputs:
+      targetPath: '$(Build.SourcesDirectory)'
       useConfigFile: true
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
