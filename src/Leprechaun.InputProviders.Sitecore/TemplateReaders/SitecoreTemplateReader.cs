@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Leprechaun.Filters;
@@ -8,18 +9,24 @@ using Leprechaun.InputProviders.Sitecore.Adapters;
 using Leprechaun.InputProviders.Sitecore.Configuration;
 using Leprechaun.InputProviders.Sitecore.Extensions;
 using Leprechaun.InputProviders.Sitecore.Filters;
+using Leprechaun.Logging;
 using Leprechaun.Model;
 using Leprechaun.TemplateReaders;
 using Sitecore.DevEx.Serialization;
 using Sitecore.DevEx.Serialization.Client.Query;
+using Sitecore.DevEx.Serialization.Exceptions;
+using Sitecore.DevEx.Serialization.Models;
 
 
 namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 {
 	public class SitecoreTemplateReader : BaseTemplateReader, ITemplateReader
 	{
-		public SitecoreTemplateReader(XmlNode configNode) : base(configNode)
+		private readonly ILogger _logger;
+
+		public SitecoreTemplateReader(XmlNode configNode, ILogger logger) : base(configNode)
 		{
+			_logger = logger;
 		}
 
 		public override TemplateInfo[] GetTemplates(ITemplatePredicate predicate)
@@ -57,7 +64,24 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		
 		private async Task<IEnumerable<TemplateInfo>> ConvertTreeToTemplates(LeprechaunModuleConfiguration module, IItemTreeNode tn)
 		{
-			var templateItemData = await module.DataStore.GetItemData(tn);
+			IItemData templateItemData = null;
+			try
+			{
+				templateItemData = await module.DataStore.GetItemData(tn);
+			}
+			catch (NullReferenceException ex)
+			{
+				var exceptionMessage = new StringBuilder("Itemdata was null for the provided treenode.");
+				exceptionMessage.AppendLine();
+				exceptionMessage.AppendLine();
+				exceptionMessage.AppendLine("This likely indicates the filesystem is out of sync with the module.json.");
+				exceptionMessage.Append("Try running 'dotnet sitecore ser validate -f' and 'dotnet sitecore ser pull',");
+				exceptionMessage.AppendLine(" then run Leprechaun again.");
+				var exception = new InvalidConfigurationException(exceptionMessage.ToString(), ex);
+				_logger.Error(exception);
+				Environment.Exit(1);
+			}
+
 			var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore);
 			return ParseTemplates(itemAdapter);
 		}
