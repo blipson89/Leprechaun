@@ -8,12 +8,19 @@ jobs:
     inputs:
       versionSpec: '5.x'
   - task: gitversion/execute@0
+    displayName: "Update SharedAssemblyInfo version"
     inputs:
       targetPath: '$(Build.SourcesDirectory)'
       useConfigFile: true
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
-      updateAssemblyInfoFilename: '$(Build.SourcesDirectory)/src/SharedAssemblyInfo.cs'
+      updateAssemblyInfoFilename: '$(Build.SourcesDirectory)\src\SharedAssemblyInfo.cs'
+  - task: gitversion/execute@0
+    displayName: "Update dotnet csproj assembly version"
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)'
+      useConfigFile: true
+      configFilePath: 'GitVersion.yml'
       additionalArguments: '/updateprojectfiles'
   - task: DotNetCoreCLI@2
     displayName: "Dotnet Restore"
