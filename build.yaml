@@ -10,6 +10,7 @@ jobs:
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
       updateAssemblyInfoFilename: 'src/SharedAssemblyInfo.cs'
+      additionalArguments: '/updateprojectfiles'
   - task: DotNetCoreCLI@2
     displayName: "Dotnet Restore"
     inputs:
