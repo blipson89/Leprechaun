@@ -9,10 +9,11 @@ jobs:
       versionSpec: '5.x'
   - task: gitversion/execute@0
     inputs:
+      targetPath: '$(Build.SourcesDirectory)'
       useConfigFile: true
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
-      updateAssemblyInfoFilename: 'SharedAssemblyInfo.cs'
+      updateAssemblyInfoFilename: '$(Build.SourcesDirectory)/src/SharedAssemblyInfo.cs'
       additionalArguments: '/updateprojectfiles'
   - task: DotNetCoreCLI@2
     displayName: "Dotnet Restore"
