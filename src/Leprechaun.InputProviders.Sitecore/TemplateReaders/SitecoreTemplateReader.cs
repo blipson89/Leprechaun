@@ -63,7 +63,7 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 
 		protected override Guid[] ParseMultilistValue(string value)
 		{
-			return value.Split(new []{'\r','\n','|'}, StringSplitOptions.RemoveEmptyEntries)
+			return value.Split(new []{@"\r",@"\n","|", Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
 				.Select(item => Guid.TryParse(item, out Guid result) ? result : Guid.Empty)
 				.Where(item => item != Guid.Empty)
 				.ToArray();
