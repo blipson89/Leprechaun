@@ -10,11 +10,9 @@ jobs:
   - task: gitversion/execute@0
     displayName: "Update SharedAssemblyInfo version"
     inputs:
-      targetPath: '$(Build.SourcesDirectory)'
       useConfigFile: true
       configFilePath: 'GitVersion.yml'
-      updateAssemblyInfo: true
-      updateAssemblyInfoFilename: '.\src\SharedAssemblyInfo.cs'
+      additionalArguments: '/updateassemblyinfo .\src\SharedAssemblyInfo.cs'
   - task: gitversion/execute@0
     displayName: "Update dotnet csproj assembly version"
     inputs:
