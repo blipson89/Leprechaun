@@ -4,9 +4,12 @@ pool:
 jobs:
 - job: Build
   steps:
-  - task: GitVersion@5
+  - task: gitversion/setup@0
     inputs:
-      runtime: 'core'
+      versionSpec: '5.x'
+  - task: gitversion/execute@0
+    inputs:
+      useConfigFile: true
       configFilePath: 'GitVersion.yml'
       updateAssemblyInfo: true
       updateAssemblyInfoFilename: 'src/SharedAssemblyInfo.cs'
