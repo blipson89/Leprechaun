@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using Leprechaun.Filters;
 using Leprechaun.InputProviders.Sitecore.Adapters;
@@ -9,13 +10,14 @@ using Leprechaun.InputProviders.Sitecore.Extensions;
 using Leprechaun.InputProviders.Sitecore.Filters;
 using Leprechaun.Model;
 using Leprechaun.TemplateReaders;
+using Sitecore.DevEx.Serialization;
+using Sitecore.DevEx.Serialization.Client.Query;
 
 
 namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 {
 	public class SitecoreTemplateReader : BaseTemplateReader, ITemplateReader
 	{
-	
 		public SitecoreTemplateReader(XmlNode configNode) : base(configNode)
 		{
 		}
@@ -24,22 +26,39 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		{
 			if (predicate is SitecoreTemplatePredicate scPredicate)
 			{
-				return GetTemplates(scPredicate.GetModule()).ToArray();
+				return GetTemplates(scPredicate).GetAwaiter().GetResult().ToArray();
 			}
 			return new TemplateInfo[0];
 		}
-
-		public IEnumerable<TemplateInfo> GetTemplates(LeprechaunModuleConfiguration module)
+		
+		public async Task<IEnumerable<TemplateInfo>> GetTemplates(SitecoreTemplatePredicate predicate)
 		{
-			return module.SerializationModule.Items.Includes
-				.AsParallel()
-				.SelectMany(fsTreeSpec =>
+			var module = predicate.GetModule();
+			var tasks = new List<Task<IEnumerable<TemplateInfo>>>();
+			foreach (var fstree in predicate.GetTreeSpecs())
+			{
+				if (fstree.Scope == TreeScope.DescendantsOnly)
 				{
-					var templateItemData = module.DataStore.GetItemDataSync(module.DataStore.GetTreeNodeSync(fsTreeSpec.Path));
-					var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore);
-					return ParseTemplates(itemAdapter);
-				})
-				.ToArray();
+					var templates = (await module.DataStore
+						.GetChildren(fstree.Path))
+						.Select(child => ConvertTreeToTemplates(module, child));
+
+					tasks.AddRange(templates);
+				}
+				else
+				{
+					tasks.Add(ConvertTreeToTemplates(module, await module.DataStore.GetTreeNode(fstree.Path)));
+				}
+			}
+
+			return (await Task.WhenAll(tasks)).SelectMany(x => x);
+		}
+		
+		private async Task<IEnumerable<TemplateInfo>> ConvertTreeToTemplates(LeprechaunModuleConfiguration module, IItemTreeNode tn)
+		{
+			var templateItemData = await module.DataStore.GetItemData(tn);
+			var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore);
+			return ParseTemplates(itemAdapter);
 		}
 
 		protected override Guid[] ParseMultilistValue(string value)

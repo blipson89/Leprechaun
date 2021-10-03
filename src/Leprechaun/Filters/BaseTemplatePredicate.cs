@@ -12,6 +12,7 @@ namespace Leprechaun.Filters
 	public abstract class BaseTemplatePredicate : ITemplatePredicate
 	{
 		protected readonly IList<ITemplateTreeRoot> _includeEntries;
+		protected readonly ISet<string> _includeNames;
 		protected readonly IContainer _configuration;
 		protected readonly string _rootNamespace;
 
@@ -24,6 +25,7 @@ namespace Leprechaun.Filters
 			_rootNamespace = rootNamespace;
 
 			_includeEntries = ParsePreset(configNode);
+			_includeNames = new HashSet<string>(_includeEntries.Select(x => x.Name.ToLowerInvariant()));
 			EnsureEntriesExist(configuration?.Name ?? "Unknown");
 		}
 		/// <summary>

@@ -58,8 +58,6 @@ namespace Leprechaun.TemplateReaders
 
 		public abstract TemplateInfo[] GetTemplates(ITemplatePredicate predicate);
 
-		//public abstract TemplateInfo[] GetTemplates(params ITreeRoot[] rootPaths);
-
 		protected virtual IEnumerable<TemplateInfo> ParseTemplates(IItemDataAdapter root)
 		{
 			var processQueue = new Queue<IItemDataAdapter>();
