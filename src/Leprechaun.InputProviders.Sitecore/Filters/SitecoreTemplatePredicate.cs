@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Configy.Containers;
 using Leprechaun.Filters;
@@ -45,6 +46,11 @@ namespace Leprechaun.InputProviders.Sitecore.Filters
 					yield return treeNode;
 				}
 			}
+		}
+
+		public IEnumerable<string> GetWatchPaths()
+		{
+			return GetTreeSpecs().Select(x => x.PhysicalPath);
 		}
 	}
 }

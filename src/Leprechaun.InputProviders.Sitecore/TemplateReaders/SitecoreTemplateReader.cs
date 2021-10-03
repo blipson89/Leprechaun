@@ -34,6 +34,7 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		public async Task<IEnumerable<TemplateInfo>> GetTemplates(SitecoreTemplatePredicate predicate)
 		{
 			var module = predicate.GetModule();
+			await module.DataStore.Reinitialize(null); // ensure the datastore is up to date
 			var tasks = new List<Task<IEnumerable<TemplateInfo>>>();
 			foreach (var fstree in predicate.GetTreeSpecs())
 			{
