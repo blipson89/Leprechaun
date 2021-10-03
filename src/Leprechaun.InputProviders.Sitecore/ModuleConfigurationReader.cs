@@ -56,7 +56,7 @@ namespace Leprechaun.InputProviders.Sitecore
 
 
 			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result,
-				new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>()))); // TODO
+				new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>(), new ExternalPackageResolver(_loggerFactory)))); // TODO
 			moduleConfigurations.Wait();
 			
 			return _modules = moduleConfigurations.Result.ToDictionary(m => m.GetLeprechaunModuleName());
