@@ -25,14 +25,14 @@ namespace {template.Namespace}
 
 	/// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
 	[RepresentsSitecoreTemplateAttribute(""{{{template.Id}}}"", """", ""{ConfigurationName}"")]	
-	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""{Version}"")]
 	public interface I{template.CodeName}Item : {GetBaseInterfaces(template)}
 	{{
 		{RenderInterfaceFields(template)}
 	}}
 
 	/// <summary>Controls the appearance of the inheriting template in site navigation.</summary>
-	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""{Version}"")]
 	public class {template.CodeName} : StandardTemplateItem, I{template.CodeName}Item
 	{{
 		public {template.CodeName}(Item innerItem) : base(innerItem)
@@ -55,7 +55,7 @@ namespace {template.Namespace}
 		{RenderFields(template)}
 	}}
 
-	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""{Version}"")]
 	public class {template.CodeName}Initializer : ITemplateInitializer
 	{{
 		public ID InitializesTemplateId => new ID(""{{{template.Id}}}"");
