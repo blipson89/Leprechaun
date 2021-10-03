@@ -11,6 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides code generation to Leprechaun using C# scripts, executed with Roslyn.</description>
     <tags>sitecore codegen leprechaun</tags>
+    <copyright>©2021 Ben Lipson</copyright>
     <dependencies>
         <dependency id="Leprechaun" version="$version$" />
     </dependencies>
