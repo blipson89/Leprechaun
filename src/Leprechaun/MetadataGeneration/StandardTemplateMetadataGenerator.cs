@@ -4,13 +4,12 @@ using System.Linq;
 using System.Xml;
 using Leprechaun.Filters;
 using Leprechaun.Model;
-using Sitecore.Diagnostics;
 
 namespace Leprechaun.MetadataGeneration
 {
 	public class StandardTemplateMetadataGenerator : ITemplateMetadataGenerator
 	{
-		private IDictionary<Guid, string> _fieldMap = new Dictionary<Guid, string>();
+		private readonly IDictionary<Guid, string> _fieldMap = new Dictionary<Guid, string>();
 		public StandardTemplateMetadataGenerator(XmlNode configNode)
 		{
 			Assert.ArgumentNotNull(configNode, nameof(configNode));
@@ -19,15 +18,19 @@ namespace Leprechaun.MetadataGeneration
 
 		protected virtual void CreateFieldmap(XmlNode configNode)
 		{
-			IEnumerable<XmlNode> nodes = configNode.ChildNodes.Cast<XmlNode>().Where(node => node.Name == "fieldType");
+			var nodes = configNode.ChildNodes
+				.Cast<XmlNode>()
+				.Where(node => node.Name == "fieldType");
 
 			foreach (XmlNode node in nodes)
 			{
-				bool validId = Guid.TryParse(node.Attributes?["id"]?.Value, out Guid id);
+				bool validId = Guid.TryParse(node.Attributes?["id"]?.Value, out var id);
 				string type = node.Attributes?["type"]?.Value;
 
-				if(validId && !string.IsNullOrEmpty(type))
+				if (validId && !string.IsNullOrEmpty(type))
+				{
 					_fieldMap.Add(id, type);
+				}
 			}
 		}
 
@@ -58,7 +61,7 @@ namespace Leprechaun.MetadataGeneration
 
 		protected virtual TemplateCodeGenerationMetadata CreateTemplate(ITypeNameGenerator nameGenerator, ITemplatePredicate predicate, TemplateInfo template)
 		{
-			var fullName = nameGenerator.GetFullTypeName(template.Path);
+			string fullName = nameGenerator.GetFullTypeName(template.Path);
 
 			var fields = CreateTemplateFields(template, nameGenerator);
 
@@ -74,7 +77,9 @@ namespace Leprechaun.MetadataGeneration
 				var currentField = new TemplateFieldCodeGenerationMetadata(field, nameGenerator.ConvertToIdentifier(field.Name));
 
 				if (_fieldMap.ContainsKey(currentField.Id))
+				{
 					currentField.Type = _fieldMap[currentField.Id];
+				}
 
 				fields.Add(currentField);
 			}
