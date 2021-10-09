@@ -49,9 +49,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NJsonSchema" Version="10.0.21" />
-	  <PackageReference Include="Sitecore.DevEx.Configuration" Version="2.0.0" />
-    <PackageReference Include="Sitecore.DevEx.Serialization" Version="2.0.0" />
-    <PackageReference Include="Sitecore.DevEx.Serialization.Client" Version="2.0.0" />
+	  <PackageReference Include="Sitecore.DevEx.Configuration" Version="4.0.0" />
+    <PackageReference Include="Sitecore.DevEx.Serialization" Version="4.0.0" />
+    <PackageReference Include="Sitecore.DevEx.Serialization.Client" Version="4.0.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
   </ItemGroup>

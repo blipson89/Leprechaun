@@ -11,5 +11,6 @@
     <iconUrl>http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png</iconUrl>
     <description>A Rainbow-based template code generation framework for Sitecore CMS</description>
     <tags>sitecore codegen leprechaun rainbow</tags>
+    <copyright>©2021 Ben Lipson</copyright>
   </metadata>
 </package>

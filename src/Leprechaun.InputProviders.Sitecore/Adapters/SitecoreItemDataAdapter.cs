@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Leprechaun.Adapters;
 using Leprechaun.InputProviders.Sitecore.Extensions;
 using Leprechaun.TemplateReaders;
@@ -28,10 +29,11 @@ namespace Leprechaun.InputProviders.Sitecore.Adapters
 		public IEnumerable<IItemFieldValueAdapter> SharedFields => _itemData.SharedFields.Select(sf => new SitecoreItemFieldValueAdapter(sf));
 		public IEnumerable<IItemLanguageAdapter> UnversionedFields => _itemData.UnversionedFields.Select(id => new SitecoreItemLanguageAdapter(id));
 		public IEnumerable<IItemVersionAdapter> Versions => _itemData.Versions.Select(x => new SitecoreItemVersionAdapter(x));
-		public IEnumerable<IItemDataAdapter> GetChildren()
+		public IEnumerable<IItemDataAdapter> GetChildren() => GetChildrenAsync().GetAwaiter().GetResult();
+		public async Task<IEnumerable<IItemDataAdapter>> GetChildrenAsync()
 		{
-			IItemTreeNode templateRootNode = _dataStore.GetTreeNodeSync(_itemData.Path);
-			return templateRootNode.GetChildrenSync().Select(n => new SitecoreItemDataAdapter(_dataStore.GetItemDataSync(n), _dataStore)).ToArray();
+			IItemTreeNode templateRootNode = await _dataStore.GetTreeNode(_itemData.Path);
+			return (await templateRootNode.GetChildren()).Select(n => new SitecoreItemDataAdapter(_dataStore.GetItemDataSync(n), _dataStore)).ToArray();
 		}
 	}
 }

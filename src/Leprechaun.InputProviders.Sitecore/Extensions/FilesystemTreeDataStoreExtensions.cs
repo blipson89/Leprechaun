@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Sitecore.DevEx.Serialization.Client.Datasources.Filesystem.Query;
 using Sitecore.DevEx.Serialization.Client.Query;
@@ -18,8 +19,13 @@ namespace Leprechaun.InputProviders.Sitecore.Extensions
 			return Task.Run(async () => await GetTreeNode(dataStore, itemPath)).GetAwaiter().GetResult();
 		}
 
+		/// <exception cref="NullReferenceException">if treenode is null</exception>
 		public static async Task<IItemData> GetItemData(this FilesystemTreeDataStore dataStore, IItemTreeNode treeNode)
 		{
+			if (treeNode == null)
+			{
+				throw new NullReferenceException($"{nameof(treeNode)} is null");
+			}
 			return (await dataStore.GetItemData(new[] {new ItemSpec(treeNode.Value.Path)})).FirstOrDefault();
 		}
 

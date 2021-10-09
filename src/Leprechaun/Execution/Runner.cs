@@ -9,6 +9,7 @@ using System.Xml;
 using Configy.Parsing;
 using Leprechaun.CodeGen;
 using Leprechaun.Configuration;
+using Leprechaun.Logging;
 using Leprechaun.Model;
 using Leprechaun.Variables;
 using Newtonsoft.Json;
@@ -37,6 +38,10 @@ namespace Leprechaun.Execution
 
 			// the orchestrator controls the overall codegen flow
 			var orchestrator = configuration.Shared.Resolve<IOrchestrator>();
+			if (parsedArgs.Debug)
+			{
+				(configuration.Shared.Resolve<ILogger>() as ConsoleLogger)?.SetDebug(parsedArgs.Debug);
+			}
 
 			var metadata = GenerateMetadata(orchestrator, configuration);
 

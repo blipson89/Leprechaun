@@ -25,5 +25,8 @@ namespace Leprechaun.Cli
 
 		[ValueArgument(typeof(string), 'p', "plugins", Description = "Path to the folder where plugins will be located. ./Leprechaun")]
 		public string PluginPath { get; set; }
+		
+		[SwitchArgument('d', "debug", false, Description = "Prints out full stack traces for exceptions")]
+		public bool Debug { get; set; }
 	}
 }

@@ -1,7 +1,10 @@
-﻿using System.Xml;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using Configy.Containers;
 using Leprechaun.Filters;
 using Leprechaun.InputProviders.Sitecore.Configuration;
+using Sitecore.DevEx.Serialization.Client.Datasources.Filesystem.Configuration;
 
 namespace Leprechaun.InputProviders.Sitecore.Filters
 {
@@ -32,6 +35,22 @@ namespace Leprechaun.InputProviders.Sitecore.Filters
 		public LeprechaunModuleConfiguration GetModule()
 		{
 			return _leprechaunModule;
+		}
+
+		public IEnumerable<FilesystemTreeSpec> GetTreeSpecs()
+		{
+			foreach (var treeNode in _leprechaunModule.SerializationModule.Items.Includes)
+			{
+				if (_includeNames.Contains(treeNode.Name.ToLowerInvariant()))
+				{
+					yield return treeNode;
+				}
+			}
+		}
+
+		public IEnumerable<string> GetWatchPaths()
+		{
+			return GetTreeSpecs().Select(x => x.PhysicalPath);
 		}
 	}
 }

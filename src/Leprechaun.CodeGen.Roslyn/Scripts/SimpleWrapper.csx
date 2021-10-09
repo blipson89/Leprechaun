@@ -16,11 +16,11 @@ public string RenderTemplates()
 		localCode.AppendLine($@"
 namespace {template.Namespace}
 {{
-	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""{Version}"")]
 	public interface I{template.CodeName}Item{baseInterfaceStr}
 	{{{RenderInterfaceFields(template)}
 	}}
-	[GeneratedCode(""Leprechaun"", ""2.0.0.0"")]
+	[GeneratedCode(""Leprechaun"", ""{Version}"")]
 	public class {template.CodeName} : CustomItem, I{template.CodeName}Item
 	{{
 		public {template.CodeName}(Item innerItem)
