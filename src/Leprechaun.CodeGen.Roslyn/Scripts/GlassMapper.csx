@@ -120,7 +120,7 @@ public string RenderInterfaceFields(TemplateCodeGenerationMetadata template)
 	foreach (var field in template.OwnFields)
 	{
 		localCode.AppendLine($@"
-        /// <summary>{field.HelpText}</summary>
+        /// <summary>{field.HelpText.Replace(System.Environment.NewLine, System.Environment.NewLine + "        /// ")}</summary>
         [SitecoreField(FieldName = {template.RootNamespace}.{template.CodeName}Constants.{field.CodeName}FieldName)]
         {GetFieldType(field)} {field.CodeName} {{ get; set; }}");
 	}
