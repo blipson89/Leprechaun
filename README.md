@@ -5,7 +5,7 @@ Leprechaun is a universal, open API for code generation from [Rainbow](https://g
 
 ## Why should I use Leprechaun?
 ### It's Really Flexible
-Leprechaun uses [C# Script](https://blogs.msdn.microsoft.com/visualstudio/2011/10/19/introducing-the-microsoft-roslyn-ctp/) files as templates. If you're familiar with C#, it's a breeze. Out of the box, a [Synthesis script file](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.CodeGen.Roslyn/Scripts/Synthesis.csx) is provided, but it can easily be adapted to generate templates Glass, Fortis, or more! The template is essentially a big `StringBuilder` that you can build out however you like and Leprechaun will fill in the rest. 
+Leprechaun uses [C# Script](https://blogs.msdn.microsoft.com/visualstudio/2011/10/19/introducing-the-microsoft-roslyn-ctp/) files as templates. If you're familiar with C#, it's a breeze. Out of the box, a [Synthesis script file](https://github.com/blipson89/Leprechaun/blob/main/src/Leprechaun.CodeGen.Roslyn/Scripts/Synthesis.csx) is provided, but it can easily be adapted to generate templates Glass, Fortis, or more! The template is essentially a big `StringBuilder` that you can build out however you like and Leprechaun will fill in the rest. 
 ### It Can Be Run at Build-Time
 Sick of trying to resolve merge conflicts in gigantic model files? You don't need to do that anymore with Leprechaun. The outputted model files don't have to be checked into source control at all!
 
@@ -13,7 +13,7 @@ Why not?
 
 Leprechaun generates models based off of the yaml files outputted by Rainbow. Since these yaml files are on disk already, there's no need for Sitecore to be running or for Visual Studio to be open in order to generate the models. Without these dependencies, you can generate models as a pre-build step. 
 ### It's Helix-Friendly
-Most everything in Leprechaun is config-based. The base Leprechaun.config ([for Rainbow](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config), [for Sitecore Serialization](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)) file contains everything needed for Leprechaun to get started for a single project. However, these configs can be extended and overridden. For each module you have, create a `CodeGen.config` file and have it extend another config.
+Most everything in Leprechaun is config-based. The base Leprechaun.config ([for Rainbow](https://github.com/blipson89/Leprechaun/blob/main/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config), [for Sitecore Serialization](https://github.com/blipson89/Leprechaun/blob/main/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)) file contains everything needed for Leprechaun to get started for a single project. However, these configs can be extended and overridden. For each module you have, create a `CodeGen.config` file and have it extend another config.
 
 For example, a module named `Feature.Promo` would contain a `CodeGen.config` file like this:
 
@@ -73,10 +73,10 @@ dotnet tool uninstall --global Leprechaun.Cli
 
 #### General Steps
 1. Grab the version of `Leprechaun.config` associated with your version of Leprechaun from GitHub:
-    * [Leprechaun.config (for Rainbow)](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config)
-    * [Leprechaun.config (for Sitecore Serialization)](https://github.com/blipson89/Leprechaun/blob/master/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)
+    * [Leprechaun.config (for Rainbow)](https://github.com/blipson89/Leprechaun/blob/main/src/Leprechaun.InputProviders.Rainbow/Leprechaun.config)
+    * [Leprechaun.config (for Sitecore Serialization)](https://github.com/blipson89/Leprechaun/blob/main/src/Leprechaun.InputProviders.Sitecore/Leprechaun.config)
 1. Place the `Leprechaun.config` file somewhere close to the source code. In Helix solutions, I would recommend `src/`.
-1. Grab a script template. Some pre-configured ones can be [found here (link)](https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts).
+1. Grab a script template. Some pre-configured ones can be [found here (link)](https://github.com/blipson89/Leprechaun/tree/main/src/Leprechaun.CodeGen.Roslyn/Scripts).
 1. Open up `Leprechaun.config` and update settings where applicable. Pay close attention to the following:
     1. `<configurations import=".....">`
         * This line is going to tell Leprechaun where to look for additional configurations, typically for modules. Wildcards accepted.
@@ -85,7 +85,7 @@ dotnet tool uninstall --global Leprechaun.Cli
     1. `<configuration name="Sample.Base">`
         * Recommend changing this to `[SolutionName].Base`
     1. `<codeGenerator scripts="..." outputFile="...">`
-        * `scripts` are the script templates that will be used. Pre-configured ones can be downloaded from https://github.com/blipson89/Leprechaun/tree/master/src/Leprechaun.CodeGen.Roslyn/Scripts
+        * `scripts` are the script templates that will be used. Pre-configured ones can be downloaded from https://github.com/blipson89/Leprechaun/tree/main/src/Leprechaun.CodeGen.Roslyn/Scripts
         * `outputFile` - I recommend `$(configDirectory)\$(layer)\$(module)\code\Templates.cs` for Habitat
             * For **Helix** solutions using NuGet: `$(configDirectory)\..\..\..\$(layer)\$(module)\code\Models\Synthesis.Model.cs` *should* work. This is assuming you leave the .exe in the packages folder.
     1. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
@@ -209,7 +209,7 @@ Watch is *currently* not supported for Sitecore serialization.
 If you are migrating from Synthesis Code Gen, have your models in source control, and Synthesis AutoRegenerate on non-local environments, you may want to note the following:
 
 1. `<templatePredicate rootNamespace="Sample.$(layer).$(module)">`
-	* You may want to use `$(layer).$(module).Models` if you used the [default namespace](https://github.com/blipson89/Synthesis/blob/master/Source/Synthesis/Standard%20Config%20Files/Synthesis.config#L29).
+	* You may want to use `$(layer).$(module).Models` if you used the [default namespace](https://github.com/blipson89/Synthesis/blob/main/Source/Synthesis/Standard%20Config%20Files/Synthesis.config#L29).
 2. You will no longer need your models in source control. You should remove them from source control and add them to your ignores (e.g. `.gitignore` or similar functionality)
 3. You should disable Synthesis AutoRegenerate in non-local environments by removing it or transforming its event nodes out of the config in those environments.
     * Recommendation: disable Synthesis AutoRegenerate on local environments as well, and use Leprechaun's watch instead
