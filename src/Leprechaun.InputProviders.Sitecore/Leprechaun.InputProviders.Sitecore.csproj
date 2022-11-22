@@ -9,7 +9,7 @@
 	<PropertyGroup>
     <RootNamespace>Leprechaun.InputProviders.Sitecore</RootNamespace>
     <AssemblyName>Leprechaun.InputProviders.Sitecore</AssemblyName>
-    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net472;net6.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
