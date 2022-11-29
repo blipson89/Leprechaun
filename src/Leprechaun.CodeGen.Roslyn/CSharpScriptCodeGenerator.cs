@@ -53,28 +53,33 @@ namespace Leprechaun.CodeGen.Roslyn
 		{
 			var code = string.Join(Environment.NewLine, states.Select(state => state.Code.ToString()));
 
-			if (File.Exists(_outputFile))
-			{
-				var existingCode = File.ReadAllText(_outputFile);
+			var files = _outputFile.Split(',');
+			var tasks = files.Select(fi => Task.Run(() => WriteFile(fi.Trim(), code)));
+			Task.WhenAll(tasks).Wait();
+		}
 
-				if (existingCode.Equals(code, StringComparison.Ordinal))
+		protected virtual void WriteFile(string filePath, string contents)
+		{
+			if (File.Exists(filePath))
+			{
+				var existingCode = File.ReadAllText(filePath);
+
+				if (existingCode.Equals(contents, StringComparison.Ordinal))
 				{
-					_logger.Debug($"Skipped up to date {_outputFile}.");
+					_logger.Debug($"Skipped up to date {filePath}.");
 					return;
 				}
 			}
 
-			Directory.CreateDirectory(Path.GetDirectoryName(_outputFile));
+			Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
-			using (var file = File.Open(_outputFile, FileMode.Create, FileAccess.Write))
+			using (var file = File.Open(filePath, FileMode.Create, FileAccess.Write))
+			using (var writer = new StreamWriter(file))
 			{
-				using (var writer = new StreamWriter(file))
-				{
-					writer.Write(code);
-				}
+				writer.Write(contents);
 			}
 
-			_logger.Info($"Wrote {_outputFile}.");
+			_logger.Info($"Wrote {filePath}.");
 		}
 
 		protected virtual Script GetScript(string scriptFileName)
