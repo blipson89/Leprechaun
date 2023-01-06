@@ -81,7 +81,7 @@ namespace Leprechaun.Tests
 		}
 
 		private string AbsoluteTestRoot => Path.Combine(Environment.CurrentDirectory, "ConfigurationImportPathResolverTests");
-		private string RelativeTestRoot => ".\\ConfigurationImportPathResolverTests";
+		private string RelativeTestRoot => $".{Path.DirectorySeparatorChar}ConfigurationImportPathResolverTests";
 		private string AbsolutePathToBarConfig => Path.Combine(AbsoluteTestRoot, "Directory2", "Bar.config");
 		private string AbsolutePathToFooConfig => Path.Combine(AbsoluteTestRoot, "Directory1", "Directory1.1", "Foo.config");
 

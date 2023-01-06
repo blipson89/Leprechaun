@@ -21,7 +21,7 @@ namespace Leprechaun.Configuration
 		public virtual string[] ResolveImportPaths(string inputPath)
 		{
 			// normalize input path 
-			inputPath = inputPath.Replace('/', '\\').Trim();
+			inputPath = inputPath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar).Trim();
 
 			// check for wildcards
 			if (inputPath.IndexOf('*') < 0)
@@ -40,9 +40,12 @@ namespace Leprechaun.Configuration
 			string rootDir = inputPath.Substring(0, wildcardIndex);
 
 			// handle partial wildcards e.g. Dir*
-			if (!rootDir.EndsWith("\\")) rootDir = rootDir.Substring(0, rootDir.LastIndexOf('\\'));
+			if (!rootDir.EndsWith($"{Path.DirectorySeparatorChar}"))
+			{
+				rootDir = rootDir.Substring(0, rootDir.LastIndexOf(Path.DirectorySeparatorChar));
+			}
 
-			var wildcardSegments = new Queue<string>(inputPath.Substring(wildcardIndex).Split('\\'));
+			var wildcardSegments = new Queue<string>(inputPath.Substring(wildcardIndex).Split(Path.DirectorySeparatorChar));
 
 			var pathCandidates = new Queue<string>();
 			pathCandidates.Enqueue(rootDir);
