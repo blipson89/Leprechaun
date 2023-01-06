@@ -40,7 +40,10 @@ namespace Leprechaun.Configuration
 			string rootDir = inputPath.Substring(0, wildcardIndex);
 
 			// handle partial wildcards e.g. Dir*
-			if (!rootDir.EndsWith($"{Path.DirectorySeparatorChar}")) rootDir = rootDir.Substring(0, rootDir.LastIndexOf(Path.DirectorySeparatorChar));
+			if (!rootDir.EndsWith($"{Path.DirectorySeparatorChar}"))
+			{
+				rootDir = rootDir.Substring(0, rootDir.LastIndexOf(Path.DirectorySeparatorChar));
+			}
 
 			var wildcardSegments = new Queue<string>(inputPath.Substring(wildcardIndex).Split(Path.DirectorySeparatorChar));
 
