@@ -41,7 +41,7 @@ jobs:
       includeSymbols: true
       nobuild: true
   - task: DotNetCoreCLI@2
-    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/')))
+    # condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/')))
     displayName: "Push to Artifact feed"
     inputs:
       command: 'push'
