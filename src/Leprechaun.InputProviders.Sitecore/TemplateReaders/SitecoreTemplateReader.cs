@@ -40,11 +40,16 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		
 		public async Task<IEnumerable<TemplateInfo>> GetTemplates(SitecoreTemplatePredicate predicate)
 		{
+			_logger.Debug("[SitecoreTemplateReader] Getting templates - A");
 			var module = predicate.GetModule();
+			_logger.Debug("[SitecoreTemplateReader] Getting templates - B");
 			await module.DataStore.Reinitialize(null); // ensure the datastore is up to date
+			_logger.Debug("[SitecoreTemplateReader] Getting templates - C");
 			var tasks = new List<Task<IEnumerable<TemplateInfo>>>();
+			_logger.Debug("[SitecoreTemplateReader] Getting templates - D");
 			foreach (var fstree in predicate.GetTreeSpecs())
 			{
+				_logger.Debug($"[SitecoreTemplateReader] Getting templates - Get Tree Specs '{fstree.Name}'");
 				if (fstree.Scope == TreeScope.DescendantsOnly)
 				{
 					var templates = (await module.DataStore
@@ -57,6 +62,7 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 				{
 					tasks.Add(ConvertTreeToTemplates(module, await module.DataStore.GetTreeNode(fstree.Path)));
 				}
+				_logger.Debug($"[SitecoreTemplateReader] Getting templates - Done Get Tree Specs '{fstree.Name}'");
 			}
 
 			return (await Task.WhenAll(tasks)).SelectMany(x => x);
@@ -64,10 +70,13 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		
 		private async Task<IEnumerable<TemplateInfo>> ConvertTreeToTemplates(LeprechaunModuleConfiguration module, IItemTreeNode tn)
 		{
+			_logger.Debug("[SitecoreTemplateReader] ConvertTreeToTemplates");
 			IItemData templateItemData = null;
 			try
 			{
+				_logger.Debug("[SitecoreTemplateReader] ConvertTreeToTemplates - GetItemData");
 				templateItemData = await module.DataStore.GetItemData(tn);
+				_logger.Debug("[SitecoreTemplateReader] ConvertTreeToTemplates - Done GetItemData");
 			}
 			catch (NullReferenceException ex)
 			{
@@ -82,12 +91,13 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 				Environment.Exit(1);
 			}
 
-			var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore);
+			var itemAdapter = new SitecoreItemDataAdapter(templateItemData, module.DataStore, _logger);
 			return ParseTemplates(itemAdapter);
 		}
 
 		protected override Guid[] ParseMultilistValue(string value)
 		{
+			_logger.Debug("[SitecoreTemplateReader] ParseMultilistValue");
 			return value.Split(new []{@"\r",@"\n","|", Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
 				.Select(item => Guid.TryParse(item, out Guid result) ? result : Guid.Empty)
 				.Where(item => item != Guid.Empty)
