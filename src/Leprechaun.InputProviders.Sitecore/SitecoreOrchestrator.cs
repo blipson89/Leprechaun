@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Configy.Containers;
 using Leprechaun.Filters;
@@ -60,10 +62,27 @@ namespace Leprechaun.InputProviders.Sitecore
 		protected virtual IEnumerable<TemplateInfo> GetTemplates(IContainer configuration)
 		{
 			_logger?.Debug($"[SitecoreOrchestrator] GetTemplates - {configuration.Name}");
+			try
+			{
+				var singletonsField = configuration.GetType().GetField("_singletons", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+				var singletons = ((ConcurrentDictionary<Type, Lazy<object>>)singletonsField.GetValue(configuration)).Select(x => x.Key.FullName);
+				_logger.Debug("====== DI Registration ======");
+				foreach (string s in singletons)
+				{
+					_logger.Debug($"- {s}");
+				}
+				_logger.Debug("=====  END DI Registration ======");
+			}
+			catch (Exception) { }
+
 			var templateReader = configuration.Resolve<ITemplateReader>();
-			var templatePredicate = configuration.Resolve<ITemplatePredicate>();
+			_logger?.Debug($"[SitecoreOrchestrator] GetTemplates - Template Reader Resolved Successfully!");
 			Assert.IsNotNull(templateReader, "templateReader != null");
+			_logger?.Debug($"[SitecoreOrchestrator] GetTemplates - Template Reader is not null! Type: {templateReader.GetType().FullName}");
+			var templatePredicate = configuration.Resolve<ITemplatePredicate>();
+			_logger?.Debug($"[SitecoreOrchestrator] GetTemplates - Template Predicate Resolved Successfully!");
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
+			_logger?.Debug($"[SitecoreOrchestrator] GetTemplates - Template Predicate Is not null! Type: {templatePredicate.GetType().FullName}");
 
 			return templateReader.GetTemplates(templatePredicate);
 		}
