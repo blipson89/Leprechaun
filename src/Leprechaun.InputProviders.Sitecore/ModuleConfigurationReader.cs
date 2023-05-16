@@ -41,24 +41,32 @@ namespace Leprechaun.InputProviders.Sitecore
 		private static IDictionary<string, SerializationModuleConfiguration> _modules;
 		public IDictionary<string, SerializationModuleConfiguration> GetModules()
 		{
+			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - A");
 			if (_modules != null) return _modules;
+			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - B");
 			var resolveRootConfiguration = Task.Run(async () => await _rootConfigurationManager.ResolveRootConfiguration(_configRootDirectory));
+			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - C");
 			try
 			{
 				resolveRootConfiguration.Wait();
+				_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - D");
 			}
 			catch (AggregateException ex)
 			{
-				if(ex.Message.Contains("Couldn't resolve a root configuration"))
+				if (ex.Message.Contains("Couldn't resolve a root configuration"))
 					_leprechaunLogger.Error("[ERROR] The path to the sitecore.json file could not be resolved. Check the 'configRootDirectory' property on the 'moduleConfigReader' in your Leprechaun.config.", ex);
+				else
+					_leprechaunLogger.Error("[ModuleConfigurationReader] GetModules failed!", ex);
+				
 				Environment.Exit(1);
 			}
-
+			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - E");
 
 			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result,
 				new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>(), new ExternalPackageResolver(_loggerFactory)))); // TODO
 			moduleConfigurations.Wait();
-			
+			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - F");
+
 			return _modules = moduleConfigurations.Result.ToDictionary(m => m.GetLeprechaunModuleName());
 		}
 	}
