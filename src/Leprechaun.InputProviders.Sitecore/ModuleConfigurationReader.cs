@@ -60,6 +60,11 @@ namespace Leprechaun.InputProviders.Sitecore
 				
 				Environment.Exit(1);
 			}
+			catch(Exception ex)
+			{
+				_leprechaunLogger.Error("[ModuleConfigurationReader] GetModules failed!", ex);
+				Environment.Exit(2);
+			}
 			_leprechaunLogger.Debug("[ModuleConfigurationReader] Get Modules - E");
 
 			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result,
