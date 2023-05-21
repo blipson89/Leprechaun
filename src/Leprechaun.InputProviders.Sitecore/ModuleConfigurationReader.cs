@@ -49,8 +49,20 @@ namespace Leprechaun.InputProviders.Sitecore
 			}
 			catch (AggregateException ex)
 			{
-				if(ex.Message.Contains("Couldn't resolve a root configuration"))
+				if (ex.Message.Contains("Couldn't resolve a root configuration"))
+				{
 					_leprechaunLogger.Error("[ERROR] The path to the sitecore.json file could not be resolved. Check the 'configRootDirectory' property on the 'moduleConfigReader' in your Leprechaun.config.", ex);
+				}
+				else if (ex.Message.Contains("was missing Authority"))
+				{
+					_leprechaunLogger.Error("[ERROR] Sitecore CLI failed validation. The nature of this error indicates you are likely using XM Cloud." +
+						"\n\nPlease check your .sitecore/user.json file and ensure the \"Authority\" attribute is not blank. The value should be \"https://auth.sitecorecloud.io\" for XM Cloud.", ex);
+				}
+				else
+				{
+					_leprechaunLogger.Error("[ERROR] Sitecore CLI threw an error while attempting to gather the module. ", ex);
+				}
+
 				Environment.Exit(1);
 			}
 
