@@ -56,11 +56,11 @@ namespace Leprechaun.InputProviders.Sitecore
 				else if (ex.Message.Contains("was missing Authority"))
 				{
 					_leprechaunLogger.Error("[ERROR] Sitecore CLI failed validation. The nature of this error indicates you are likely using XM Cloud." +
-						"\n\nPlease check your .sitecore/user.json file and ensure the \"Authority\" attribute is not blank. The value should be \"https://auth.sitecorecloud.io\" for XM Cloud.", ex);
+						"\n\nPlease check your .sitecore/user.json file and ensure the \"authority\" property is present for every endpoint. The value should be \"https://auth.sitecorecloud.io/\" for XM Cloud.", ex);
 				}
 				else
 				{
-					_leprechaunLogger.Error("[ERROR] Sitecore CLI threw an error while attempting to gather the module. ", ex);
+					_leprechaunLogger.Error("[ERROR] Sitecore CLI threw an error while attempting to gather the module. This likely indicates an issue with your Sitecore CLI configuration.", ex);
 				}
 
 				Environment.Exit(1);
