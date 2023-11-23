@@ -31,7 +31,7 @@ namespace Leprechaun.Filters
 		/// <summary>
 		/// Checks if a preset includes a given item
 		/// </summary>
-		protected virtual bool Includes(ITemplateTreeRoot entry, TemplateInfo itemData)
+		protected virtual bool Includes(ITemplateTreeRoot entry, IItemInfo itemData)
 		{
 			// check for path match
 			var unescapedPath = entry.Path.Replace(@"\*", "*");
@@ -43,7 +43,7 @@ namespace Leprechaun.Filters
 			// check excludes
 			return ExcludeMatches(entry, itemData);
 		}
-		protected virtual bool ExcludeMatches(ITemplateTreeRoot entry, TemplateInfo itemData)
+		protected virtual bool ExcludeMatches(ITemplateTreeRoot entry, IItemInfo itemData)
 		{
 			foreach (var exclude in entry.Exclusions)
 			{
@@ -78,7 +78,7 @@ namespace Leprechaun.Filters
 			return presets;
 		}
 
-		public virtual bool Includes(TemplateInfo template)
+		public virtual bool Includes(IItemInfo template)
 		{
 			Assert.ArgumentNotNull(template, nameof(template));
 

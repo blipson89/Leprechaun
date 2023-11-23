@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using Configy.Containers;
 using Leprechaun.Filters;
 using Leprechaun.MetadataGeneration;
 using Leprechaun.Model;
+using Leprechaun.RenderingReaders;
 using Leprechaun.TemplateReaders;
 using Leprechaun.Validation;
 
@@ -23,7 +25,7 @@ namespace Leprechaun
 		public virtual IReadOnlyList<ConfigurationCodeGenerationMetadata> GenerateMetadata(params IContainer[] configurations)
 		{
 			var templates = GetAllTemplates(configurations);
-
+			
 			FilterIgnoredFields(templates);
 
 			var metadata = _metadataGenerator.Generate(templates);
@@ -41,8 +43,11 @@ namespace Leprechaun
 
 			foreach (var config in configurations)
 			{
-				var processingConfig = new TemplateConfiguration(config);
-				processingConfig.Templates = GetTemplates(config);
+				var processingConfig = new TemplateConfiguration(config)
+				{
+					Templates = GetTemplates(config), 
+					Renderings = GetRenderings(config)
+				};
 				results.Add(processingConfig);
 			}
 
@@ -58,6 +63,22 @@ namespace Leprechaun
 			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
 
 			return templateReader.GetTemplates(templatePredicate);
+		}
+
+		private IEnumerable<RenderingInfo> GetRenderings(IContainer configuration)
+		{
+			var renderingReader = configuration.Resolve<IRenderingReader>();
+			var templatePredicate = configuration.Resolve<ITemplatePredicate>();
+
+			if (renderingReader == null)
+			{
+				return new RenderingInfo[0];
+			}
+
+			Assert.IsNotNull(renderingReader, "renderingReader != null");
+			Assert.IsNotNull(templatePredicate, "templatePredicate != null");
+
+			return renderingReader.GetRenderings(templatePredicate);
 		}
 
 		protected virtual void FilterIgnoredFields(IEnumerable<TemplateConfiguration> configurations)

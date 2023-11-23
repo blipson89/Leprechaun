@@ -8,10 +8,11 @@ namespace Leprechaun.Model
 	[DebuggerDisplay("{Configuration.Name}")]
 	public class ConfigurationCodeGenerationMetadata
 	{
-		public ConfigurationCodeGenerationMetadata(IContainer configuration, IReadOnlyCollection<TemplateCodeGenerationMetadata> metadata)
+		public ConfigurationCodeGenerationMetadata(IContainer configuration, IReadOnlyCollection<TemplateCodeGenerationMetadata> metadata, RenderingCodeGenerationMetadata[] renderings)
 		{
 			Configuration = configuration;
 			Metadata = metadata;
+			RenderingMetadata = renderings;
 		}
 
 		public IContainer Configuration { get; }
@@ -19,5 +20,7 @@ namespace Leprechaun.Model
 		public string RootNamespace => Configuration.Resolve<ITemplatePredicate>().GetRootNamespace(null);
 
 		public IReadOnlyCollection<TemplateCodeGenerationMetadata> Metadata { get; }
+
+		public IReadOnlyCollection<RenderingCodeGenerationMetadata> RenderingMetadata { get; }
 	}
 }

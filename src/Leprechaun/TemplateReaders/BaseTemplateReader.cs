@@ -14,7 +14,7 @@ namespace Leprechaun.TemplateReaders
 		internal static readonly Guid TemplateTemplateId = new Guid("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
 		internal static readonly Guid TemplateFieldTemplateId = new Guid("{455A3E98-A627-4B40-8035-E683A0331AC7}");
 		internal static readonly Guid TemplateSectionTemplateId = new Guid("{E269FBB5-3750-427A-9149-7AA950B49301}");
-
+		
 		internal static readonly Guid DisplayNameFieldId = new Guid("{B5E02AD9-D56F-4C41-A065-A133DB87BDEB}");
 		internal static readonly Guid TemplateFieldTitleFieldId = new Guid("{19A69332-A23E-4E70-8D16-B2640CB24CC8}");
 		internal static readonly Guid HelpTextFieldId = new Guid("{577F1689-7DE4-4AD2-A15F-7FDC1759285F}");
