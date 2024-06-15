@@ -7,7 +7,7 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>leprechaun</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
@@ -38,6 +38,21 @@
 		<None Include="..\Leprechaun.InputProviders.Rainbow\bin\Release\net472\*Rainbow*.*">
 			<Pack>true</Pack>
 			<PackagePath>tools\net6.0\any\Legacy</PackagePath>
+			<Visible>false</Visible>
+		</None>
+		<None Include="..\Leprechaun.InputProviders.Sitecore\bin\Release\net8.0\*">
+			<Pack>true</Pack>
+			<PackagePath>tools\net8.0\any\Plugins</PackagePath>
+			<Visible>false</Visible>
+		</None>
+		<None Include="..\Leprechaun.Console\bin\Release\net472\*">
+			<Pack>true</Pack>
+			<PackagePath>tools\net8.0\any\Legacy</PackagePath>
+			<Visible>false</Visible>
+		</None>
+		<None Include="..\Leprechaun.InputProviders.Rainbow\bin\Release\net472\*Rainbow*.*">
+			<Pack>true</Pack>
+			<PackagePath>tools\net8.0\any\Legacy</PackagePath>
 			<Visible>false</Visible>
 		</None>
 	</ItemGroup>

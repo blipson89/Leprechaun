@@ -78,6 +78,8 @@ namespace Leprechaun.Filters
 			return presets;
 		}
 
+		public string GetConfigName() => _configuration.Name;
+
 		public virtual bool Includes(TemplateInfo template)
 		{
 			Assert.ArgumentNotNull(template, nameof(template));

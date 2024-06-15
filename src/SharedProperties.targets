@@ -7,6 +7,6 @@
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
 		<RepositoryUrl>https://github.com/blipson89/Leprechaun</RepositoryUrl>
 		<PackageIconUrl>http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png</PackageIconUrl>
-		<Copyright>©2023 Ben Lipson</Copyright>
+		<Copyright>©2024 Ben Lipson</Copyright>
 	</PropertyGroup>
 </Project>

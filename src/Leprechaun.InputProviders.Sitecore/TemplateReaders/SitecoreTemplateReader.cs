@@ -41,6 +41,10 @@ namespace Leprechaun.InputProviders.Sitecore.TemplateReaders
 		public async Task<IEnumerable<TemplateInfo>> GetTemplates(SitecoreTemplatePredicate predicate)
 		{
 			var module = predicate.GetModule();
+			if(module == null)
+			{
+				throw new InvalidConfigurationException($"No Sitecore module was found for the predicate '{predicate.GetConfigName()}'");
+			}
 			await module.DataStore.Reinitialize(null); // ensure the datastore is up to date
 			var tasks = new List<Task<IEnumerable<TemplateInfo>>>();
 			foreach (var fstree in predicate.GetTreeSpecs())

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <RootNamespace>Leprechaun</RootNamespace>
     <AssemblyName>Leprechaun</AssemblyName>
-	<TargetFrameworks>net472;net6.0;netstandard2.1</TargetFrameworks>
+	<TargetFrameworks>net472;net6.0;net8.0;netstandard2.1</TargetFrameworks>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup>
@@ -36,6 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Configy" Version="1.1.0-pre02" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>
