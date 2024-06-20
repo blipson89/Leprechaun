@@ -136,7 +136,7 @@ public string RenderConstantFields(TemplateCodeGenerationMetadata template)
 	{
 		localCode.AppendLine($@"
         public static readonly ID {field.CodeName}FieldId = new ID(""{field.Id}"");
-        public const string {field.CodeName}FieldName = ""{field.CodeName}"";");
+        public const string {field.CodeName}FieldName = ""{field.Name}"";");
 	}
 
 	return localCode.ToString().TrimEnd();
