@@ -160,33 +160,35 @@ namespace Leprechaun.Configuration
 				if (Path.GetExtension(import) == ".json")
 				{
 					var xmlConfig = JsonConvert.DeserializeXmlNode(File.ReadAllText(import), "module");
-					nodeToImport = (XmlElement)xmlConfig.SelectSingleNode("/module/leprechaun")?.FirstChild;
-					if (nodeToImport == null)
+					XmlNodeList nodes = xmlConfig.SelectNodes("/module/leprechaun/configuration");
+					foreach (XmlNode item in nodes)
 					{
-						allImportsFiles.Remove(import);
-						continue;
-					}
-
-					if (!nodeToImport.HasAttribute("name"))
-					{
-						var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
-						if (string.IsNullOrEmpty(namespaceUri))
+						nodeToImport = (XmlElement)item;
+						if (nodeToImport == null)
 						{
-							throw new InvalidOperationException($"module does not have namespace: '{import}'");
+							allImportsFiles.Remove(import);
+							continue;
+						}	 
+						if (!nodeToImport.HasAttribute("name"))
+						{
+							var namespaceUri = xmlConfig.SelectSingleNode("/module/namespace")?.InnerText;
+							if (string.IsNullOrEmpty(namespaceUri))
+							{
+								throw new InvalidOperationException($"module does not have namespace: '{import}'");
+							}
+							nodeToImport.SetAttribute("name", namespaceUri);
 						}
-						nodeToImport.SetAttribute("name", namespaceUri);
+		 				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
+						_configsElement.AppendChild(importedXml);
 					}
 				}
 				else
 				{
 					xml.Load(import);
 					nodeToImport = xml.DocumentElement;
+					var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
+					_configsElement.AppendChild(importedXml);
 				}
-
-				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
-
-				_configsElement.AppendChild(importedXml);
-
 			}
 
 			// we'll use this to watch imports for changes later
