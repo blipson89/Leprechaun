@@ -24,8 +24,13 @@ namespace Leprechaun.Validation
 
 		public void Validate(TemplateCodeGenerationMetadata[] allTemplates)
 		{
-			var allTemplatesIndex = allTemplates.ToDictionary(config => config.Id);
-
+			var allTemplatesIndex = new Dictionary<Guid, TemplateCodeGenerationMetadata>();
+			foreach (TemplateCodeGenerationMetadata item in allTemplates)
+			{
+				if (!allTemplatesIndex.ContainsKey(item.Id))
+					allTemplatesIndex.Add(item.Id, item);
+			}
+   
 			// ReSharper disable once ReplaceWithSingleAssignment.False
 			bool errors = false;
 
