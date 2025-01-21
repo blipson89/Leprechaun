@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Sitecore.DevEx.Serialization.Client.Configuration;
 
 namespace Leprechaun.InputProviders.Sitecore.Extensions
