@@ -92,10 +92,14 @@ namespace Leprechaun.MetadataGeneration
 		protected virtual void ApplyBaseTemplates(IList<ConfigurationCodeGenerationMetadata> generatedMetadata)
 		{
 			// index all templates' metadata (so we can resolve base template IDs)
-			var allTemplatesIndex = generatedMetadata
-				.SelectMany(config => config.Metadata)
-				.ToDictionary(template => template.Id);
-
+			var allTemplatesIndexes = generatedMetadata.SelectMany(config => config.Metadata);
+			var allTemplatesIndex = new Dictionary<Guid, TemplateCodeGenerationMetadata>();
+			foreach (TemplateCodeGenerationMetadata item in allTemplatesIndexes)
+			{
+				if (!allTemplatesIndex.ContainsKey(item.Id))
+					allTemplatesIndex.Add(item.Id, item);
+			}
+   
 			foreach (var config in generatedMetadata)
 			{
 				foreach (var template in config.Metadata)
