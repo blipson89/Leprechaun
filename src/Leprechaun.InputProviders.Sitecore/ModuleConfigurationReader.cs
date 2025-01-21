@@ -65,13 +65,19 @@ namespace Leprechaun.InputProviders.Sitecore
 
 				Environment.Exit(1);
 			}
-
-
-			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result,
-				new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>(), new ExternalPackageResolver(_loggerFactory)))); // TODO
-			moduleConfigurations.Wait();
-			
-			return _modules = moduleConfigurations.Result.ToDictionary(m => m.GetLeprechaunModuleName());
+   
+			var moduleConfigurations = Task.Run(async () => await _serializationConfigurationManager.ReadSerializationConfiguration(resolveRootConfiguration.Result, new ModuleGlobResolver(_loggerFactory.CreateLogger<ModuleGlobResolver>(), new ExternalPackageResolver(_loggerFactory)))); // TODO
+			moduleConfigurations.Wait(); 
+			var result = moduleConfigurations.Result;
+			foreach(var configuration in result)
+			{
+				List<string> modules = configuration.GetLeprechaunModuleName();
+				foreach(string module in modules)
+				{
+					_modules.Add(module, configuration);
+				}
+			}
+			return _modules;
 		}
 	}
 }
