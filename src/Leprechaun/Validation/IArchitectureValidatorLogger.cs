@@ -10,5 +10,6 @@ namespace Leprechaun.Validation
 		void DuplicateTemplateNames(IEnumerable<TemplateCodeGenerationMetadata> duplicates);
 		void DuplicateFieldNames(IEnumerable<TemplateFieldCodeGenerationMetadata> duplicates);
 		void FieldNamedSameAsTemplate(TemplateCodeGenerationMetadata template, TemplateFieldCodeGenerationMetadata field);
+		void TemplateInMultipleModules(IEnumerable<(string resultingNamespace, TemplateCodeGenerationMetadata dupe)> duplicates);
 	}
 }

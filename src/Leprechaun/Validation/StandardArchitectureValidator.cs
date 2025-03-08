@@ -11,6 +11,8 @@ namespace Leprechaun.Validation
 		private readonly IArchitectureValidatorLogger _logger;
 		private readonly bool _allowFieldNamesIdenticalToTemplateName;
 		private readonly bool _allowNovelFieldNames;
+		private readonly bool _allowTemplatesInMultipleModules;
+		private readonly List<(string resultingNamespace, TemplateCodeGenerationMetadata dupe)> _templatesInMultipleModules;
 
 		public StandardArchitectureValidator(XmlNode configNode, IArchitectureValidatorLogger logger)
 		{
@@ -18,6 +20,8 @@ namespace Leprechaun.Validation
 			{
 				_allowNovelFieldNames = configNode.Attributes["allowNovelFieldNames"]?.Value == "true";
 				_allowFieldNamesIdenticalToTemplateName = configNode.Attributes["allowFieldNamesIdenticalToTemplateName"]?.Value == "true";
+				_allowTemplatesInMultipleModules = configNode.Attributes["allowTemplatesInMultipleModules"]?.Value == "true";
+				_templatesInMultipleModules = new List<(string resultingNamespace, TemplateCodeGenerationMetadata dupe)>();
 			}
 			_logger = logger;
 		}
@@ -28,7 +32,21 @@ namespace Leprechaun.Validation
 			foreach (TemplateCodeGenerationMetadata item in allTemplates)
 			{
 				if (!allTemplatesIndex.ContainsKey(item.Id))
+				{
 					allTemplatesIndex.Add(item.Id, item);
+				}
+				else
+				{
+					if (!_allowTemplatesInMultipleModules)
+					{
+						_templatesInMultipleModules.Add((allTemplatesIndex[item.Id].Namespace, item));
+					}
+				}
+			}
+
+			if (!_allowTemplatesInMultipleModules)
+			{
+				_logger.TemplateInMultipleModules(_templatesInMultipleModules);
 			}
    
 			// ReSharper disable once ReplaceWithSingleAssignment.False
