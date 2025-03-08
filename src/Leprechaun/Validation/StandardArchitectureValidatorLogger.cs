@@ -44,5 +44,17 @@ namespace Leprechaun.Validation
 			_logger.Error($"{template.Path} ({template.Id})");
 			_logger.Error($"The field {field.Name} has the same name as its template. This is an architecture smell, please rename it.");
 		}
+
+		public void TemplateInMultipleModules(IEnumerable<(string resultingNamespace, TemplateCodeGenerationMetadata dupe)> duplicates)
+		{
+			_logger.Warn("The following templates were found in multiple modules. All base template references will use the first namespace.");
+			_logger.Warn("Note: you can suppress this warning by setting 'allowTemplatesInMultipleModules' to 'true' on the architectureValidator.");
+			_logger.Warn("");
+			foreach (var duplicate in duplicates)
+			{
+				_logger.Warn($"'{duplicate.dupe.Name}' will use the namespace '{duplicate.resultingNamespace}'");
+			}
+			
+		}
 	}
 }
