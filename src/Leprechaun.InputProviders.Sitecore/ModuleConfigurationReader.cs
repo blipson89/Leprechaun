@@ -42,6 +42,7 @@ namespace Leprechaun.InputProviders.Sitecore
 		public IDictionary<string, SerializationModuleConfiguration> GetModules()
 		{
 			if (_modules != null) return _modules;
+			_modules = new Dictionary<string, SerializationModuleConfiguration>();
 			var resolveRootConfiguration = Task.Run(async () => await _rootConfigurationManager.ResolveRootConfiguration(_configRootDirectory));
 			try
 			{
