@@ -1,12 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<VersionPrefix>2.1.0</VersionPrefix>
+		<VersionPrefix>2.1.1</VersionPrefix>
 		<VersionSuffix></VersionSuffix>
 		<Authors>Ben Lipson,Kam Figy</Authors>
 		<owners>Ben Lipson</owners>
 		<PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
 		<RepositoryUrl>https://github.com/blipson89/Leprechaun</RepositoryUrl>
 		<PackageIconUrl>http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png</PackageIconUrl>
-		<Copyright>©2024 Ben Lipson</Copyright>
+		<Copyright>©2025 Ben Lipson</Copyright>
 	</PropertyGroup>
 </Project>
