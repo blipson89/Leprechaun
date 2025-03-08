@@ -1,5 +1,5 @@
 # Leprechaun
-![Leprechaun](http://www.benlipson.net/wp-content/uploads/2018/04/leprechaun-logo_pipe-small.png)
+![Leprechaun](./src/icon.png)
 
 Leprechaun is a universal, open API for code generation from [Rainbow](https://github.com/SitecoreUnicorn/Rainbow) serialized or Sitecore serialized Sitecore templates. Leprechaun uses state-of-the-art [Roslyn code generation](https://msdn.microsoft.com/en-us/magazine/mt707527.aspx) technology instead of T4 templates for speedy generation that doesn't require Visual Studio.
 
@@ -141,15 +141,6 @@ In the following example, the "`items`" section is setup by Sitecore and was onl
       {
         "name": "templates",
         "path": "/sitecore/templates/Feature/Sample"
-      },
-      {
-        "name": "renderings",
-        "path": "/sitecore/layout/Renderings/Feature/Sample"
-      },
-      {
-        "name": "buttons",
-        "database": "core",
-        "path": "/sitecore/content/Applications/WebEdit/Custom Experience Buttons/Sample"
       }
     ]
   },
@@ -162,6 +153,54 @@ In the following example, the "`items`" section is setup by Sitecore and was onl
 }
 ```
 
+##### Multiple Output Files for One Module
+Leprechaun can support multiple configurations for a single module. However, there are a few things to note:
+
+1. Module config names must be unique, so the name of the configuration must be different
+2. Any path that relies on `$(module)` must be explicitly overridden, or it will look in the wrong location.
+
+The below configuration demonstrates how this feature can be used:
+
+`Sample.module.json`
+```json
+{
+    "namespace": "Feature.Sample",
+    "items": {
+      "includes": [
+        {
+          "name": "templates",
+          "path": "/sitecore/templates/Feature/Sample"
+        }
+      ]
+    },
+    "leprechaun": {
+      "configuration": [
+        {
+          "@extends": "Sample.Base",
+          "@name": "Feature.Sample"
+        },
+        {
+          "@extends": "Sample.Base",
+          "@name": "Feature.SampleTSX", /* Must be unique */
+          /* 
+           * The following 2 sections must be overridden since the 
+           * $(module) would be "SampleTSX" instead of "Sample" 
+           */
+          "codeGenerator": {
+            "@scripts": "$(configDirectory)/PATH/TO/CSX/JssTypeScript.csx",
+            "@outputFile": "$(configDirectory)/PATH/TO/OUTPUT/$(layer)/Sample/Generated.tsx"
+          },
+          "templatePredicate": {
+            "include" : {
+                "@name": "TemplatesSampleTsx",
+                "@path": "/sitecore/templates/Feature/Sample"
+            }
+          }
+        }
+      ]
+    }
+}
+```
 --- 
 
 ### Integration
