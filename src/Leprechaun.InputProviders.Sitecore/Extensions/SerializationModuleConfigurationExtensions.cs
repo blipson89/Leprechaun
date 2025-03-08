@@ -1,21 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Sitecore.DevEx.Serialization.Client.Configuration;
 
 namespace Leprechaun.InputProviders.Sitecore.Extensions
 {
 	public static class SerializationModuleConfigurationExtensions
-	{
-		public static string GetLeprechaunModuleName(this SerializationModuleConfiguration configuration)
+	{	
+		public static List<string> GetLeprechaunModuleName(this SerializationModuleConfiguration configuration)
 		{
 			if(configuration == null)
 				throw new NullReferenceException("SerializationModuleConfiguration is null");
-
+		 
+			List<string> configNames = new List<string>(); 
 			if (!configuration.Extensions.ContainsKey("leprechaun"))
-				return configuration.Namespace;
-
-			var configName = configuration.Extensions["leprechaun"].SelectToken("configuration").Value<string>("@name");
-
-			return string.IsNullOrEmpty(configName) ? configuration.Namespace : configName;
+				return new List<string> { configuration.Namespace };
+			var token =	configuration.Extensions["leprechaun"].SelectToken("configuration"); 
+			if (token.Type == JTokenType.Array)
+			{
+				foreach (JToken item in token)
+				{
+					configNames.Add(item.Value<string>("@name"));
+				}
+			}
+			else
+			{
+				configNames.Add(token.Value<string>("@name"));
+			}			
+	 
+			return configNames ?? new List<string> { configuration.Namespace };
 		}
 	}
 }
