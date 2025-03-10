@@ -24,12 +24,14 @@ namespace Leprechaun.Configuration
 		private readonly XmlElement _baseConfigElement;
 		private readonly XmlElement _sharedConfigElement;
 		private readonly string _configFilePath;
+  		private readonly string _include;
+		private readonly string _exclude;
 		private readonly ConfigurationImportPathResolver _configImportResolver;
 
 		private IContainer _sharedConfig;
 		private IContainer[] _configurations;
 
-		public LeprechaunConfigurationBuilder(IContainerDefinitionVariablesReplacer variablesReplacer, XmlElement configsElement, XmlElement baseConfigElement, XmlElement sharedConfigElement, string configFilePath, ConfigurationImportPathResolver configImportResolver) : base(variablesReplacer)
+		public LeprechaunConfigurationBuilder(IContainerDefinitionVariablesReplacer variablesReplacer, XmlElement configsElement, XmlElement baseConfigElement, XmlElement sharedConfigElement, string configFilePath, string include, string exclude, ConfigurationImportPathResolver configImportResolver) : base(variablesReplacer)
 		{
 			Assert.ArgumentNotNull(variablesReplacer, nameof(variablesReplacer));
 			Assert.ArgumentNotNull(configsElement, nameof(configsElement));
@@ -40,6 +42,8 @@ namespace Leprechaun.Configuration
 			_baseConfigElement = baseConfigElement;
 			_sharedConfigElement = sharedConfigElement;
 			_configFilePath = configFilePath;
+   			_include = include;
+			_exclude = exclude; 
 			_configImportResolver = configImportResolver;
 
 			ProcessImports();
@@ -151,6 +155,8 @@ namespace Leprechaun.Configuration
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
 				.Concat(new[] {_configFilePath})
 				.ToList();
+			List<string> includedModules = string.IsNullOrWhiteSpace(_include) ? null : _include.Split(',').ToList();
+			List<string> excludedModules = string.IsNullOrWhiteSpace(_exclude) ? null : _exclude.Split(',').ToList();
 			Queue<string> configsToProcess = new Queue<string>(allImportsFiles);
 			while(configsToProcess.Count > 0)
 			{
@@ -178,8 +184,11 @@ namespace Leprechaun.Configuration
 							}
 							nodeToImport.SetAttribute("name", namespaceUri);
 						}
+	  					if ((includedModules == null  || includedModules.Contains(nodeToImport.Attributes["name"].Value)) && (excludedModules == null || !excludedModules.Contains(nodeToImport.Attributes["name"].Value)))
+						{
 		 				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
 						_configsElement.AppendChild(importedXml);
+	  					}
 					}
 				}
 				else

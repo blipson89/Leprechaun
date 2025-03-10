@@ -156,7 +156,9 @@ namespace Leprechaun.Execution
 				configsElement, 
 				baseConfigElement, 
 				sharedConfigElement, 
-				args.ConfigFilePath, 
+				args.ConfigFilePath,
+				args.Include,
+				args.Exclude,
 				new ConfigurationImportPathResolver(new ConsoleLogger()));
 
 			return configObject;
