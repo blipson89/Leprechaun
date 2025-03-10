@@ -28,5 +28,11 @@ namespace Leprechaun.Console
 
 		[SwitchArgument('d', "debug", false, Description = "Prints out full stack traces for exceptions")]
 		public bool Debug { get; set; }
+
+        [ValueArgument(typeof(string), 'e', "exclude", Description = "Path to the config file to use. Defaults to Leprechaun.config.")]
+        public string Exclude { get; set; }
+ 
+        [ValueArgument(typeof(string), 'i', "include", Description = "Path to the config file to use. Defaults to Leprechaun.config.")]
+        public string Include { get; set; }
 	}
 }

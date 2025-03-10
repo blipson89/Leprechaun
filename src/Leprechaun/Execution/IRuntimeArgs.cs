@@ -14,5 +14,7 @@
 		bool Rainbow { get; set; }
 		string PluginPath { get; set; }
 		bool Debug { get; set; }
+		string Exclude { get; set; }
+		string Include { get; set; }
 	}
 }
