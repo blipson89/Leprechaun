@@ -155,8 +155,6 @@ namespace Leprechaun.Configuration
 				.SelectMany(glob => _configImportResolver.ResolveImportPaths(glob))
 				.Concat(new[] {_configFilePath})
 				.ToList();
-			List<string> includedModules = string.IsNullOrWhiteSpace(_include) ? null : _include.Split(',').ToList();
-			List<string> excludedModules = string.IsNullOrWhiteSpace(_exclude) ? null : _exclude.Split(',').ToList();
 			Queue<string> configsToProcess = new Queue<string>(allImportsFiles);
 			while(configsToProcess.Count > 0)
 			{
@@ -184,11 +182,10 @@ namespace Leprechaun.Configuration
 							}
 							nodeToImport.SetAttribute("name", namespaceUri);
 						}
-	  					if ((includedModules == null  || includedModules.Contains(nodeToImport.Attributes["name"].Value)) && (excludedModules == null || !excludedModules.Contains(nodeToImport.Attributes["name"].Value)))
-						{
-		 				var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
+
+						if (!IsIncludedModule(nodeToImport) || IsExcludedModule(nodeToImport)) continue;
+						var importedXml = _baseConfigElement.OwnerDocument.ImportNode(nodeToImport, true);
 						_configsElement.AppendChild(importedXml);
-	  					}
 					}
 				}
 				else
@@ -202,6 +199,18 @@ namespace Leprechaun.Configuration
 
 			// we'll use this to watch imports for changes later
 			ImportedConfigFilePaths = allImportsFiles.ToArray();
+		}
+
+		private bool IsExcludedModule(XmlElement nodeToImport)
+		{
+			List<string> excludedModules = string.IsNullOrWhiteSpace(_exclude) ? null : _exclude.Split(',').ToList();
+			return excludedModules != null && excludedModules.Contains(nodeToImport.Attributes["name"].Value);
+		}
+
+		private bool IsIncludedModule(XmlElement nodeToImport)
+		{
+			List<string> includedModules = string.IsNullOrWhiteSpace(_include) ? null : _include.Split(',').ToList();
+			return includedModules == null || includedModules.Contains(nodeToImport.Attributes["name"].Value);
 		}
 	}
 }
